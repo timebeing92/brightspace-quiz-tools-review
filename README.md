@@ -202,8 +202,25 @@ snapshot file hashes; [the upstream pin](upstream/workbench_pin.json) identifies
 the shared implementation. See [repository scope](docs/REPOSITORY_BOUNDARY.md)
 for ownership and change guidance.
 
-Generated course outputs contain questions and answers. Keep them outside source
-control; the default `output/` folder is ignored. Included examples are synthetic.
+The default `output/` folder is ignored so routine generated outputs stay out of
+source control. Included examples are synthetic; feedback can use real course
+exports as described below.
+
+## Feedback and contributions
+
+[Issues and suggestions](https://github.com/timebeing92/brightspace-quiz-tools-review/issues)
+and [pull requests](https://github.com/timebeing92/brightspace-quiz-tools-review/pulls)
+are welcome. Feedback from real course exports helps improve the application and
+its supporting tools. Reproductions may use real course data or synthetic input.
+Include the course name, steps or command used, exact error messages, and what
+you expected to happen, along with relevant files you have permission to share.
+
+You can propose changes to any part of the included code here. Maintainers will
+coordinate shared-code improvements with the source projects and update the
+pinned files through the vendor process. Contributions will be acknowledged in
+this repository, with accepted improvements credited in project documentation
+or release notes. See [the contribution guidance](docs/REPOSITORY_BOUNDARY.md#feedback-and-contributions)
+for reporting details and source-project coordination.
 
 ## License
 

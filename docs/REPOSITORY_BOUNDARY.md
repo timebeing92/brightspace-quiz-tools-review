@@ -33,24 +33,42 @@ review commands, guarded decision import, draft intake, readiness checks, packag
 assembly, and local validation. It also includes synthetic examples and blank
 drafting templates.
 
-Real course exports, generated course reviewbooks, student data, credentials,
-live Brightspace evidence, the broader private fixture corpus, and original Git
-history are omitted. The newer full-screen Workshop application is a separate
-project and is outside this snapshot. Bindery Ledger's terminal display is included.
+The distributed snapshot omits real course exports, generated course reviewbooks,
+student data, credentials, live Brightspace evidence, the broader private fixture
+corpus, and original Git history. The newer full-screen Workshop application is a
+separate project and is outside this snapshot. Bindery Ledger's terminal display
+is included.
 
-## Reviewing and changing code
+## Feedback and contributions
 
-Use the source map in the README and the synthetic demonstration to explore the
-implementation. Useful feedback includes installation problems, unclear commands
-or output, extraction edge cases, import validation gaps, and code organization.
-Describe the command and observed behavior, and use synthetic input when sharing
-a reproduction.
+Suggestions, bug reports, and pull requests are welcome in this repository and
+will help improve the application and its supporting tools. Useful feedback
+includes installation problems, unclear commands or output, extraction edge
+cases, import validation gaps, and code organization. The source map in the
+README and the included demonstration are starting points for exploring the code.
 
-Shared behavior should be fixed in Workbench and promoted through the bundle's
-vendor process. Changes to terminal presentation, setup, or introductory
-documentation belong to the bundle or this review snapshot. Directly changing a
-pinned shared file here causes `vendor_from_workbench.py --check` to report drift;
-that check should not be bypassed by editing hashes to match.
+Testing with real course exports is encouraged. Reproductions may include real
+course data or synthetic input. For a useful report, include:
+
+- The course name and the affected quiz, question, or output file.
+- The steps or exact command used, tool version or commit, Python version, and
+  operating system.
+- What you expected, what happened, and any exact error messages or relevant logs.
+- The relevant export, excerpt, or generated output you have permission to share.
+
+Pull requests may propose changes to any included code, including shared files.
+Access to the original Workbench or bundle repositories is not required to
+contribute here. Maintainers will coordinate accepted shared-code improvements
+with Workbench and promote them through the bundle's vendor process. Terminal
+presentation, setup, and documentation improvements are also welcome here.
+
+The vendor check records whether shared files match their upstream pin. A proposed
+edit to a pinned file can therefore cause `vendor_from_workbench.py --check` to
+report drift. Describe the change in the pull request and leave the pin update to
+the maintainer's reviewed promotion process.
+
+Contributions will be acknowledged in this repository, with accepted improvements
+credited in project documentation or release notes.
 
 The full test suite runs in the development projects. This repository provides
 the built-in synthetic demonstration and drift/input checks. No local check
