@@ -1,0 +1,212 @@
+{
+  "schema": "coursecraft.quiz/1",
+  "model_id": "cc:model:quiz:observed-question-kinds",
+  "run_id": "cc:run:quiz:observed-question-kinds",
+  "source": {
+    "source_key": "cc:source:3333333333333333333333333333333333333333333333333333333333333333",
+    "source_lineage_key": "cc:lineage:composite:phase-1-corpus",
+    "source_kind": "composite",
+    "fingerprint": {"algorithm": "sha256", "digest": "3333333333333333333333333333333333333333333333333333333333333333", "scope": "file_set"},
+    "references": ["docs/project/quiz-consolidation/PHASE_0_1_PROVENANCE_AND_CAPABILITY_MATRIX_2026-07-15.md"],
+    "extensions": {}
+  },
+  "quizzes": [],
+  "structures": [],
+  "questions": [
+    {
+      "entity_key": "cc:question:example:multiple-choice",
+      "identity": {"strategy": "permanent_code", "permanent_code": "EX_MC", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "multiple_choice",
+      "source_kind": "Multiple Choice",
+      "title": null,
+      "prompt": null,
+      "type_payload": {
+        "options": [
+          {"option_key": "A", "content": {"format": "plain_text", "content": "Synthetic A", "extensions": {}}, "correct": true, "weight": "100", "source_evidence_keys": ["ev.kinds"], "extensions": {}},
+          {"option_key": "B", "content": {"format": "plain_text", "content": "Synthetic B", "extensions": {}}, "correct": false, "weight": "0", "source_evidence_keys": ["ev.kinds"], "extensions": {}}
+        ],
+        "accepted_responses": [], "blanks": [], "match_pairs": [], "correct_order": [],
+        "raw_response_models": [{"source_kind": "response_lid/render_choice", "payload": {"cardinality": "Single"}, "source_evidence_keys": ["ev.kinds"], "extensions": {}}],
+        "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "exact", "maximum_points": 1, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "roundtrip_verified", "receipt_refs": ["docs/IMPORT_TEST_LOG.md"], "notes": [], "extensions": {}},
+      "source_evidence_keys": ["ev.kinds"], "diagnostic_ids": [], "extensions": {}
+    },
+    {
+      "entity_key": "cc:question:example:true-false",
+      "identity": {"strategy": "permanent_code", "permanent_code": "EX_TF", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "true_false",
+      "source_kind": "True/False",
+      "title": null,
+      "prompt": null,
+      "type_payload": {
+        "options": [
+          {"option_key": "T", "content": {"format": "plain_text", "content": "True", "extensions": {}}, "correct": true, "weight": "100", "source_evidence_keys": ["ev.kinds"], "extensions": {}},
+          {"option_key": "F", "content": {"format": "plain_text", "content": "False", "extensions": {}}, "correct": false, "weight": "0", "source_evidence_keys": ["ev.kinds"], "extensions": {}}
+        ],
+        "accepted_responses": [], "blanks": [], "match_pairs": [], "correct_order": [], "raw_response_models": [], "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "exact", "maximum_points": 1, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "roundtrip_verified", "receipt_refs": ["docs/IMPORT_TEST_LOG.md"], "notes": [], "extensions": {}},
+      "source_evidence_keys": ["ev.kinds"], "diagnostic_ids": [], "extensions": {}
+    },
+    {
+      "entity_key": "cc:question:example:multi-select",
+      "identity": {"strategy": "permanent_code", "permanent_code": "EX_MS", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "multi_select",
+      "source_kind": "Multi-Select",
+      "title": null,
+      "prompt": null,
+      "type_payload": {
+        "options": [
+          {"option_key": "A", "content": {"format": "plain_text", "content": "Synthetic A", "extensions": {}}, "correct": true, "weight": null, "source_evidence_keys": ["ev.kinds"], "extensions": {}},
+          {"option_key": "B", "content": {"format": "plain_text", "content": "Synthetic B", "extensions": {}}, "correct": true, "weight": null, "source_evidence_keys": ["ev.kinds"], "extensions": {}}
+        ],
+        "accepted_responses": [], "blanks": [], "match_pairs": [], "correct_order": [], "raw_response_models": [], "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "all_or_nothing", "maximum_points": 1, "rules": [{"kind": "all_or_nothing", "source_kind": "respcondition/and", "payload": {}, "source_evidence_keys": ["ev.kinds"], "extensions": {}}], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "roundtrip_verified", "receipt_refs": ["docs/IMPORT_TEST_LOG.md"], "notes": [], "extensions": {}},
+      "source_evidence_keys": ["ev.kinds"], "diagnostic_ids": [], "extensions": {}
+    },
+    {
+      "entity_key": "cc:question:example:short-answer",
+      "identity": {"strategy": "permanent_code", "permanent_code": "EX_SA", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "short_answer",
+      "source_kind": "Short Answer",
+      "title": null,
+      "prompt": null,
+      "type_payload": {
+        "options": [],
+        "accepted_responses": [{"value": "synthetic", "case_sensitive": false, "weight": "100", "extensions": {}}],
+        "blanks": [], "match_pairs": [], "correct_order": [],
+        "raw_response_models": [{"source_kind": "response_str", "payload": {}, "source_evidence_keys": ["ev.kinds"], "extensions": {}}],
+        "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "exact", "maximum_points": 1, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "extraction_only", "receipt_refs": [], "notes": [], "extensions": {}},
+      "source_evidence_keys": ["ev.kinds"], "diagnostic_ids": [], "extensions": {}
+    },
+    {
+      "entity_key": "cc:question:example:multi-short-answer",
+      "identity": {"strategy": "permanent_code", "permanent_code": "EX_MSA", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "multi_short_answer",
+      "source_kind": "Multi-Short Answer",
+      "title": null,
+      "prompt": null,
+      "type_payload": {
+        "options": [], "accepted_responses": [],
+        "blanks": [
+          {"blank_key": "B1", "accepted_responses": [{"value": "one", "case_sensitive": null, "weight": null, "extensions": {}}], "source_evidence_keys": ["ev.kinds"], "extensions": {}},
+          {"blank_key": "B2", "accepted_responses": [{"value": "two", "case_sensitive": null, "weight": null, "extensions": {}}], "source_evidence_keys": ["ev.kinds"], "extensions": {}}
+        ],
+        "match_pairs": [], "correct_order": [],
+        "raw_response_models": [{"source_kind": "multiple response_str", "payload": {}, "source_evidence_keys": ["ev.kinds"], "extensions": {}}],
+        "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "partial", "maximum_points": 2, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "extraction_only", "receipt_refs": [], "notes": [], "extensions": {}},
+      "source_evidence_keys": ["ev.kinds"], "diagnostic_ids": [], "extensions": {}
+    },
+    {
+      "entity_key": "cc:question:example:fill-in-blanks",
+      "identity": {"strategy": "permanent_code", "permanent_code": "EX_FIB", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "fill_in_blanks",
+      "source_kind": "Fill in the Blanks",
+      "title": null,
+      "prompt": null,
+      "type_payload": {
+        "options": [], "accepted_responses": [],
+        "blanks": [{"blank_key": "BLANK_1", "accepted_responses": [{"value": "fill", "case_sensitive": false, "weight": "100", "extensions": {}}], "source_evidence_keys": ["ev.kinds"], "extensions": {}}],
+        "match_pairs": [], "correct_order": [],
+        "raw_response_models": [{"source_kind": "render_fib", "payload": {"blank_count": 1}, "source_evidence_keys": ["ev.kinds"], "extensions": {}}],
+        "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "exact", "maximum_points": 1, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "extraction_only", "receipt_refs": [], "notes": [], "extensions": {}},
+      "source_evidence_keys": ["ev.kinds"], "diagnostic_ids": [], "extensions": {}
+    },
+    {
+      "entity_key": "cc:question:example:long-answer",
+      "identity": {"strategy": "permanent_code", "permanent_code": "EX_LA", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "long_answer",
+      "source_kind": "Long Answer",
+      "title": null,
+      "prompt": null,
+      "type_payload": {
+        "options": [], "accepted_responses": [], "blanks": [], "match_pairs": [], "correct_order": [],
+        "manual_answer_key": {"format": "plain_text", "content": "Synthetic evaluator guidance.", "extensions": {}},
+        "raw_response_models": [{"source_kind": "response_str/render_fib", "payload": {"rows": "5"}, "source_evidence_keys": ["ev.kinds"], "extensions": {}}],
+        "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "manual", "maximum_points": 5, "rules": [], "extensions": {}},
+      "feedback": [{"channel": "answer_key", "source_kind": "answer_key_material", "content": {"format": "plain_text", "content": "Synthetic evaluator guidance.", "extensions": {}}, "source_evidence_keys": ["ev.kinds"], "extensions": {}}],
+      "build_support": {"level": "roundtrip_verified", "receipt_refs": ["docs/IMPORT_TEST_LOG.md"], "notes": ["Represented by the builder's written-response mode."], "extensions": {}},
+      "source_evidence_keys": ["ev.kinds"], "diagnostic_ids": [], "extensions": {}
+    },
+    {
+      "entity_key": "cc:question:example:matching",
+      "identity": {"strategy": "permanent_code", "permanent_code": "EX_MATCH", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "matching",
+      "source_kind": "Matching",
+      "title": null,
+      "prompt": null,
+      "type_payload": {
+        "options": [], "accepted_responses": [], "blanks": [],
+        "match_pairs": [
+          {"left_key": "L1", "right_key": "R1", "weight": "100", "source_evidence_keys": ["ev.kinds"], "extensions": {}},
+          {"left_key": "L2", "right_key": "R2", "weight": "100", "source_evidence_keys": ["ev.kinds"], "extensions": {}}
+        ],
+        "correct_order": [],
+        "raw_response_models": [{"source_kind": "response_grp", "payload": {"group_count": 2}, "source_evidence_keys": ["ev.kinds"], "extensions": {}}],
+        "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "partial", "maximum_points": 2, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "extraction_only", "receipt_refs": [], "notes": [], "extensions": {}},
+      "source_evidence_keys": ["ev.kinds"], "diagnostic_ids": [], "extensions": {}
+    },
+    {
+      "entity_key": "cc:question:example:ordering",
+      "identity": {"strategy": "permanent_code", "permanent_code": "EX_ORDER", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "ordering",
+      "source_kind": "Ordering",
+      "title": null,
+      "prompt": null,
+      "type_payload": {
+        "options": [
+          {"option_key": "O1", "content": {"format": "plain_text", "content": "First", "extensions": {}}, "correct": null, "weight": null, "source_evidence_keys": ["ev.kinds"], "extensions": {}},
+          {"option_key": "O2", "content": {"format": "plain_text", "content": "Second", "extensions": {}}, "correct": null, "weight": null, "source_evidence_keys": ["ev.kinds"], "extensions": {}}
+        ],
+        "accepted_responses": [], "blanks": [], "match_pairs": [],
+        "correct_order": [
+          {"option_key": "O1", "position": 1, "source_evidence_keys": ["ev.kinds"], "extensions": {}},
+          {"option_key": "O2", "position": 2, "source_evidence_keys": ["ev.kinds"], "extensions": {}}
+        ],
+        "raw_response_models": [{"source_kind": "response_grp/position conditions", "payload": {}, "source_evidence_keys": ["ev.kinds"], "extensions": {}}],
+        "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "exact", "maximum_points": 2, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "extraction_only", "receipt_refs": [], "notes": [], "extensions": {}},
+      "source_evidence_keys": ["ev.kinds"], "diagnostic_ids": [], "extensions": {}
+    }
+  ],
+  "assets": [],
+  "resources": [],
+  "relationships": [],
+  "evidence": [
+    {"evidence_key": "ev.kinds", "source_key": "cc:source:3333333333333333333333333333333333333333333333333333333333333333", "kind": "observation", "source_ref": "Phase 0/1 corpus matrix", "locator": null, "content": null, "content_ref": "docs/project/quiz-consolidation/PHASE_0_1_PROVENANCE_AND_CAPABILITY_MATRIX_2026-07-15.md", "sha256": null, "extraction_method": "human", "extensions": {}}
+  ],
+  "lineage": [],
+  "settings_observations": [],
+  "annotations": [],
+  "diagnostics": [],
+  "extensions": {"coursecraft.example_scope": "nine observed question-kind projections"}
+}

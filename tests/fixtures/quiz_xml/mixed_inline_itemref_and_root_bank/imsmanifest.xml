@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="MIXED_STORAGE_FIXTURE">
+  <resources>
+    <resource identifier="res_qdb" type="webcontent" d2l_material_type="d2lquestionlibrary" href="questiondb.xml" />
+    <resource identifier="res_quiz" type="webcontent" d2l_material_type="d2lquiz" href="quiz_d2l_mixed.xml" />
+  </resources>
+</manifest>

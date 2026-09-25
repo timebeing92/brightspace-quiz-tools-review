@@ -1,0 +1,686 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "coursecraft.quiz_unbind_run/0",
+  "title": "CourseCraft Quiz Unbind Run (DRAFT / UNRATIFIED)",
+  "description": "Draft Workbench-owned envelope for a local Quiz Binder Unbind run. Version 0 is provisional and is not a promoted or ratified contract. It composes, but does not replace, the canonical coursecraft.quiz/1 model, coursecraft.quiz_run/1 extraction receipt, readiness report, and local station artifacts.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "contract_status",
+    "run_id",
+    "generated_at",
+    "producer",
+    "source_export",
+    "selection",
+    "model_summary",
+    "fidelity",
+    "artifacts",
+    "extraction_inventory",
+    "readiness",
+    "verification",
+    "evidence_level",
+    "non_build_guarantee",
+    "privacy",
+    "brightspace",
+    "events",
+    "extensions"
+  ],
+  "properties": {
+    "schema": {
+      "const": "coursecraft.quiz_unbind_run/0"
+    },
+    "contract_status": {
+      "const": "draft_unratified",
+      "description": "Version 0 is usable implementation evidence, not a promoted contract claim."
+    },
+    "run_id": {
+      "$ref": "#/$defs/entity_key"
+    },
+    "generated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "producer": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version",
+        "commit",
+        "tree_state",
+        "invocation",
+        "canonical_extractor",
+        "canonical_readiness",
+        "station_renderer",
+        "review_projection",
+        "reading_room_renderer",
+        "capability_registry",
+        "tools"
+      ],
+      "properties": {
+        "name": {
+          "const": "coursecraft-workbench quiz unbind"
+        },
+        "version": {
+          "const": "0"
+        },
+        "commit": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "tree_state": {
+          "type": "string",
+          "enum": [
+            "clean",
+            "dirty",
+            "unknown"
+          ],
+          "description": "Working-tree state of the producing checkout. A dirty tree means the named commit does not by itself identify the code that produced this run."
+        },
+        "invocation": {
+          "const": "module_api"
+        },
+        "canonical_extractor": {
+          "const": "extract_quiz_pool_review"
+        },
+        "canonical_readiness": {
+          "const": "check_quiz_authoring_readiness"
+        },
+        "station_renderer": {
+          "const": "quiz_binder_station"
+        },
+        "review_projection": {
+          "const": "quiz_review_projection"
+        },
+        "reading_room_renderer": {
+          "const": "quiz_review_station"
+        },
+        "capability_registry": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "path",
+            "sha256",
+            "pinned"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "$ref": "#/$defs/sha256"
+            },
+            "pinned": {
+              "const": true
+            }
+          }
+        },
+        "tools": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/tool_ref"
+          }
+        }
+      }
+    },
+    "source_export": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "reference",
+        "sha256",
+        "bytes",
+        "file_count",
+        "intake_kind",
+        "source_key",
+        "source_lineage_key",
+        "lineage_basis",
+        "asset_mode",
+        "copied_asset_count",
+        "scope"
+      ],
+      "properties": {
+        "reference": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "file_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "intake_kind": {
+          "type": "string",
+          "enum": [
+            "directory",
+            "zip"
+          ]
+        },
+        "source_key": {
+          "$ref": "#/$defs/entity_key"
+        },
+        "source_lineage_key": {
+          "$ref": "#/$defs/entity_key"
+        },
+        "lineage_basis": {
+          "type": "string",
+          "minLength": 1
+        },
+        "asset_mode": {
+          "type": "string",
+          "enum": [
+            "self_contained",
+            "reference"
+          ]
+        },
+        "copied_asset_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "scope": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "coverage_kind",
+            "questiondb_present",
+            "inline_occurrence_count",
+            "itemref_occurrence_count",
+            "resolved_itemref_count",
+            "unresolved_itemref_count"
+          ],
+          "properties": {
+            "coverage_kind": {
+              "type": "string",
+              "enum": [
+                "quiz_only_inline",
+                "quiz_only_with_unresolved_itemrefs",
+                "question_library_inline",
+                "question_library_with_itemrefs"
+              ]
+            },
+            "questiondb_present": {
+              "type": "boolean"
+            },
+            "inline_occurrence_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "itemref_occurrence_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "resolved_itemref_count": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "unresolved_itemref_count": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        }
+      }
+    },
+    "selection": {
+      "type": "object",
+      "description": "Optional authoring target selection. A multi-quiz extraction-only run may leave both values null; a later authoring or repackaging run must identify one quiz before readiness can traverse its draw and pool graph.",
+      "additionalProperties": false,
+      "required": [
+        "requested_quiz_entity_key",
+        "selected_quiz_entity_key"
+      ],
+      "properties": {
+        "requested_quiz_entity_key": {
+          "description": "Quiz entity key explicitly requested by the operator, or null when no authoring target was requested.",
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "selected_quiz_entity_key": {
+          "description": "Unique quiz entity resolved for authoring-readiness analysis, or null for an aggregate extraction-only run.",
+          "type": [
+            "string",
+            "null"
+          ]
+        }
+      }
+    },
+    "model_summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "quiz_count",
+        "question_entity_count",
+        "question_occurrence_count",
+        "library_only_question_entity_count",
+        "diagnostic_count",
+        "projection_diagnostic_count"
+      ],
+      "properties": {
+        "quiz_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "question_entity_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "question_occurrence_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "library_only_question_entity_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "diagnostic_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "projection_diagnostic_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "fidelity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "approval_safe",
+        "variant_collision_count",
+        "collided_occurrence_count",
+        "authored_variant_class_count",
+        "reused_authored_variant_class_count"
+      ],
+      "description": "Semantic fidelity of the extracted model, reported separately from hash verification. A run can be fully verified and still unsafe for answer-key approval.",
+      "properties": {
+        "state": {
+          "type": "string",
+          "enum": [
+            "clean",
+            "collapsed_question_variants"
+          ]
+        },
+        "approval_safe": {
+          "type": "boolean"
+        },
+        "variant_collision_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "collided_occurrence_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "authored_variant_class_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "reused_authored_variant_class_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model",
+        "extraction_receipt",
+        "readiness_report",
+        "readiness_markdown",
+        "station_data",
+        "station_html",
+        "review_projection",
+        "reading_room_data",
+        "reading_room_html",
+        "summary_markdown"
+      ],
+      "properties": {
+        "model": {
+          "$ref": "#/$defs/artifact_ref"
+        },
+        "extraction_receipt": {
+          "$ref": "#/$defs/artifact_ref"
+        },
+        "readiness_report": {
+          "$ref": "#/$defs/artifact_ref"
+        },
+        "readiness_markdown": {
+          "$ref": "#/$defs/artifact_ref"
+        },
+        "station_data": {
+          "$ref": "#/$defs/artifact_ref"
+        },
+        "station_html": {
+          "$ref": "#/$defs/artifact_ref"
+        },
+        "review_projection": {
+          "$ref": "#/$defs/artifact_ref"
+        },
+        "reading_room_data": {
+          "$ref": "#/$defs/artifact_ref"
+        },
+        "reading_room_html": {
+          "$ref": "#/$defs/artifact_ref"
+        },
+        "summary_markdown": {
+          "$ref": "#/$defs/artifact_ref"
+        }
+      }
+    },
+    "extraction_inventory": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "declared_artifact_count",
+        "review_artifact_count",
+        "model_artifact_count",
+        "copied_asset_count"
+      ],
+      "properties": {
+        "declared_artifact_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "review_artifact_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "model_artifact_count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "copied_asset_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "readiness": {
+      "type": "object",
+      "description": "Content-minimized authoring-readiness summary. On a valid multi-quiz extraction-only close, quiz_selection_required is an expected later-stage selection gate rather than an extraction-fidelity failure.",
+      "additionalProperties": false,
+      "required": [
+        "report_type",
+        "ready",
+        "error_count",
+        "warning_count",
+        "blocker_codes",
+        "warning_codes"
+      ],
+      "properties": {
+        "report_type": {
+          "type": "string",
+          "minLength": 1
+        },
+        "ready": {
+          "type": "boolean"
+        },
+        "error_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "warning_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "blocker_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "warning_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "verification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "mode",
+        "status",
+        "verified_at",
+        "direct_artifact_count",
+        "extraction_artifact_count",
+        "total_reference_count"
+      ],
+      "properties": {
+        "mode": {
+          "const": "recursive_extraction_receipt"
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "pending",
+            "verified"
+          ]
+        },
+        "verified_at": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "format": "date-time"
+        },
+        "direct_artifact_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "extraction_artifact_count": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "total_reference_count": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "evidence_level": {
+      "const": "extraction_only"
+    },
+    "non_build_guarantee": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "statement",
+        "build_performed",
+        "instance_state"
+      ],
+      "properties": {
+        "statement": {
+          "type": "string",
+          "minLength": 1
+        },
+        "build_performed": {
+          "const": false
+        },
+        "instance_state": {
+          "const": "extraction_only"
+        }
+      }
+    },
+    "privacy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "class",
+        "receipt_records_authored_text",
+        "run_contains_course_content",
+        "sharing_requires_review"
+      ],
+      "properties": {
+        "class": {
+          "const": "local_course_evidence"
+        },
+        "receipt_records_authored_text": {
+          "const": false
+        },
+        "run_contains_course_content": {
+          "const": true
+        },
+        "sharing_requires_review": {
+          "const": true
+        }
+      }
+    },
+    "brightspace": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "roundtrip",
+        "network_operations",
+        "brightspace_operations"
+      ],
+      "properties": {
+        "roundtrip": {
+          "const": "not_performed"
+        },
+        "network_operations": {
+          "const": 0
+        },
+        "brightspace_operations": {
+          "const": 0
+        }
+      }
+    },
+    "events": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    },
+    "extensions": {
+      "type": "object"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "entity_key": {
+      "type": "string",
+      "pattern": "^cc:[A-Za-z0-9._~:/-]+$"
+    },
+    "artifact_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "bytes",
+        "identity"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "bytes": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "identity": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "tool_ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "path",
+        "sha256",
+        "role"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        },
+        "role": {
+          "type": "string",
+          "enum": [
+            "orchestrator",
+            "producer",
+            "renderer",
+            "verifier",
+            "contract"
+          ]
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "sequence",
+        "stage",
+        "status",
+        "code"
+      ],
+      "properties": {
+        "sequence": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "stage": {
+          "type": "string",
+          "enum": [
+            "source_check",
+            "extract_normalize",
+            "project_review",
+            "readiness",
+            "verified_close"
+          ]
+        },
+        "status": {
+          "type": "string",
+          "enum": [
+            "started",
+            "completed"
+          ]
+        },
+        "code": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

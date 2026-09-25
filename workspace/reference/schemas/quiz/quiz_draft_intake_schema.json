@@ -1,0 +1,94 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://coursecraft.local/schemas/quiz_draft_intake_schema.json",
+  "title": "CourseCraft fresh quiz intake version 1",
+  "description": "Structural contract. Type-specific joins, answer semantics, numeric precision and rich content constraints are additionally enforced by quiz_draft_intake.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["config", "Questions", "Responses", "Pools", "Draws"],
+  "properties": {
+    "config": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema", "lineage_code", "quiz_code", "quiz_title"],
+      "properties": {
+        "schema": {"const": "coursecraft.quiz_draft/1"},
+        "lineage_code": {"$ref": "#/$defs/code"},
+        "quiz_code": {"$ref": "#/$defs/optionalText"},
+        "quiz_title": {"$ref": "#/$defs/optionalText"}
+      }
+    },
+    "Questions": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["question_code", "question_type", "question_text", "points", "pool_code", "content_format"],
+        "properties": {
+          "question_code": {"$ref": "#/$defs/code"},
+          "question_type": {"type": "string", "minLength": 1},
+          "question_text": {"type": "string", "minLength": 1},
+          "points": {"$ref": "#/$defs/number"},
+          "pool_code": {"$ref": "#/$defs/code"},
+          "answer_key": {"$ref": "#/$defs/optionalText"},
+          "feedback": {"$ref": "#/$defs/optionalText"},
+          "content_format": {"$ref": "#/$defs/format"}
+        }
+      }
+    },
+    "Responses": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["question_code", "response_key", "role", "text", "content_format"],
+        "properties": {
+          "question_code": {"$ref": "#/$defs/code"},
+          "response_key": {"$ref": "#/$defs/code"},
+          "role": {"enum": ["option", "accepted", "left", "right"]},
+          "text": {"type": "string", "minLength": 1},
+          "content_format": {"$ref": "#/$defs/format"},
+          "correct": {"$ref": "#/$defs/optionalBoolean"},
+          "case_sensitive": {"$ref": "#/$defs/optionalBoolean"},
+          "group_key": {"$ref": "#/$defs/optionalText"},
+          "match_key": {"$ref": "#/$defs/optionalText"},
+          "position": {"anyOf": [{"$ref": "#/$defs/number"}, {"type": "null"}, {"const": ""}]}
+        }
+      }
+    },
+    "Pools": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["pool_code", "title"],
+        "properties": {
+          "pool_code": {"$ref": "#/$defs/code"},
+          "title": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "Draws": {
+      "type": "array",
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["draw_code", "pool_code", "title", "draw_count", "points_per_question"],
+        "properties": {
+          "draw_code": {"$ref": "#/$defs/code"},
+          "pool_code": {"$ref": "#/$defs/code"},
+          "title": {"type": "string", "minLength": 1},
+          "draw_count": {"$ref": "#/$defs/number"},
+          "points_per_question": {"$ref": "#/$defs/number"}
+        }
+      }
+    }
+  },
+  "$defs": {
+    "code": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]*$"},
+    "optionalText": {"type": ["string", "null"]},
+    "optionalBoolean": {"anyOf": [{"type": ["boolean", "null"]}, {"type": "string", "pattern": "^(?:[Tt][Rr][Uu][Ee]|[Ff][Aa][Ll][Ss][Ee]|)$"}]},
+    "format": {"enum": ["plain_text", "html", "mathml", "latex"]},
+    "number": {
+      "anyOf": [
+        {"type": "number", "exclusiveMinimum": 0},
+        {"type": "string", "pattern": "^[+]?(?:[0-9]+(?:\\.[0-9]*)?|\\.[0-9]+)(?:[eE][+-]?[0-9]+)?$"}
+      ]
+    }
+  }
+}

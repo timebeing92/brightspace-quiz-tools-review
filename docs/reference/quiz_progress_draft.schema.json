@@ -1,0 +1,143 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "brightspace-quiz-bundle.quiz-progress/0",
+  "title": "Quiz Binder journey progress events (DRAFT)",
+  "description": "One JSON object per NDJSON line, emitted live by the synthetic-journey engine. A same-grammar draft sibling of coursecraft.progress/1: run_start -> (step_start step_end)* [journey_note]* -> run_end. Additive keys are quiz-specific and must be ignored by generic consumers; unknown event kinds must be ignored or rendered literally, never given invented prose. Paths are always run-directory-relative; SHA-256 values are computed from the file on disk at emission time. The stream is testimony: journey.receipt.json remains the only proof, and on any divergence the receipt wins. Ratifying coursecraft.quiz_progress/1 from this draft remains a separate Workbench/operator decision.",
+  "type": "object",
+  "required": ["event", "schema"],
+  "properties": {
+    "event": {
+      "type": "string",
+      "enum": ["run_start", "step_start", "step_end", "journey_note", "run_end"]
+    },
+    "schema": {"const": "brightspace-quiz-bundle.quiz-progress/0"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"event": {"const": "run_start"}}},
+      "then": {
+        "required": [
+          "label", "total", "steps", "step_keys", "doors",
+          "receipt_format", "fixture_policy", "proof_ceiling", "boundary_step"
+        ],
+        "properties": {
+          "label": {"type": "string"},
+          "total": {"const": 9},
+          "steps": {"type": "array", "items": {"type": "string"}, "minItems": 9, "maxItems": 9},
+          "step_keys": {"type": "array", "items": {"type": "string"}, "minItems": 9, "maxItems": 9},
+          "doors": {
+            "type": "object",
+            "required": ["unbind", "compose"],
+            "properties": {
+              "unbind": {"type": "array", "items": {"type": "string"}},
+              "compose": {"type": "array", "items": {"type": "string"}}
+            }
+          },
+          "receipt_format": {"const": "brightspace-quiz-bundle.synthetic-journey/1"},
+          "fixture_policy": {"const": "synthetic_only"},
+          "proof_ceiling": {"const": "validated_locally"},
+          "boundary_step": {"const": "check_unbound_readiness"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event": {"const": "step_start"}}},
+      "then": {
+        "required": ["index", "total", "step", "label", "door", "act"],
+        "properties": {
+          "index": {"type": "integer", "minimum": 1, "maximum": 9},
+          "total": {"const": 9},
+          "step": {"type": "string"},
+          "label": {"type": "string"},
+          "door": {"enum": ["unbind", "compose"]},
+          "act": {"enum": ["unbind", "compose", "seal"]}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event": {"const": "step_end"}}},
+      "then": {
+        "required": ["index", "total", "step", "label", "status", "exit_code", "artifacts"],
+        "properties": {
+          "index": {"type": "integer", "minimum": 1, "maximum": 9},
+          "total": {"const": 9},
+          "step": {"type": "string"},
+          "label": {"type": "string"},
+          "status": {"enum": ["ok", "error"]},
+          "exit_code": {"type": "integer"},
+          "seconds": {"type": ["number", "null"]},
+          "artifacts": {"$ref": "#/$defs/artifacts"},
+          "boundary": {"type": "boolean"},
+          "readiness": {"enum": ["ready", "not_ready", "unknown"]},
+          "blocker_codes": {"type": "array", "items": {"type": "string"}},
+          "report": {"$ref": "#/$defs/relativePath"},
+          "record": {"$ref": "#/$defs/relativePath"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event": {"const": "journey_note"}}},
+      "then": {
+        "required": ["note", "artifacts"],
+        "properties": {
+          "note": {"type": "string"},
+          "artifacts": {"$ref": "#/$defs/artifacts"},
+          "simulated": {"type": "boolean"}
+        }
+      }
+    },
+    {
+      "if": {"properties": {"event": {"const": "run_end"}}},
+      "then": {
+        "required": ["status", "outcome"],
+        "properties": {
+          "status": {"enum": ["ok", "partial", "error"]},
+          "outcome": {"enum": ["completed", "refused", "failed", "interrupted"]},
+          "outputs": {
+            "type": "object",
+            "properties": {
+              "receipt": {"$ref": "#/$defs/relativePath"},
+              "summary": {"$ref": "#/$defs/relativePath"}
+            }
+          },
+          "delivery": {
+            "type": "object",
+            "required": ["receipt_written"],
+            "properties": {
+              "receipt_written": {"type": "boolean"},
+              "unbind_readiness": {"enum": ["ready", "not_ready", "unknown"]},
+              "compose_readiness": {"enum": ["ready", "not_ready", "unknown"]},
+              "validation_error_count": {"type": "integer", "minimum": 0},
+              "local_equivalence_break_count": {"type": "integer", "minimum": 0},
+              "brightspace_roundtrip": {"const": "not_performed"}
+            }
+          },
+          "reason": {"type": "string"},
+          "failed_step": {"type": ["string", "null"]},
+          "interrupted_step": {"type": ["string", "null"]},
+          "completed_steps": {"type": "array", "items": {"type": "string"}}
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "relativePath": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.?(?:/|$))[^\\\\]+$",
+      "description": "Run-directory-relative POSIX path; never absolute, Windows-separated, or dot-segmented."
+    },
+    "artifacts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "sha256"],
+        "additionalProperties": false,
+        "properties": {
+          "path": {"$ref": "#/$defs/relativePath"},
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"}
+        }
+      }
+    }
+  }
+}

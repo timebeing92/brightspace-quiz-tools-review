@@ -1,0 +1,30 @@
+{
+  "schema": "coursecraft.quiz_settings/1",
+  "receipt_id": "cc:settings-receipt:example:quiz-1",
+  "run_id": "cc:run:quiz:settings-example",
+  "target_quiz_key": "cc:quiz:example:quiz-1",
+  "profile_key": "coursecraft.profile:example-program-v1",
+  "inputs": [
+    {"input_id": "in.attempts.default", "setting": "attempts_allowed", "layer": "hard_default", "target_entity_key": "cc:quiz:example:quiz-1", "state": "known", "value": 1, "source_reference": "builder defaults v1", "source_evidence_keys": [], "extensions": {}},
+    {"input_id": "in.attempts.profile", "setting": "attempts_allowed", "layer": "profile", "target_entity_key": "cc:quiz:example:quiz-1", "state": "known", "value": 2, "source_reference": "example-program-v1", "source_evidence_keys": [], "extensions": {}},
+    {"input_id": "in.attempts.quiz", "setting": "attempts_allowed", "layer": "quiz_decision", "target_entity_key": "cc:quiz:example:quiz-1", "state": "known", "value": 3, "source_reference": "intake row quiz-1", "source_evidence_keys": ["ev.sme-attempts"], "extensions": {}},
+    {"input_id": "in.time.default", "setting": "time_limit", "layer": "hard_default", "target_entity_key": "cc:quiz:example:quiz-1", "state": "known", "value": 0, "source_reference": "builder defaults v1", "source_evidence_keys": [], "extensions": {"unit": "minutes"}},
+    {"input_id": "in.time.profile", "setting": "time_limit", "layer": "profile", "target_entity_key": "cc:quiz:example:quiz-1", "state": "known", "value": 60, "source_reference": "example-program-v1", "source_evidence_keys": [], "extensions": {"unit": "minutes"}},
+    {"input_id": "in.active.observed", "setting": "is_active", "layer": "source_observation", "target_entity_key": "cc:quiz:example:quiz-1", "state": "known", "value": true, "source_reference": "prior export quiz XML", "source_evidence_keys": ["ev.prior-active"], "extensions": {}},
+    {"input_id": "in.active.default", "setting": "is_active", "layer": "hard_default", "target_entity_key": "cc:quiz:example:quiz-1", "state": "known", "value": false, "source_reference": "safe inactive builder default", "source_evidence_keys": [], "extensions": {}},
+    {"input_id": "in.shuffle.default", "setting": "randomize_answers", "layer": "hard_default", "target_entity_key": "cc:question:example:q1", "state": "known", "value": false, "source_reference": "builder defaults v1", "source_evidence_keys": [], "extensions": {}},
+    {"input_id": "in.shuffle.question", "setting": "randomize_answers", "layer": "question_override", "target_entity_key": "cc:question:example:q1", "state": "known", "value": true, "source_reference": "question row q1", "source_evidence_keys": ["ev.question-shuffle"], "extensions": {}},
+    {"input_id": "in.submission.observed", "setting": "submission_view", "layer": "source_observation", "target_entity_key": "cc:quiz:example:quiz-1", "state": "unknown", "value": {"raw": "mode-7"}, "source_reference": "prior export quiz XML", "source_evidence_keys": ["ev.submission-mode"], "extensions": {}}
+  ],
+  "resolutions": [
+    {"setting": "attempts_allowed", "target_entity_key": "cc:quiz:example:quiz-1", "state": "known", "effective_value": 3, "winner_input_id": "in.attempts.quiz", "considered_input_ids": ["in.attempts.default", "in.attempts.profile", "in.attempts.quiz"], "defaulted": false, "coerced": false, "coercion_note": null, "source_evidence_keys": ["ev.sme-attempts"], "extensions": {}},
+    {"setting": "time_limit", "target_entity_key": "cc:quiz:example:quiz-1", "state": "known", "effective_value": 60, "winner_input_id": "in.time.profile", "considered_input_ids": ["in.time.default", "in.time.profile"], "defaulted": false, "coerced": false, "coercion_note": null, "source_evidence_keys": [], "extensions": {"unit": "minutes"}},
+    {"setting": "is_active", "target_entity_key": "cc:quiz:example:quiz-1", "state": "known", "effective_value": false, "winner_input_id": "in.active.default", "considered_input_ids": ["in.active.observed", "in.active.default"], "defaulted": true, "coerced": false, "coercion_note": null, "source_evidence_keys": ["ev.prior-active"], "extensions": {"note": "Source observation is evidence; it does not override an explicit build layer."}},
+    {"setting": "randomize_answers", "target_entity_key": "cc:question:example:q1", "state": "known", "effective_value": true, "winner_input_id": "in.shuffle.question", "considered_input_ids": ["in.shuffle.default", "in.shuffle.question"], "defaulted": false, "coerced": false, "coercion_note": null, "source_evidence_keys": ["ev.question-shuffle"], "extensions": {}},
+    {"setting": "submission_view", "target_entity_key": "cc:quiz:example:quiz-1", "state": "unresolved", "effective_value": null, "winner_input_id": null, "considered_input_ids": ["in.submission.observed"], "defaulted": false, "coerced": false, "coercion_note": null, "source_evidence_keys": ["ev.submission-mode"], "extensions": {"raw_source_preserved": true}}
+  ],
+  "diagnostics": [
+    {"diagnostic_id": "diag.submission-unresolved", "severity": "warning", "code": "unresolved_setting_projection", "message": "The observed submission view is preserved but has no approved authoring projection.", "status": "open", "details": {"setting": "submission_view"}, "extensions": {}}
+  ],
+  "extensions": {"coursecraft.empirical_basis": "BUMG settings decisions plus Phase 0/1 observed vocabulary"}
+}

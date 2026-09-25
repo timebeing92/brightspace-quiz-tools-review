@@ -1,0 +1,28 @@
+# Python environments and generated files
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Local inputs, outputs, and packaged archives
+/input/
+/inputs/
+/exports/
+/output/
+/dist/
+*.zip
+*.tar.gz
+
+# Local settings and editor files
+.env
+.env.*
+.DS_Store
+*.swp
+*.swo
+.codex/
+.claude/
+.idea/
+.vscode/

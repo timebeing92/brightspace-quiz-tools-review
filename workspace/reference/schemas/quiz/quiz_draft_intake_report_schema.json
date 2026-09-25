@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://coursecraft.local/schemas/quiz_draft_intake_report_schema.json",
+  "title": "CourseCraft successful fresh quiz intake report version 1",
+  "type": "object", "additionalProperties": false,
+  "required": ["schema", "valid_intake", "ready_to_build", "source", "question_count", "pool_count", "draw_count", "question_types", "notes"],
+  "properties": {
+    "schema": {"const": "coursecraft.quiz_draft_intake_report/1"},
+    "valid_intake": {"const": true},
+    "ready_to_build": {"const": false},
+    "source": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "input_format", "sha256", "fingerprint_basis", "parser", "input_schema_sha256"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "input_format": {"enum": ["xlsx", "json"]},
+        "sha256": {"$ref": "#/$defs/sha256"},
+        "fingerprint_basis": {"enum": ["file_bytes", "canonical_json"]},
+        "parser": {"const": "coursecraft.quiz_draft_intake/1"},
+        "input_schema_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "question_count": {"type": "integer", "minimum": 1},
+    "pool_count": {"type": "integer", "minimum": 1},
+    "draw_count": {"type": "integer", "minimum": 0},
+    "question_types": {
+      "type": "array", "minItems": 1,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["question_code", "kind", "type_capability", "instance_build_support"],
+        "properties": {
+          "question_code": {"type": "string", "minLength": 1},
+          "kind": {"enum": ["multiple_choice", "true_false", "multi_select", "long_answer", "short_answer", "multi_short_answer", "fill_in_blanks", "matching", "ordering"]},
+          "type_capability": {"enum": ["unsupported", "extraction_only", "import_tested", "roundtrip_verified"]},
+          "instance_build_support": {"const": "extraction_only"}
+        }
+      }
+    },
+    "notes": {"type": "array", "items": {"type": "string"}}
+  },
+  "$defs": {"sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}}
+}

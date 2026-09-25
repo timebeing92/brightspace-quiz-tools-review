@@ -1,0 +1,104 @@
+{
+  "schema": "coursecraft.quiz/1",
+  "model_id": "cc:model:quiz:unknown-incomplete-example",
+  "run_id": "cc:run:quiz:unknown-incomplete-example",
+  "source": {
+    "source_key": "cc:source:2222222222222222222222222222222222222222222222222222222222222222",
+    "source_lineage_key": "cc:lineage:fixture:future-shape",
+    "source_kind": "fixture",
+    "fingerprint": {"algorithm": "sha256", "digest": "2222222222222222222222222222222222222222222222222222222222222222", "scope": "file_set"},
+    "references": ["synthetic/future_quiz.xml"],
+    "extensions": {"vendor.future_export_revision": 2}
+  },
+  "quizzes": [
+    {
+      "entity_key": "cc:quiz:fixture:future-quiz",
+      "identity": {"strategy": "assigned", "permanent_code": null, "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "title": null,
+      "source_evidence_keys": ["ev.future-quiz"],
+      "diagnostic_ids": ["diag.incomplete-itemref"],
+      "extensions": {}
+    }
+  ],
+  "structures": [],
+  "questions": [
+    {
+      "entity_key": "cc:question:fixture:future-hotspot",
+      "identity": {"strategy": "assigned", "permanent_code": null, "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "unknown",
+      "source_kind": "Vendor Hotspot 2.0",
+      "title": null,
+      "prompt": null,
+      "type_payload": {
+        "options": [],
+        "accepted_responses": [],
+        "blanks": [],
+        "match_pairs": [],
+        "correct_order": [],
+        "raw_response_models": [
+          {
+            "source_kind": "response_xy/render_hotspot",
+            "payload": {"coordinate_system": "image-pixels", "regions": [{"shape": "polygon", "points": [[1, 2], [3, 4], [5, 6]]}]},
+            "source_evidence_keys": ["ev.future-hotspot"],
+            "extensions": {"vendor.unseen_region_mode": "overlap-weighted"}
+          }
+        ],
+        "extensions": {"vendor.future_payload": {"preserve": true}}
+      },
+      "scoring": {"state": "unknown", "mode": "unknown", "maximum_points": null, "rules": [], "extensions": {"vendor.raw_scoring_ref": "future_quiz.xml#score-1"}},
+      "feedback": [],
+      "build_support": {"level": "unsupported", "receipt_refs": [], "notes": ["Retained for inspection; no builder claim."], "extensions": {}},
+      "source_evidence_keys": ["ev.future-hotspot"],
+      "diagnostic_ids": ["diag.unknown-kind"],
+      "extensions": {"vendor.future_question_field": {"mode": "retain-verbatim"}}
+    }
+  ],
+  "assets": [],
+  "resources": [],
+  "relationships": [
+    {
+      "relationship_key": "cc:relationship:fixture:future-hotspot-contained",
+      "kind": "contains",
+      "source_kind": "inline item",
+      "from_entity_key": "cc:quiz:fixture:future-quiz",
+      "to_entity_key": "cc:question:fixture:future-hotspot",
+      "status": "resolved",
+      "ordinal": 1,
+      "attributes": {},
+      "candidates": [],
+      "source_evidence_keys": ["ev.future-hotspot"],
+      "diagnostic_ids": ["diag.unknown-kind"],
+      "extensions": {}
+    },
+    {
+      "relationship_key": "cc:relationship:fixture:missing-itemref-target",
+      "kind": "itemref",
+      "source_kind": "itemref/linkrefid",
+      "from_entity_key": "cc:quiz:fixture:future-quiz",
+      "to_entity_key": null,
+      "status": "incomplete",
+      "ordinal": 2,
+      "attributes": {"linkrefid": "MISSING_Q", "file_href": "questiondb.xml"},
+      "candidates": [],
+      "source_evidence_keys": ["ev.future-quiz"],
+      "diagnostic_ids": ["diag.incomplete-itemref"],
+      "extensions": {"vendor.future_edge_attribute": "retained"}
+    }
+  ],
+  "evidence": [
+    {"evidence_key": "ev.future-quiz", "source_key": "cc:source:2222222222222222222222222222222222222222222222222222222222222222", "kind": "raw_fragment", "source_ref": "future_quiz.xml", "locator": "/assessment", "content": null, "content_ref": "local-evidence://future_quiz.xml#assessment", "sha256": null, "extraction_method": "deterministic", "extensions": {}},
+    {"evidence_key": "ev.future-hotspot", "source_key": "cc:source:2222222222222222222222222222222222222222222222222222222222222222", "kind": "raw_fragment", "source_ref": "future_quiz.xml", "locator": "/assessment/item[@ident='HOTSPOT_1']", "content": "<item ident=\"HOTSPOT_1\"><!-- synthetic raw fragment retained --></item>", "content_ref": null, "sha256": null, "extraction_method": "deterministic", "extensions": {}}
+  ],
+  "lineage": [
+    {"lineage_id": "lin.future-hotspot", "subject_entity_key": "cc:question:fixture:future-hotspot", "stage": "normalized", "method": "deterministic_normalization", "status": "unresolved", "predecessor_entity_keys": [], "input_evidence_keys": ["ev.future-hotspot"], "actor": "future-compatible-parser", "timestamp": null, "receipt_ref": null, "notes": ["Source shape retained without interpreting coordinates or scoring."], "extensions": {}}
+  ],
+  "settings_observations": [
+    {"target_entity_key": "cc:quiz:fixture:future-quiz", "name": "future_submission_mode", "state": "unknown", "raw_value": "mode-7", "normalized_value": null, "source_evidence_keys": ["ev.future-quiz"], "extensions": {"vendor.namespace": "example"}}
+  ],
+  "annotations": [],
+  "diagnostics": [
+    {"diagnostic_id": "diag.unknown-kind", "severity": "warning", "code": "unknown_question_kind", "message": "The question kind is retained but not normalized or buildable.", "status": "open", "entity_keys": ["cc:question:fixture:future-hotspot"], "evidence_keys": ["ev.future-hotspot"], "details": {"source_kind": "Vendor Hotspot 2.0"}, "extensions": {}},
+    {"diagnostic_id": "diag.incomplete-itemref", "severity": "warning", "code": "missing_itemref_target", "message": "The quiz references a question that is absent from the available source files.", "status": "open", "entity_keys": ["cc:quiz:fixture:future-quiz"], "evidence_keys": ["ev.future-quiz"], "details": {"linkrefid": "MISSING_Q"}, "extensions": {}}
+  ],
+  "extensions": {"vendor.future_top_level_extension": {"preserved": true}}
+}

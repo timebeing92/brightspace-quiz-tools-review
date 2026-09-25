@@ -1,0 +1,321 @@
+{
+  "distribution_scope": "public_runtime_subset",
+  "files": [
+    {
+      "sha256": "c3edab41506a938fc74544f6c84368c024b83c90bd500dafa82310c7e977d175",
+      "source": "docs/project/quiz-consolidation/ASSESSMENT_REVIEW_PACKETS.md",
+      "target": "docs/project/quiz-consolidation/ASSESSMENT_REVIEW_PACKETS.md"
+    },
+    {
+      "sha256": "61e5abcb87c6bf52c2983b70f818f33256ebf20c1f9b21be46d47e811155285a",
+      "source": "docs/project/quiz-consolidation/DETERMINISTIC_QUIZ_DRAFT_INTAKE_2026-09-16.md",
+      "target": "docs/project/quiz-consolidation/DETERMINISTIC_QUIZ_DRAFT_INTAKE_2026-09-16.md"
+    },
+    {
+      "sha256": "98e5256df601c9b23be69e22258fc4e7df727b2863a244b0f126ec4ef9875b76",
+      "source": "docs/project/quiz-consolidation/QUIZ_PROJECTION_FIDELITY_GATES_2026-09-16.md",
+      "target": "docs/project/quiz-consolidation/QUIZ_PROJECTION_FIDELITY_GATES_2026-09-16.md"
+    },
+    {
+      "sha256": "8c52394cb579764478d55a786336c6b84e7f13cf69e3df3ab293bcfb62386936",
+      "source": "scripts/build_quiz_package_from_workbook.py",
+      "target": "scripts/build_quiz_package_from_workbook.py"
+    },
+    {
+      "sha256": "52d25bc2e584ddaa89e2854568d0bd50c76d562958e629cec079533d9bc9d3d2",
+      "source": "scripts/check_package_conformance.py",
+      "target": "scripts/check_package_conformance.py"
+    },
+    {
+      "sha256": "6e40c21ea0cf34e65c0ffa154f14e89b702762861cbb356f73770de1cb6182fb",
+      "source": "scripts/check_quiz_authoring_readiness.py",
+      "target": "scripts/check_quiz_authoring_readiness.py"
+    },
+    {
+      "sha256": "27e8e32971887eded7f4e1d54eb91a49e96eaebd0f51b942908feab6a9903430",
+      "source": "scripts/common_xml.py",
+      "target": "scripts/common_xml.py"
+    },
+    {
+      "sha256": "320aff1d55e5d3bfc02c8d77b994e1994c8b053cfefa173d1345ca45c002b6ea",
+      "source": "scripts/course_artifact_contracts.py",
+      "target": "scripts/course_artifact_contracts.py"
+    },
+    {
+      "sha256": "e3987b82875cc1b7df65bf2a8e21dbf536c848a227d43f08bea05f9e067f50f9",
+      "source": "scripts/creatorplus_package.py",
+      "target": "scripts/creatorplus_package.py"
+    },
+    {
+      "sha256": "57f0947a18ad634c3de66dcb35e416c1af3de9505fd90ba9c3e6853de9bea410",
+      "source": "scripts/d2l_package_lib.py",
+      "target": "scripts/d2l_package_lib.py"
+    },
+    {
+      "sha256": "58ade0a470076b2811a57e62c60d02363bc2b826abcda455c99a4ebb36e4ca17",
+      "source": "scripts/diff_packages.py",
+      "target": "scripts/diff_packages.py"
+    },
+    {
+      "sha256": "4982aede0de072bf6349f3b5e2d3cd94a4e88bc9b880ab6d49fb8fdf6126dfa1",
+      "source": "scripts/extract_quiz_pool_review.py",
+      "target": "scripts/extract_quiz_pool_review.py"
+    },
+    {
+      "sha256": "aedcd0c4ef1e4ed4b9241f3c8075a2bda63db43e513a656811dec7a132209144",
+      "source": "scripts/local_evidence_output.py",
+      "target": "scripts/local_evidence_output.py"
+    },
+    {
+      "sha256": "7bbb0bbbfc177db0ae8b57008ac2d2e4649936e324f377ea0ed9427bc8320a20",
+      "source": "scripts/quiz_assessment_review.py",
+      "target": "scripts/quiz_assessment_review.py"
+    },
+    {
+      "sha256": "55267229fe59278b2ca79594f759b488fb2c6df45b2ea8d3a0e006a6dc971618",
+      "source": "scripts/quiz_authoring_readiness.py",
+      "target": "scripts/quiz_authoring_readiness.py"
+    },
+    {
+      "sha256": "9c71a2931668bc52b064489bf2d0e0c0fce431a87109db1a8448ce76a946a612",
+      "source": "scripts/quiz_binder_station.py",
+      "target": "scripts/quiz_binder_station.py"
+    },
+    {
+      "sha256": "602a077093928bca2e1856cfe6592733d5e26324926290971f5e5b5c32fdf5d8",
+      "source": "scripts/quiz_binder_strings.py",
+      "target": "scripts/quiz_binder_strings.py"
+    },
+    {
+      "sha256": "90222f45946f8d0e8e95f8144703c830860071340f00da32fd360a19000f61d3",
+      "source": "scripts/quiz_build_support.py",
+      "target": "scripts/quiz_build_support.py"
+    },
+    {
+      "sha256": "4bb77a767086231c3a3ae4e5d2636a29c43444928d80b4fd2873b43140724d4a",
+      "source": "scripts/quiz_contracts.py",
+      "target": "scripts/quiz_contracts.py"
+    },
+    {
+      "sha256": "c545aca10a4b9a8407580e01907b2d9fe1be7c5ed69b582fac95e36e20f9f070",
+      "source": "scripts/quiz_draft_intake.py",
+      "target": "scripts/quiz_draft_intake.py"
+    },
+    {
+      "sha256": "7d5ac32feb852349e2c74bc205a49d76ebd5bb29b8d51616ae2ec412f0a59974",
+      "source": "scripts/quiz_normalization.py",
+      "target": "scripts/quiz_normalization.py"
+    },
+    {
+      "sha256": "6183b4a94ce542df09977537f4cf197b5ee2f7f4b8731e3756022bf3c945af28",
+      "source": "scripts/quiz_phase5_authorization.py",
+      "target": "scripts/quiz_phase5_authorization.py"
+    },
+    {
+      "sha256": "9944e5ab22d9fe3267e11264b28bfeb87e7e38b4b42f6b37f7fce3c1a9c2c741",
+      "source": "scripts/quiz_promote_revisions.py",
+      "target": "scripts/quiz_promote_revisions.py"
+    },
+    {
+      "sha256": "16710869d919fc83b0c3713c5cda70d6c1239828a205ec83da164c1d6c153b80",
+      "source": "scripts/quiz_question_types.py",
+      "target": "scripts/quiz_question_types.py"
+    },
+    {
+      "sha256": "545b336a7c26ba67c00f9ff0e220477279b7e3392af08e271e6a3f5cf3c5fb2e",
+      "source": "scripts/quiz_review_projection.py",
+      "target": "scripts/quiz_review_projection.py"
+    },
+    {
+      "sha256": "c2c17576f24860eb6d8ce1a3875ba19992bb16cba3a90c253e96c270787951d9",
+      "source": "scripts/quiz_review_queues.py",
+      "target": "scripts/quiz_review_queues.py"
+    },
+    {
+      "sha256": "f32ff0a8a6af373954099e945eef9888f1cff36f9d3a2d764f7a05d8b6fc6d33",
+      "source": "scripts/quiz_review_station.py",
+      "target": "scripts/quiz_review_station.py"
+    },
+    {
+      "sha256": "df8cfa5756f1bdd713211e5f9d27c9c07d0f4a4567259f5ea31fcadcc96151cf",
+      "source": "scripts/quiz_review_text.py",
+      "target": "scripts/quiz_review_text.py"
+    },
+    {
+      "sha256": "ec3eae9a23e9f74bfcf30d6b0abecd3cf02b5d589b09ed42fce4de3270c730c7",
+      "source": "scripts/quiz_review_workbook_reingest.py",
+      "target": "scripts/quiz_review_workbook_reingest.py"
+    },
+    {
+      "sha256": "e33aa0249bbcf5578edf9ec730a400d7c231d87b3366bb986ab0049d14063a13",
+      "source": "scripts/quiz_share_gate.py",
+      "target": "scripts/quiz_share_gate.py"
+    },
+    {
+      "sha256": "c5b912edc244a0d153765a15cf0620532cd5ebbdf97f1f345eed6017f6b85d77",
+      "source": "scripts/quiz_unbind.py",
+      "target": "scripts/quiz_unbind.py"
+    },
+    {
+      "sha256": "77b52b119cf3b5b3e530c10fd3055c93e12973723ad936867302f5f97276a68d",
+      "source": "scripts/quiz_unbind_receipt.py",
+      "target": "scripts/quiz_unbind_receipt.py"
+    },
+    {
+      "sha256": "f402effb547229b36b13c46117a83e5fd9ea92192f369505f78840b0abc79abe",
+      "source": "scripts/quiz_variant_control_matrix.py",
+      "target": "scripts/quiz_variant_control_matrix.py"
+    },
+    {
+      "sha256": "4b86e15be51a87baca9a2fac83a710cc86163b32a30239fcbe67c14fa3468ef2",
+      "source": "scripts/validate_quiz_contract.py",
+      "target": "scripts/validate_quiz_contract.py"
+    },
+    {
+      "sha256": "fe6267c48e70505fdc2be66ae5fb7a3f72114c49be1572070eec170e63beb384",
+      "source": "scripts/validate_quiz_package.py",
+      "target": "scripts/validate_quiz_package.py"
+    },
+    {
+      "sha256": "bb1059cde0dfc46126960e4ad5285990ef59020b6e0b55bb069b7de235cbd508",
+      "source": "scripts/verify_quiz_unbind_run.py",
+      "target": "scripts/verify_quiz_unbind_run.py"
+    },
+    {
+      "sha256": "373a06806354c0c9ed5f1700882fd90b60043237dfa3e062ccc97e040da993da",
+      "source": "tests/fixtures/quiz_authoring/assets/concept-map.svg",
+      "target": "tests/fixtures/quiz_authoring/assets/concept-map.svg"
+    },
+    {
+      "sha256": "90bac7036ae89ea462fb17b37b4bd4cbabc60cdb33e6d967fd9054ac7c4ab86b",
+      "source": "tests/fixtures/quiz_authoring/buildable_quiz.model.json",
+      "target": "tests/fixtures/quiz_authoring/buildable_quiz.model.json"
+    },
+    {
+      "sha256": "12377b6fcf2a04867603605cebc0ac35e172b7bee6c8294395a048e919301683",
+      "source": "tests/fixtures/quiz_authoring/buildable_quiz.settings.json",
+      "target": "tests/fixtures/quiz_authoring/buildable_quiz.settings.json"
+    },
+    {
+      "sha256": "1a91d717787c5b2c5f08fd91258d92a823543bb588eb439c2436207c2077bc3c",
+      "source": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/imsmanifest.xml",
+      "target": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/imsmanifest.xml"
+    },
+    {
+      "sha256": "d0e56ca7afd5159048e9d0688de2e77b6f201ef8a9344e9c467d9e41719fe5ab",
+      "source": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/questiondb.xml",
+      "target": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/questiondb.xml"
+    },
+    {
+      "sha256": "c1c5b241f8cee2a634501141d63414bab21279931e2361239d835c6ca40aa3a8",
+      "source": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/quiz_d2l_mixed.xml",
+      "target": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/quiz_d2l_mixed.xml"
+    },
+    {
+      "sha256": "17f56e6bbde8a7f8b1eebeb9397f3c3274358aefb6be6fabf8ef19bf67eea2e0",
+      "source": "workspace/reference/examples/quiz_draft/README.md",
+      "target": "workspace/reference/examples/quiz_draft/README.md"
+    },
+    {
+      "sha256": "7c1beb720796c72b6bf05c124c042d6d7b74a6d34050800d5fe3805d3076c37c",
+      "source": "workspace/reference/examples/quiz_draft/blank.xlsx",
+      "target": "workspace/reference/examples/quiz_draft/blank.xlsx"
+    },
+    {
+      "sha256": "cb85def7aa54410158e1b4fee335040d532e8b4c189b7558f4664838ec996b1c",
+      "source": "workspace/reference/examples/quiz_draft/nine_types.json",
+      "target": "workspace/reference/examples/quiz_draft/nine_types.json"
+    },
+    {
+      "sha256": "08d73199d83d7a11c98a738c80f43e5f4f41124168902fb78efb9e6895309984",
+      "source": "workspace/reference/examples/quiz_draft/nine_types.xlsx",
+      "target": "workspace/reference/examples/quiz_draft/nine_types.xlsx"
+    },
+    {
+      "sha256": "5cfd3246dd90309e65ee6dbb26592b06d77edb5e8982823bd875e08df3e3eded",
+      "source": "workspace/reference/examples/quiz_draft/template-spec.json",
+      "target": "workspace/reference/examples/quiz_draft/template-spec.json"
+    },
+    {
+      "sha256": "3e5a4153be4a5beeefb6ee26994baee15f924a9043a2abf742d4b93e873015e0",
+      "source": "workspace/reference/schemas/course/component_package_receipt_schema.json",
+      "target": "workspace/reference/schemas/course/component_package_receipt_schema.json"
+    },
+    {
+      "sha256": "7f808284469aa70891c3a8d53d512af4f2daf7b683864a08e42c3a92dc0f651e",
+      "source": "workspace/reference/schemas/quiz/BRIGHTSPACE_QUIZ_XML_SOURCE_OBSERVATIONS.md",
+      "target": "workspace/reference/schemas/quiz/BRIGHTSPACE_QUIZ_XML_SOURCE_OBSERVATIONS.md"
+    },
+    {
+      "sha256": "5f0bdf2a26811b37a45e1fdbd53e569a3e006e91a825754f628d57759885393c",
+      "source": "workspace/reference/schemas/quiz/QUIZ_CONTRACT_FAMILY.md",
+      "target": "workspace/reference/schemas/quiz/QUIZ_CONTRACT_FAMILY.md"
+    },
+    {
+      "sha256": "59db480eb817f38d351ab6879092e89601ed9a1d896255d5a624cc9fdcd64a89",
+      "source": "workspace/reference/schemas/quiz/examples/mixed_storage.example.json",
+      "target": "workspace/reference/schemas/quiz/examples/mixed_storage.example.json"
+    },
+    {
+      "sha256": "986c3c5318e233f78da8d2bb60341fca7d405a0ed3b5cb6d401228536ceb69a2",
+      "source": "workspace/reference/schemas/quiz/examples/observed_question_kinds.example.json",
+      "target": "workspace/reference/schemas/quiz/examples/observed_question_kinds.example.json"
+    },
+    {
+      "sha256": "56ea18e0554f08450d1049e433a4594535e5320d7a12f65ea297e88ec2d523aa",
+      "source": "workspace/reference/schemas/quiz/examples/run_receipt.example.json",
+      "target": "workspace/reference/schemas/quiz/examples/run_receipt.example.json"
+    },
+    {
+      "sha256": "af4a512d370251f03ecdbce3cc17e59a6b294431a94c0bc74f3e0e7c5b9e3f2c",
+      "source": "workspace/reference/schemas/quiz/examples/settings_resolution.example.json",
+      "target": "workspace/reference/schemas/quiz/examples/settings_resolution.example.json"
+    },
+    {
+      "sha256": "7c9a3bbac91d35aa2204b7cda9d396e88757ddf6728555103fe4afb3dce2e35c",
+      "source": "workspace/reference/schemas/quiz/examples/unknown_incomplete.example.json",
+      "target": "workspace/reference/schemas/quiz/examples/unknown_incomplete.example.json"
+    },
+    {
+      "sha256": "9ff5949b4c9a659e9fb97d410ee3f9f63c2664a39c848099602a5d0bdadd50a5",
+      "source": "workspace/reference/schemas/quiz/quiz_build_capabilities.json",
+      "target": "workspace/reference/schemas/quiz/quiz_build_capabilities.json"
+    },
+    {
+      "sha256": "1647c5c8526253da8e271bc46a612be4a2506d516427252f694da52de46fac41",
+      "source": "workspace/reference/schemas/quiz/quiz_draft_intake_report_schema.json",
+      "target": "workspace/reference/schemas/quiz/quiz_draft_intake_report_schema.json"
+    },
+    {
+      "sha256": "e50074afcdd1a5278549ee971876fb853fc7d12e990c8b5588e5105f4a77ff4c",
+      "source": "workspace/reference/schemas/quiz/quiz_draft_intake_schema.json",
+      "target": "workspace/reference/schemas/quiz/quiz_draft_intake_schema.json"
+    },
+    {
+      "sha256": "6164a91b5d427abb18cd8f7b69c1b330f9ff0cd43684bf3028a5b5154080b42b",
+      "source": "workspace/reference/schemas/quiz/quiz_model_schema.json",
+      "target": "workspace/reference/schemas/quiz/quiz_model_schema.json"
+    },
+    {
+      "sha256": "815a58eea9588c645ec6bc37afeb435dd574036792fd641324a42013d158a3ce",
+      "source": "workspace/reference/schemas/quiz/quiz_run_schema.json",
+      "target": "workspace/reference/schemas/quiz/quiz_run_schema.json"
+    },
+    {
+      "sha256": "d9f09ff10df7a89b2c0ecd420ccd60bcd4f562b67e25fb3e8c0f0d7bf641859d",
+      "source": "workspace/reference/schemas/quiz/quiz_settings_schema.json",
+      "target": "workspace/reference/schemas/quiz/quiz_settings_schema.json"
+    },
+    {
+      "sha256": "273db01720aecb78c90e8f94ab54d2902bdee498560e2000c9ae2c3e865731f2",
+      "source": "workspace/reference/schemas/quiz/quiz_unbind_run_schema.json",
+      "target": "workspace/reference/schemas/quiz/quiz_unbind_run_schema.json"
+    }
+  ],
+  "policy": "byte-identical mechanical promotion; behavior changes upstream first",
+  "schema": "coursecraft.workbench_vendor_pin/1",
+  "source_branch": "refine-quiz-assessment-review-20260925",
+  "source_commit": "093dc3e6c67eb6ff4955050381f769ed2035d2ff",
+  "source_committed_at": "2026-09-25T15:28:15-04:00",
+  "source_repository": "https://github.com/timebeing92/coursecraft-workbench.git"
+}

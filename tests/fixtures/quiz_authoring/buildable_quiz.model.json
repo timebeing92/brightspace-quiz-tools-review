@@ -1,0 +1,149 @@
+{
+  "schema": "coursecraft.quiz/1",
+  "model_id": "cc:model:quiz:phase4-authoring-fixture",
+  "run_id": "cc:run:quiz:phase4-authoring-fixture",
+  "source": {
+    "source_key": "cc:source:2222222222222222222222222222222222222222222222222222222222222222",
+    "source_lineage_key": "cc:lineage:fixture:phase4-authoring",
+    "source_kind": "fixture",
+    "fingerprint": {"algorithm": "sha256", "digest": "2222222222222222222222222222222222222222222222222222222222222222", "scope": "file_set"},
+    "references": ["tests/fixtures/quiz_authoring"],
+    "extensions": {}
+  },
+  "quizzes": [
+    {
+      "entity_key": "cc:quiz:fixture:phase4",
+      "identity": {"strategy": "permanent_code", "permanent_code": "PHASE4_QUIZ", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "title": "Phase 4 Contract Quiz",
+      "source_evidence_keys": [],
+      "diagnostic_ids": [],
+      "extensions": {"coursecraft.authoring_status": "approved"}
+    }
+  ],
+  "structures": [
+    {
+      "entity_key": "cc:structure:fixture:phase4-pool",
+      "identity": {"strategy": "permanent_code", "permanent_code": "PHASE4_POOL", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "pool",
+      "source_kind": "approved authoring pool",
+      "title": "Phase 4 Question Pool",
+      "ordinal": 1,
+      "selection": {"mode": "all", "requested_count": null, "available_count": 4, "extensions": {}},
+      "source_evidence_keys": [],
+      "diagnostic_ids": [],
+      "extensions": {}
+    },
+    {
+      "entity_key": "cc:structure:fixture:phase4-draw",
+      "identity": {"strategy": "permanent_code", "permanent_code": "PHASE4_DRAW", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "draw",
+      "source_kind": "approved authoring draw",
+      "title": "Randomized Contract Questions",
+      "ordinal": 1,
+      "selection": {"mode": "random", "requested_count": 2, "available_count": 4, "extensions": {"points_per_question": 1}},
+      "source_evidence_keys": [],
+      "diagnostic_ids": [],
+      "extensions": {}
+    }
+  ],
+  "questions": [
+    {
+      "entity_key": "cc:question:fixture:p4-q1",
+      "identity": {"strategy": "permanent_code", "permanent_code": "P4-Q001", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "multiple_choice",
+      "source_kind": "Multiple Choice",
+      "title": "Read a concept map",
+      "prompt": {"format": "html", "content": "<p>Use the concept map. <img src=\"quiz-assets/concept-map.svg\" alt=\"A circle connected to a rectangle\"></p><p>Which option is correct?</p>", "extensions": {}},
+      "type_payload": {
+        "options": [
+          {"option_key": "A", "content": {"format": "plain_text", "content": "The connected option", "extensions": {}}, "correct": true, "weight": 100, "source_evidence_keys": [], "extensions": {}},
+          {"option_key": "B", "content": {"format": "plain_text", "content": "The disconnected option", "extensions": {}}, "correct": false, "weight": 0, "source_evidence_keys": [], "extensions": {}}
+        ],
+        "accepted_responses": [], "blanks": [], "match_pairs": [], "correct_order": [], "raw_response_models": [], "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "exact", "maximum_points": 1, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "roundtrip_verified", "receipt_refs": ["docs/IMPORT_TEST_LOG.md#receipt-4"], "notes": [], "extensions": {}},
+      "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}
+    },
+    {
+      "entity_key": "cc:question:fixture:p4-q2",
+      "identity": {"strategy": "permanent_code", "permanent_code": "P4-Q002", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "true_false",
+      "source_kind": "True/False",
+      "title": "Contracts preserve identity",
+      "prompt": {"format": "plain_text", "content": "Permanent question codes support stable matching.", "extensions": {}},
+      "type_payload": {
+        "options": [
+          {"option_key": "T", "content": {"format": "plain_text", "content": "True", "extensions": {}}, "correct": true, "weight": 100, "source_evidence_keys": [], "extensions": {}},
+          {"option_key": "F", "content": {"format": "plain_text", "content": "False", "extensions": {}}, "correct": false, "weight": 0, "source_evidence_keys": [], "extensions": {}}
+        ],
+        "accepted_responses": [], "blanks": [], "match_pairs": [], "correct_order": [], "raw_response_models": [], "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "exact", "maximum_points": 1, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "roundtrip_verified", "receipt_refs": ["docs/IMPORT_TEST_LOG.md#receipt-4"], "notes": [], "extensions": {}},
+      "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}
+    },
+    {
+      "entity_key": "cc:question:fixture:p4-q3",
+      "identity": {"strategy": "permanent_code", "permanent_code": "P4-Q003", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "multi_select",
+      "source_kind": "Multi-Select",
+      "title": "Identify contract features",
+      "prompt": {"format": "plain_text", "content": "Select both contract features.", "extensions": {}},
+      "type_payload": {
+        "options": [
+          {"option_key": "A", "content": {"format": "plain_text", "content": "Versioned schema", "extensions": {}}, "correct": true, "weight": 100, "source_evidence_keys": [], "extensions": {}},
+          {"option_key": "B", "content": {"format": "plain_text", "content": "Stable identity", "extensions": {}}, "correct": true, "weight": 100, "source_evidence_keys": [], "extensions": {}},
+          {"option_key": "C", "content": {"format": "plain_text", "content": "Silent guessing", "extensions": {}}, "correct": false, "weight": 0, "source_evidence_keys": [], "extensions": {}}
+        ],
+        "accepted_responses": [], "blanks": [], "match_pairs": [], "correct_order": [], "raw_response_models": [], "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "all_or_nothing", "maximum_points": 1, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "roundtrip_verified", "receipt_refs": ["docs/IMPORT_TEST_LOG.md#receipt-4"], "notes": [], "extensions": {}},
+      "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}
+    },
+    {
+      "entity_key": "cc:question:fixture:p4-q4",
+      "identity": {"strategy": "permanent_code", "permanent_code": "P4-Q004", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "long_answer",
+      "source_kind": "Long Answer",
+      "title": "Explain provenance",
+      "prompt": {"format": "plain_text", "content": "Explain why a build receipt is useful.", "extensions": {}},
+      "type_payload": {
+        "options": [], "accepted_responses": [], "blanks": [], "match_pairs": [], "correct_order": [],
+        "manual_answer_key": {"format": "plain_text", "content": "A strong answer connects inputs, versions, artifacts, and checksums.", "extensions": {}},
+        "raw_response_models": [], "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "manual", "maximum_points": 1, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "roundtrip_verified", "receipt_refs": ["docs/IMPORT_TEST_LOG.md#receipt-4"], "notes": [], "extensions": {}},
+      "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}
+    }
+  ],
+  "assets": [
+    {
+      "entity_key": "cc:asset:fixture:concept-map",
+      "identity": {"strategy": "assigned", "permanent_code": null, "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "source_path": "assets/concept-map.svg",
+      "package_path": "quiz-assets/concept-map.svg",
+      "media_type": "image/svg+xml",
+      "fingerprint": {"algorithm": "sha256", "digest": "373a06806354c0c9ed5f1700882fd90b60043237dfa3e062ccc97e040da993da", "basis": "file bytes", "extensions": {}},
+      "status": "resolved", "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}
+    }
+  ],
+  "resources": [],
+  "relationships": [
+    {"relationship_key": "cc:relationship:fixture:p4-quiz-draw", "kind": "contains", "source_kind": "approved quiz structure", "from_entity_key": "cc:quiz:fixture:phase4", "to_entity_key": "cc:structure:fixture:phase4-draw", "status": "resolved", "ordinal": 1, "attributes": {}, "candidates": [], "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:p4-draw-pool", "kind": "draws_from", "source_kind": "approved pool selection", "from_entity_key": "cc:structure:fixture:phase4-draw", "to_entity_key": "cc:structure:fixture:phase4-pool", "status": "resolved", "ordinal": 1, "attributes": {}, "candidates": [], "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:p4-q1-pool", "kind": "member_of", "source_kind": "approved pool membership", "from_entity_key": "cc:question:fixture:p4-q1", "to_entity_key": "cc:structure:fixture:phase4-pool", "status": "resolved", "ordinal": 1, "attributes": {}, "candidates": [], "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:p4-q2-pool", "kind": "member_of", "source_kind": "approved pool membership", "from_entity_key": "cc:question:fixture:p4-q2", "to_entity_key": "cc:structure:fixture:phase4-pool", "status": "resolved", "ordinal": 2, "attributes": {}, "candidates": [], "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:p4-q3-pool", "kind": "member_of", "source_kind": "approved pool membership", "from_entity_key": "cc:question:fixture:p4-q3", "to_entity_key": "cc:structure:fixture:phase4-pool", "status": "resolved", "ordinal": 3, "attributes": {}, "candidates": [], "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:p4-q4-pool", "kind": "member_of", "source_kind": "approved pool membership", "from_entity_key": "cc:question:fixture:p4-q4", "to_entity_key": "cc:structure:fixture:phase4-pool", "status": "resolved", "ordinal": 4, "attributes": {}, "candidates": [], "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:p4-q1-asset", "kind": "uses_asset", "source_kind": "approved HTML asset", "from_entity_key": "cc:question:fixture:p4-q1", "to_entity_key": "cc:asset:fixture:concept-map", "status": "resolved", "ordinal": 1, "attributes": {"raw_ref": "quiz-assets/concept-map.svg"}, "candidates": [], "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}}
+  ],
+  "evidence": [], "lineage": [], "settings_observations": [], "annotations": [], "diagnostics": [],
+  "extensions": {"coursecraft.authoring_projection": "quiz-builder-v1", "coursecraft.phase": "phase-4-fixture"}
+}

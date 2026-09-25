@@ -1,0 +1,73 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "coursecraft.quiz_settings/1",
+  "title": "CourseCraft Quiz Settings Resolution Receipt",
+  "description": "Four-layer settings-resolution receipt. Raw source observations are evidence, not an implicit build layer. Every consequential effective value records the winning input, defaults, and coercions.",
+  "type": "object",
+  "required": ["schema", "receipt_id", "run_id", "target_quiz_key", "profile_key", "inputs", "resolutions", "diagnostics", "extensions"],
+  "additionalProperties": false,
+  "$defs": {
+    "extensions": {"type": "object", "additionalProperties": true},
+    "entityKey": {"type": "string", "pattern": "^cc:[A-Za-z0-9._~:/-]+$"},
+    "state": {"type": "string", "enum": ["known", "absent", "unknown", "not_applicable", "unresolved", "unsupported"]},
+    "input": {
+      "type": "object",
+      "required": ["input_id", "setting", "layer", "target_entity_key", "state", "value", "source_reference", "source_evidence_keys", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "input_id": {"type": "string", "minLength": 1},
+        "setting": {"type": "string", "minLength": 1},
+        "layer": {"type": "string", "enum": ["source_observation", "hard_default", "profile", "quiz_decision", "question_override"]},
+        "target_entity_key": {"$ref": "#/$defs/entityKey"},
+        "state": {"$ref": "#/$defs/state"},
+        "value": {},
+        "source_reference": {"type": ["string", "null"]},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "resolution": {
+      "type": "object",
+      "required": ["setting", "target_entity_key", "state", "effective_value", "winner_input_id", "considered_input_ids", "defaulted", "coerced", "coercion_note", "source_evidence_keys", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "setting": {"type": "string", "minLength": 1},
+        "target_entity_key": {"$ref": "#/$defs/entityKey"},
+        "state": {"$ref": "#/$defs/state"},
+        "effective_value": {},
+        "winner_input_id": {"type": ["string", "null"]},
+        "considered_input_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "defaulted": {"type": "boolean"},
+        "coerced": {"type": "boolean"},
+        "coercion_note": {"type": ["string", "null"]},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "diagnostic": {
+      "type": "object",
+      "required": ["diagnostic_id", "severity", "code", "message", "status", "details", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "diagnostic_id": {"type": "string", "minLength": 1},
+        "severity": {"type": "string", "enum": ["info", "warning", "error"]},
+        "code": {"type": "string", "minLength": 1},
+        "message": {"type": "string", "minLength": 1},
+        "status": {"type": "string", "enum": ["open", "resolved", "accepted", "not_applicable"]},
+        "details": {"type": "object", "additionalProperties": true},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    }
+  },
+  "properties": {
+    "schema": {"type": "string", "const": "coursecraft.quiz_settings/1"},
+    "receipt_id": {"$ref": "#/$defs/entityKey"},
+    "run_id": {"$ref": "#/$defs/entityKey"},
+    "target_quiz_key": {"$ref": "#/$defs/entityKey"},
+    "profile_key": {"type": ["string", "null"]},
+    "inputs": {"type": "array", "items": {"$ref": "#/$defs/input"}},
+    "resolutions": {"type": "array", "items": {"$ref": "#/$defs/resolution"}},
+    "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/diagnostic"}},
+    "extensions": {"$ref": "#/$defs/extensions"}
+  }
+}

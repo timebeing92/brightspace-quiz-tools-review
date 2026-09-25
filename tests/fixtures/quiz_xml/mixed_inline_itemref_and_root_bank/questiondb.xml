@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop>
+  <objectbank ident="MIXED_BANK">
+    <item ident="ROOT_OBJECT" label="ROOT_Q" title="Root item">
+      <itemmetadata>
+        <qtimetadata>
+          <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Multiple Choice</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>ROOT001</fieldentry></qti_metadatafield>
+        </qtimetadata>
+      </itemmetadata>
+      <presentation>
+        <material><mattext texttype="text/html">&lt;p&gt;Synthetic root-bank prompt?&lt;/p&gt;</mattext></material>
+        <response_lid ident="ROOT_LID" rcardinality="Single">
+          <render_choice>
+            <response_label ident="ROOT_A"><material><mattext texttype="text/html">&lt;p&gt;Correct&lt;/p&gt;</mattext></material></response_label>
+            <response_label ident="ROOT_B"><material><mattext texttype="text/html">&lt;p&gt;Incorrect&lt;/p&gt;</mattext></material></response_label>
+          </render_choice>
+        </response_lid>
+      </presentation>
+      <resprocessing>
+        <respcondition><conditionvar><varequal respident="ROOT_LID">ROOT_A</varequal></conditionvar><setvar>100</setvar></respcondition>
+      </resprocessing>
+    </item>
+    <section ident="SECTION_BANK" title="Section Bank">
+      <item ident="SECTION_OBJECT" label="SECTION_Q" title="Section item">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Short Answer</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>2</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>SECTION001</fieldentry></qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material><mattext texttype="text/html">&lt;p&gt;Synthetic section-bank prompt?&lt;/p&gt;</mattext></material>
+          <response_str ident="SECTION_STR"><render_fib><response_label ident="SECTION_ANS" /></render_fib></response_str>
+        </presentation>
+        <resprocessing>
+          <respcondition><conditionvar><varequal respident="SECTION_STR">accepted</varequal></conditionvar><setvar>100</setvar></respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </objectbank>
+</questestinterop>

@@ -1,0 +1,130 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "coursecraft.quiz_run/1",
+  "title": "CourseCraft Quiz Run Identity And Receipt",
+  "description": "Identity and reproducibility receipt for a quiz extraction, normalization, review promotion, build, validation, or comparison run.",
+  "type": "object",
+  "required": [
+    "schema",
+    "run_id",
+    "started_at",
+    "finished_at",
+    "producer",
+    "source",
+    "contract_versions",
+    "inputs",
+    "artifacts",
+    "capabilities",
+    "diagnostics",
+    "extensions"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "extensions": {"type": "object", "additionalProperties": true},
+    "entityKey": {"type": "string", "pattern": "^cc:[A-Za-z0-9._~:/-]+$"},
+    "fingerprint": {
+      "type": "object",
+      "required": ["algorithm", "digest", "scope"],
+      "additionalProperties": false,
+      "properties": {
+        "algorithm": {"type": "string", "enum": ["sha256"]},
+        "digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "scope": {"type": "string", "enum": ["archive", "file_set", "file", "package", "workbook", "unknown"]}
+      }
+    },
+    "source": {
+      "type": "object",
+      "required": ["source_key", "source_lineage_key", "source_kind", "fingerprint", "references", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "source_key": {"$ref": "#/$defs/entityKey"},
+        "source_lineage_key": {"$ref": "#/$defs/entityKey"},
+        "source_kind": {"type": "string", "enum": ["d2l_export", "generated_package", "workbook", "fixture", "composite", "unknown"]},
+        "fingerprint": {"$ref": "#/$defs/fingerprint"},
+        "references": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["path", "role", "media_type", "sha256", "bytes", "status", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "path": {"type": "string", "minLength": 1},
+        "role": {"type": "string", "enum": ["input", "model", "review", "package", "validation", "diff", "receipt", "diagnostic", "other"]},
+        "media_type": {"type": "string"},
+        "sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+        "bytes": {"type": ["integer", "null"], "minimum": 0},
+        "status": {"type": "string", "enum": ["read", "emitted", "skipped", "failed", "missing"]},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "capability": {
+      "type": "object",
+      "required": ["name", "status", "started_at", "finished_at", "artifact_paths", "diagnostic_ids", "notes", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "status": {"type": "string", "enum": ["completed", "skipped", "failed", "unresolved"]},
+        "started_at": {"type": ["string", "null"], "format": "date-time"},
+        "finished_at": {"type": ["string", "null"], "format": "date-time"},
+        "artifact_paths": {"type": "array", "items": {"type": "string"}},
+        "diagnostic_ids": {"type": "array", "items": {"type": "string"}},
+        "notes": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "diagnostic": {
+      "type": "object",
+      "required": ["diagnostic_id", "severity", "code", "message", "status", "details", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "diagnostic_id": {"type": "string", "minLength": 1},
+        "severity": {"type": "string", "enum": ["info", "warning", "error"]},
+        "code": {"type": "string", "minLength": 1},
+        "message": {"type": "string", "minLength": 1},
+        "status": {"type": "string", "enum": ["open", "resolved", "accepted", "not_applicable"]},
+        "details": {"type": "object", "additionalProperties": true},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    }
+  },
+  "properties": {
+    "schema": {"type": "string", "const": "coursecraft.quiz_run/1"},
+    "run_id": {"$ref": "#/$defs/entityKey"},
+    "started_at": {"type": "string", "format": "date-time"},
+    "finished_at": {"type": ["string", "null"], "format": "date-time"},
+    "producer": {
+      "type": "object",
+      "required": ["name", "version", "commit", "release", "command", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "name": {"type": "string", "minLength": 1},
+        "version": {"type": ["string", "null"]},
+        "commit": {"type": ["string", "null"]},
+        "release": {"type": ["string", "null"]},
+        "command": {"type": ["string", "null"]},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "source": {"$ref": "#/$defs/source"},
+    "contract_versions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["schema", "schema_sha256", "extensions"],
+        "additionalProperties": false,
+        "properties": {
+          "schema": {"type": "string", "minLength": 1},
+          "schema_sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "extensions": {"$ref": "#/$defs/extensions"}
+        }
+      }
+    },
+    "inputs": {"type": "array", "items": {"$ref": "#/$defs/artifact"}},
+    "artifacts": {"type": "array", "items": {"$ref": "#/$defs/artifact"}},
+    "capabilities": {"type": "array", "items": {"$ref": "#/$defs/capability"}},
+    "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/diagnostic"}},
+    "extensions": {"$ref": "#/$defs/extensions"}
+  }
+}

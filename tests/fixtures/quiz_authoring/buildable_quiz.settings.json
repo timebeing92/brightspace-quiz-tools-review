@@ -1,0 +1,28 @@
+{
+  "schema": "coursecraft.quiz_settings/1",
+  "receipt_id": "cc:settings-receipt:fixture:phase4",
+  "run_id": "cc:run:quiz:phase4-settings-fixture",
+  "target_quiz_key": "cc:quiz:fixture:phase4",
+  "profile_key": "coursecraft.profile:phase4-fixture",
+  "inputs": [
+    {"input_id": "in.active.observed", "setting": "is_active", "layer": "source_observation", "target_entity_key": "cc:quiz:fixture:phase4", "state": "known", "value": true, "source_reference": "prior export", "source_evidence_keys": [], "extensions": {}},
+    {"input_id": "in.active.default", "setting": "is_active", "layer": "hard_default", "target_entity_key": "cc:quiz:fixture:phase4", "state": "known", "value": false, "source_reference": "safe inactive default", "source_evidence_keys": [], "extensions": {}},
+    {"input_id": "in.attempts.decision", "setting": "attempts_allowed", "layer": "quiz_decision", "target_entity_key": "cc:quiz:fixture:phase4", "state": "known", "value": 2, "source_reference": "fixture decision", "source_evidence_keys": [], "extensions": {}},
+    {"input_id": "in.time.profile", "setting": "time_limit", "layer": "profile", "target_entity_key": "cc:quiz:fixture:phase4", "state": "known", "value": 45, "source_reference": "fixture profile", "source_evidence_keys": [], "extensions": {"unit": "minutes"}},
+    {"input_id": "in.clock.profile", "setting": "show_clock", "layer": "profile", "target_entity_key": "cc:quiz:fixture:phase4", "state": "known", "value": true, "source_reference": "fixture profile", "source_evidence_keys": [], "extensions": {}},
+    {"input_id": "in.enforce.profile", "setting": "enforce_time_limit", "layer": "profile", "target_entity_key": "cc:quiz:fixture:phase4", "state": "known", "value": true, "source_reference": "fixture profile", "source_evidence_keys": [], "extensions": {}},
+    {"input_id": "in.forward.decision", "setting": "is_forward_only", "layer": "quiz_decision", "target_entity_key": "cc:quiz:fixture:phase4", "state": "known", "value": true, "source_reference": "fixture decision", "source_evidence_keys": [], "extensions": {}},
+    {"input_id": "in.q1.shuffle", "setting": "randomize_answers", "layer": "question_override", "target_entity_key": "cc:question:fixture:p4-q1", "state": "known", "value": true, "source_reference": "fixture question decision", "source_evidence_keys": [], "extensions": {}}
+  ],
+  "resolutions": [
+    {"setting": "is_active", "target_entity_key": "cc:quiz:fixture:phase4", "state": "known", "effective_value": false, "winner_input_id": "in.active.default", "considered_input_ids": ["in.active.observed", "in.active.default"], "defaulted": true, "coerced": false, "coercion_note": null, "source_evidence_keys": [], "extensions": {}},
+    {"setting": "attempts_allowed", "target_entity_key": "cc:quiz:fixture:phase4", "state": "known", "effective_value": 2, "winner_input_id": "in.attempts.decision", "considered_input_ids": ["in.attempts.decision"], "defaulted": false, "coerced": false, "coercion_note": null, "source_evidence_keys": [], "extensions": {}},
+    {"setting": "time_limit", "target_entity_key": "cc:quiz:fixture:phase4", "state": "known", "effective_value": 45, "winner_input_id": "in.time.profile", "considered_input_ids": ["in.time.profile"], "defaulted": false, "coerced": false, "coercion_note": null, "source_evidence_keys": [], "extensions": {"unit": "minutes"}},
+    {"setting": "show_clock", "target_entity_key": "cc:quiz:fixture:phase4", "state": "known", "effective_value": true, "winner_input_id": "in.clock.profile", "considered_input_ids": ["in.clock.profile"], "defaulted": false, "coerced": false, "coercion_note": null, "source_evidence_keys": [], "extensions": {}},
+    {"setting": "enforce_time_limit", "target_entity_key": "cc:quiz:fixture:phase4", "state": "known", "effective_value": true, "winner_input_id": "in.enforce.profile", "considered_input_ids": ["in.enforce.profile"], "defaulted": false, "coerced": false, "coercion_note": null, "source_evidence_keys": [], "extensions": {}},
+    {"setting": "is_forward_only", "target_entity_key": "cc:quiz:fixture:phase4", "state": "known", "effective_value": true, "winner_input_id": "in.forward.decision", "considered_input_ids": ["in.forward.decision"], "defaulted": false, "coerced": false, "coercion_note": null, "source_evidence_keys": [], "extensions": {}},
+    {"setting": "randomize_answers", "target_entity_key": "cc:question:fixture:p4-q1", "state": "known", "effective_value": true, "winner_input_id": "in.q1.shuffle", "considered_input_ids": ["in.q1.shuffle"], "defaulted": false, "coerced": false, "coercion_note": null, "source_evidence_keys": [], "extensions": {}}
+  ],
+  "diagnostics": [],
+  "extensions": {"coursecraft.fixture": "phase-4-authoring"}
+}

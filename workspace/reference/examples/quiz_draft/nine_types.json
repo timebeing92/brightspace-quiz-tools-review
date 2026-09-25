@@ -1,0 +1,246 @@
+{
+  "config": {
+    "schema": "coursecraft.quiz_draft/1",
+    "lineage_code": "synthetic-demo",
+    "quiz_code": "DEMO",
+    "quiz_title": "Synthetic nine-type draft"
+  },
+  "Questions": [
+    {
+      "question_code": "Q01",
+      "question_type": "Multiple Choice",
+      "question_text": "Synthetic prompt",
+      "points": 2,
+      "pool_code": "P1",
+      "content_format": "plain_text"
+    },
+    {
+      "question_code": "Q02",
+      "question_type": "True/False",
+      "question_text": "Synthetic prompt",
+      "points": 2,
+      "pool_code": "P1",
+      "content_format": "plain_text"
+    },
+    {
+      "question_code": "Q03",
+      "question_type": "Multi-Select",
+      "question_text": "Synthetic prompt",
+      "points": 2,
+      "pool_code": "P1",
+      "content_format": "plain_text"
+    },
+    {
+      "question_code": "Q04",
+      "question_type": "Written Response",
+      "question_text": "Synthetic prompt",
+      "points": 2,
+      "pool_code": "P1",
+      "content_format": "plain_text",
+      "answer_key": "Evaluator guidance"
+    },
+    {
+      "question_code": "Q05",
+      "question_type": "Short Answer",
+      "question_text": "Synthetic prompt",
+      "points": 2,
+      "pool_code": "P1",
+      "content_format": "plain_text"
+    },
+    {
+      "question_code": "Q06",
+      "question_type": "Multi-Short Answer",
+      "question_text": "Synthetic prompt",
+      "points": 2,
+      "pool_code": "P1",
+      "content_format": "plain_text"
+    },
+    {
+      "question_code": "Q07",
+      "question_type": "Fill in the Blanks",
+      "question_text": "A [[blank:b1]] and [[blank:b2]].",
+      "points": 2,
+      "pool_code": "P1",
+      "content_format": "plain_text"
+    },
+    {
+      "question_code": "Q08",
+      "question_type": "Matching",
+      "question_text": "Synthetic prompt",
+      "points": 2,
+      "pool_code": "P1",
+      "content_format": "plain_text"
+    },
+    {
+      "question_code": "Q09",
+      "question_type": "Ordering",
+      "question_text": "Synthetic prompt",
+      "points": 2,
+      "pool_code": "P1",
+      "content_format": "plain_text"
+    }
+  ],
+  "Responses": [
+    {
+      "question_code": "Q01",
+      "response_key": "A",
+      "role": "option",
+      "text": "First",
+      "content_format": "plain_text",
+      "correct": true
+    },
+    {
+      "question_code": "Q01",
+      "response_key": "B",
+      "role": "option",
+      "text": "Second",
+      "content_format": "plain_text",
+      "correct": false
+    },
+    {
+      "question_code": "Q02",
+      "response_key": "T",
+      "role": "option",
+      "text": "True",
+      "content_format": "plain_text",
+      "correct": true
+    },
+    {
+      "question_code": "Q02",
+      "response_key": "F",
+      "role": "option",
+      "text": "False",
+      "content_format": "plain_text",
+      "correct": false
+    },
+    {
+      "question_code": "Q03",
+      "response_key": "A",
+      "role": "option",
+      "text": "First",
+      "content_format": "plain_text",
+      "correct": true
+    },
+    {
+      "question_code": "Q03",
+      "response_key": "B",
+      "role": "option",
+      "text": "Second",
+      "content_format": "plain_text",
+      "correct": false
+    },
+    {
+      "question_code": "Q05",
+      "response_key": "A",
+      "role": "accepted",
+      "text": "First",
+      "content_format": "plain_text",
+      "case_sensitive": false
+    },
+    {
+      "question_code": "Q05",
+      "response_key": "B",
+      "role": "accepted",
+      "text": "Second",
+      "content_format": "plain_text",
+      "case_sensitive": false
+    },
+    {
+      "question_code": "Q06",
+      "response_key": "A",
+      "role": "accepted",
+      "text": "First",
+      "content_format": "plain_text",
+      "case_sensitive": false,
+      "group_key": "b1"
+    },
+    {
+      "question_code": "Q06",
+      "response_key": "B",
+      "role": "accepted",
+      "text": "Second",
+      "content_format": "plain_text",
+      "case_sensitive": false,
+      "group_key": "b2"
+    },
+    {
+      "question_code": "Q07",
+      "response_key": "A",
+      "role": "accepted",
+      "text": "First",
+      "content_format": "plain_text",
+      "case_sensitive": false,
+      "group_key": "b1"
+    },
+    {
+      "question_code": "Q07",
+      "response_key": "B",
+      "role": "accepted",
+      "text": "Second",
+      "content_format": "plain_text",
+      "case_sensitive": false,
+      "group_key": "b2"
+    },
+    {
+      "question_code": "Q08",
+      "response_key": "A",
+      "role": "left",
+      "text": "First",
+      "content_format": "plain_text",
+      "match_key": "AR"
+    },
+    {
+      "question_code": "Q08",
+      "response_key": "B",
+      "role": "left",
+      "text": "Second",
+      "content_format": "plain_text",
+      "match_key": "BR"
+    },
+    {
+      "question_code": "Q08",
+      "response_key": "AR",
+      "role": "right",
+      "text": "First",
+      "content_format": "plain_text"
+    },
+    {
+      "question_code": "Q08",
+      "response_key": "BR",
+      "role": "right",
+      "text": "Second",
+      "content_format": "plain_text"
+    },
+    {
+      "question_code": "Q09",
+      "response_key": "A",
+      "role": "option",
+      "text": "First",
+      "content_format": "plain_text",
+      "position": 1
+    },
+    {
+      "question_code": "Q09",
+      "response_key": "B",
+      "role": "option",
+      "text": "Second",
+      "content_format": "plain_text",
+      "position": 2
+    }
+  ],
+  "Pools": [
+    {
+      "pool_code": "P1",
+      "title": "Synthetic examples"
+    }
+  ],
+  "Draws": [
+    {
+      "draw_code": "D1",
+      "pool_code": "P1",
+      "title": "Draw three",
+      "draw_count": 3,
+      "points_per_question": 2
+    }
+  ]
+}

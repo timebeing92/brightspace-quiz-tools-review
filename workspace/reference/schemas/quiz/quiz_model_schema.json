@@ -1,0 +1,491 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "coursecraft.quiz/1",
+  "title": "CourseCraft Quiz Evidence Model",
+  "description": "Versioned, evidence-preserving normalized quiz and question-library model. Extraction facts, normalized structures, review annotations, build capability, relationships, and unresolved evidence remain distinct. This contract represents observed and unknown shapes; it does not imply that every represented shape can be built or round-tripped.",
+  "type": "object",
+  "required": [
+    "schema",
+    "model_id",
+    "run_id",
+    "source",
+    "quizzes",
+    "structures",
+    "questions",
+    "assets",
+    "resources",
+    "relationships",
+    "evidence",
+    "lineage",
+    "settings_observations",
+    "annotations",
+    "diagnostics",
+    "extensions"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "extensions": {
+      "type": "object",
+      "description": "Namespaced additive data. Consumers preserve unknown members and warn rather than discard them.",
+      "additionalProperties": true
+    },
+    "entityKey": {
+      "type": "string",
+      "description": "CourseCraft-normalized entity identity used for stable joins. This is not a package-native D2L field, although it may be derived from a preserved package identifier and source lineage.",
+      "pattern": "^cc:[A-Za-z0-9._~:/-]+$"
+    },
+    "sourceAlias": {
+      "type": "object",
+      "description": "A package-observed identifier value preserved with a CourseCraft namespace and scope so identifiers from different D2L contexts remain distinguishable.",
+      "required": ["namespace", "value", "scope", "source_evidence_keys", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "namespace": {"type": "string", "minLength": 1},
+        "value": {"type": "string", "minLength": 1},
+        "scope": {"type": "string", "enum": ["global", "course", "export", "file", "unknown"]},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "contentFingerprint": {
+      "type": "object",
+      "description": "A matching hint, never a primary entity identity.",
+      "required": ["algorithm", "digest", "basis", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "algorithm": {"type": "string", "enum": ["sha256"]},
+        "digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "basis": {"type": "string", "minLength": 1},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "identity": {
+      "type": "object",
+      "description": "CourseCraft identity envelope. permanent_code is deliberately assigned, source_aliases preserve package-observed values, and entity_key remains the normalized join key.",
+      "required": ["strategy", "permanent_code", "source_aliases", "content_fingerprints", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "strategy": {"type": "string", "enum": ["permanent_code", "source_alias", "assigned"]},
+        "permanent_code": {"type": ["string", "null"]},
+        "source_aliases": {"type": "array", "items": {"$ref": "#/$defs/sourceAlias"}},
+        "content_fingerprints": {"type": "array", "items": {"$ref": "#/$defs/contentFingerprint"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"strategy": {"const": "permanent_code"}}, "required": ["strategy"]},
+          "then": {"properties": {"permanent_code": {"type": "string", "minLength": 1}}}
+        },
+        {
+          "if": {"properties": {"strategy": {"const": "source_alias"}}, "required": ["strategy"]},
+          "then": {"properties": {"source_aliases": {"minItems": 1}}}
+        }
+      ]
+    },
+    "source": {
+      "type": "object",
+      "required": ["source_key", "source_lineage_key", "source_kind", "fingerprint", "references", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "source_key": {"$ref": "#/$defs/entityKey"},
+        "source_lineage_key": {"$ref": "#/$defs/entityKey"},
+        "source_kind": {"type": "string", "enum": ["d2l_export", "generated_package", "workbook", "fixture", "composite", "unknown"]},
+        "fingerprint": {
+          "type": "object",
+          "required": ["algorithm", "digest", "scope"],
+          "additionalProperties": false,
+          "properties": {
+            "algorithm": {"type": "string", "enum": ["sha256"]},
+            "digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+            "scope": {"type": "string", "enum": ["archive", "file_set", "file", "package", "workbook", "unknown"]}
+          }
+        },
+        "references": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "formattedContent": {
+      "type": "object",
+      "required": ["format", "content", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "format": {"type": "string", "enum": ["plain_text", "html", "xhtml", "markdown", "mathml", "xml_fragment", "unknown"]},
+        "content": {"type": "string"},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "quiz": {
+      "type": "object",
+      "required": ["entity_key", "identity", "title", "source_evidence_keys", "diagnostic_ids", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "entity_key": {"$ref": "#/$defs/entityKey"},
+        "identity": {"$ref": "#/$defs/identity"},
+        "title": {"type": ["string", "null"]},
+        "description": {"$ref": "#/$defs/formattedContent"},
+        "instructions": {"$ref": "#/$defs/formattedContent"},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "diagnostic_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "structure": {
+      "type": "object",
+      "required": ["entity_key", "identity", "kind", "source_kind", "title", "ordinal", "selection", "source_evidence_keys", "diagnostic_ids", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "entity_key": {"$ref": "#/$defs/entityKey"},
+        "identity": {"$ref": "#/$defs/identity"},
+        "kind": {"type": "string", "enum": ["quiz_root", "section", "bank", "pool", "draw", "unknown"]},
+        "source_kind": {"type": "string", "minLength": 1},
+        "title": {"type": ["string", "null"]},
+        "ordinal": {"type": ["integer", "null"], "minimum": 0},
+        "selection": {
+          "type": "object",
+          "required": ["mode", "requested_count", "available_count", "extensions"],
+          "additionalProperties": false,
+          "properties": {
+            "mode": {"type": "string", "enum": ["all", "fixed", "random", "unknown"]},
+            "requested_count": {"type": ["integer", "null"], "minimum": 0},
+            "available_count": {"type": ["integer", "null"], "minimum": 0},
+            "extensions": {"$ref": "#/$defs/extensions"}
+          }
+        },
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "diagnostic_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "option": {
+      "type": "object",
+      "required": ["option_key", "content", "correct", "weight", "source_evidence_keys", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "option_key": {"type": "string", "minLength": 1},
+        "content": {"$ref": "#/$defs/formattedContent"},
+        "correct": {"type": ["boolean", "null"]},
+        "weight": {"type": ["number", "string", "null"]},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "acceptedResponse": {
+      "type": "object",
+      "required": ["value", "case_sensitive", "weight", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "value": {"type": "string"},
+        "case_sensitive": {"type": ["boolean", "null"]},
+        "weight": {"type": ["number", "string", "null"]},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "blank": {
+      "type": "object",
+      "required": ["blank_key", "accepted_responses", "source_evidence_keys", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "blank_key": {"type": "string", "minLength": 1},
+        "accepted_responses": {"type": "array", "items": {"$ref": "#/$defs/acceptedResponse"}},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "matchPair": {
+      "type": "object",
+      "required": ["left_key", "right_key", "weight", "source_evidence_keys", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "left_key": {"type": "string"},
+        "right_key": {"type": "string"},
+        "weight": {"type": ["number", "string", "null"]},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "orderEntry": {
+      "type": "object",
+      "required": ["option_key", "position", "source_evidence_keys", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "option_key": {"type": "string"},
+        "position": {"type": ["integer", "null"], "minimum": 1},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "rawResponseModel": {
+      "type": "object",
+      "required": ["source_kind", "payload", "source_evidence_keys", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "source_kind": {"type": "string", "minLength": 1},
+        "payload": {},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "questionPayload": {
+      "type": "object",
+      "required": ["options", "accepted_responses", "blanks", "match_pairs", "correct_order", "raw_response_models", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "options": {"type": "array", "items": {"$ref": "#/$defs/option"}},
+        "accepted_responses": {"type": "array", "items": {"$ref": "#/$defs/acceptedResponse"}},
+        "blanks": {"type": "array", "items": {"$ref": "#/$defs/blank"}},
+        "match_pairs": {"type": "array", "items": {"$ref": "#/$defs/matchPair"}},
+        "correct_order": {"type": "array", "items": {"$ref": "#/$defs/orderEntry"}},
+        "manual_answer_key": {"$ref": "#/$defs/formattedContent"},
+        "raw_response_models": {"type": "array", "items": {"$ref": "#/$defs/rawResponseModel"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "scoringRule": {
+      "type": "object",
+      "required": ["kind", "source_kind", "payload", "source_evidence_keys", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "kind": {"type": "string", "enum": ["exact", "all_or_nothing", "partial", "manual", "custom", "unknown"]},
+        "source_kind": {"type": "string"},
+        "payload": {},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "scoring": {
+      "type": "object",
+      "required": ["state", "mode", "maximum_points", "rules", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "state": {"type": "string", "enum": ["known", "absent", "unknown", "not_applicable", "unresolved", "unsupported"]},
+        "mode": {"type": "string", "enum": ["exact", "all_or_nothing", "partial", "manual", "custom", "unknown"]},
+        "maximum_points": {"type": ["number", "string", "null"]},
+        "rules": {"type": "array", "items": {"$ref": "#/$defs/scoringRule"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "feedback": {
+      "type": "object",
+      "required": ["channel", "source_kind", "content", "source_evidence_keys", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "channel": {"type": "string", "enum": ["general", "correct", "incorrect", "hint", "answer_key", "choice", "unknown"]},
+        "source_kind": {"type": "string"},
+        "content": {"$ref": "#/$defs/formattedContent"},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "buildSupport": {
+      "type": "object",
+      "required": ["level", "receipt_refs", "notes", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "level": {"type": "string", "enum": ["roundtrip_verified", "import_verified", "generated_validated", "extraction_only", "unsupported", "unknown"]},
+        "receipt_refs": {"type": "array", "items": {"type": "string"}},
+        "notes": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "question": {
+      "type": "object",
+      "required": ["entity_key", "identity", "kind", "source_kind", "title", "prompt", "type_payload", "scoring", "feedback", "build_support", "source_evidence_keys", "diagnostic_ids", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "entity_key": {"$ref": "#/$defs/entityKey"},
+        "identity": {"$ref": "#/$defs/identity"},
+        "kind": {"type": "string", "enum": ["multiple_choice", "true_false", "multi_select", "short_answer", "multi_short_answer", "fill_in_blanks", "long_answer", "matching", "ordering", "unknown"]},
+        "source_kind": {"type": "string", "minLength": 1},
+        "title": {"type": ["string", "null"]},
+        "prompt": {"anyOf": [{"$ref": "#/$defs/formattedContent"}, {"type": "null"}]},
+        "type_payload": {"$ref": "#/$defs/questionPayload"},
+        "scoring": {"$ref": "#/$defs/scoring"},
+        "feedback": {"type": "array", "items": {"$ref": "#/$defs/feedback"}},
+        "build_support": {"$ref": "#/$defs/buildSupport"},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "diagnostic_ids": {"type": "array", "items": {"type": "string"}, "uniqueItems": true},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"kind": {"const": "unknown"}}, "required": ["kind"]},
+          "then": {"properties": {"source_evidence_keys": {"minItems": 1}}}
+        }
+      ]
+    },
+    "asset": {
+      "type": "object",
+      "required": ["entity_key", "identity", "source_path", "package_path", "media_type", "fingerprint", "status", "source_evidence_keys", "diagnostic_ids", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "entity_key": {"$ref": "#/$defs/entityKey"},
+        "identity": {"$ref": "#/$defs/identity"},
+        "source_path": {"type": ["string", "null"]},
+        "package_path": {"type": ["string", "null"]},
+        "media_type": {"type": ["string", "null"]},
+        "fingerprint": {"anyOf": [{"$ref": "#/$defs/contentFingerprint"}, {"type": "null"}]},
+        "status": {"type": "string", "enum": ["resolved", "missing", "orphaned", "ambiguous", "unknown"]},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}},
+        "diagnostic_ids": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "resource": {
+      "type": "object",
+      "required": ["entity_key", "identity", "kind", "source_kind", "path", "resource_code", "source_evidence_keys", "diagnostic_ids", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "entity_key": {"$ref": "#/$defs/entityKey"},
+        "identity": {"$ref": "#/$defs/identity"},
+        "kind": {"type": "string", "enum": ["manifest_resource", "payload_file", "grade_item", "module", "unknown"]},
+        "source_kind": {"type": "string"},
+        "path": {"type": ["string", "null"]},
+        "resource_code": {"type": ["string", "null"]},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}},
+        "diagnostic_ids": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "relationshipCandidate": {
+      "type": "object",
+      "required": ["entity_key", "score", "basis", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "entity_key": {"$ref": "#/$defs/entityKey"},
+        "score": {"type": ["number", "null"]},
+        "basis": {"type": "string"},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "relationship": {
+      "type": "object",
+      "required": ["relationship_key", "kind", "source_kind", "from_entity_key", "to_entity_key", "status", "ordinal", "attributes", "candidates", "source_evidence_keys", "diagnostic_ids", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "relationship_key": {"$ref": "#/$defs/entityKey"},
+        "kind": {"type": "string", "enum": ["contains", "itemref", "member_of", "draws_from", "uses_asset", "manifest_resource", "derived_from", "generated_from", "same_as", "unknown"]},
+        "source_kind": {"type": "string", "minLength": 1},
+        "from_entity_key": {"$ref": "#/$defs/entityKey"},
+        "to_entity_key": {"anyOf": [{"$ref": "#/$defs/entityKey"}, {"type": "null"}]},
+        "status": {"type": "string", "enum": ["resolved", "incomplete", "ambiguous", "proposed", "rejected"]},
+        "ordinal": {"type": ["integer", "null"], "minimum": 0},
+        "attributes": {"type": "object", "additionalProperties": true},
+        "candidates": {"type": "array", "items": {"$ref": "#/$defs/relationshipCandidate"}},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}},
+        "diagnostic_ids": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      },
+      "allOf": [
+        {
+          "if": {"properties": {"status": {"const": "resolved"}}, "required": ["status"]},
+          "then": {"properties": {"to_entity_key": {"$ref": "#/$defs/entityKey"}}}
+        },
+        {
+          "if": {"properties": {"status": {"const": "incomplete"}}, "required": ["status"]},
+          "then": {"properties": {"to_entity_key": {"type": "null"}}}
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "required": ["evidence_key", "source_key", "kind", "source_ref", "locator", "content", "content_ref", "sha256", "extraction_method", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "evidence_key": {"type": "string", "minLength": 1},
+        "source_key": {"$ref": "#/$defs/entityKey"},
+        "kind": {"type": "string", "enum": ["xml_element", "xml_attribute", "workbook_cell", "manifest_edge", "file", "raw_fragment", "observation", "unknown"]},
+        "source_ref": {"type": "string"},
+        "locator": {"type": ["string", "null"]},
+        "content": {},
+        "content_ref": {"type": ["string", "null"]},
+        "sha256": {"type": ["string", "null"], "pattern": "^[a-f0-9]{64}$"},
+        "extraction_method": {"type": "string", "enum": ["deterministic", "human", "model_assisted", "unknown"]},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "lineage": {
+      "type": "object",
+      "required": ["lineage_id", "subject_entity_key", "stage", "method", "status", "predecessor_entity_keys", "input_evidence_keys", "actor", "timestamp", "receipt_ref", "notes", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "lineage_id": {"type": "string", "minLength": 1},
+        "subject_entity_key": {"$ref": "#/$defs/entityKey"},
+        "stage": {"type": "string", "enum": ["source", "extracted", "normalized", "reviewed", "approved", "generated", "reexported"]},
+        "method": {"type": "string", "enum": ["deterministic_extraction", "deterministic_normalization", "human_revision", "model_assisted_translation", "generation", "platform_rewrite", "inference", "proposal", "unknown"]},
+        "status": {"type": "string", "enum": ["exact", "lossless", "partial", "lossy", "unresolved", "unknown"]},
+        "predecessor_entity_keys": {"type": "array", "items": {"$ref": "#/$defs/entityKey"}},
+        "input_evidence_keys": {"type": "array", "items": {"type": "string"}},
+        "actor": {"type": ["string", "null"]},
+        "timestamp": {"type": ["string", "null"], "format": "date-time"},
+        "receipt_ref": {"type": ["string", "null"]},
+        "notes": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "settingObservation": {
+      "type": "object",
+      "required": ["target_entity_key", "name", "state", "raw_value", "normalized_value", "source_evidence_keys", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "target_entity_key": {"$ref": "#/$defs/entityKey"},
+        "name": {"type": "string", "minLength": 1},
+        "state": {"type": "string", "enum": ["observed", "absent", "unknown", "not_applicable", "unresolved", "unsupported"]},
+        "raw_value": {},
+        "normalized_value": {},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "annotation": {
+      "type": "object",
+      "required": ["annotation_id", "target_entity_key", "field_path", "kind", "value", "actor", "timestamp", "source_evidence_keys", "status", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "annotation_id": {"type": "string", "minLength": 1},
+        "target_entity_key": {"$ref": "#/$defs/entityKey"},
+        "field_path": {"type": "string", "minLength": 1},
+        "kind": {"type": "string", "enum": ["reviewer_annotation", "proposed_revision", "approved_change", "generated_value", "inference", "model_proposal"]},
+        "value": {},
+        "actor": {"type": ["string", "null"]},
+        "timestamp": {"type": ["string", "null"], "format": "date-time"},
+        "source_evidence_keys": {"type": "array", "items": {"type": "string"}},
+        "status": {"type": "string", "enum": ["open", "accepted", "rejected", "applied", "informational"]},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    },
+    "diagnostic": {
+      "type": "object",
+      "required": ["diagnostic_id", "severity", "code", "message", "status", "entity_keys", "evidence_keys", "details", "extensions"],
+      "additionalProperties": false,
+      "properties": {
+        "diagnostic_id": {"type": "string", "minLength": 1},
+        "severity": {"type": "string", "enum": ["info", "warning", "error"]},
+        "code": {"type": "string", "minLength": 1},
+        "message": {"type": "string", "minLength": 1},
+        "status": {"type": "string", "enum": ["open", "resolved", "accepted", "not_applicable"]},
+        "entity_keys": {"type": "array", "items": {"$ref": "#/$defs/entityKey"}},
+        "evidence_keys": {"type": "array", "items": {"type": "string"}},
+        "details": {"type": "object", "additionalProperties": true},
+        "extensions": {"$ref": "#/$defs/extensions"}
+      }
+    }
+  },
+  "properties": {
+    "schema": {"type": "string", "const": "coursecraft.quiz/1"},
+    "model_id": {"$ref": "#/$defs/entityKey"},
+    "run_id": {"$ref": "#/$defs/entityKey"},
+    "source": {"$ref": "#/$defs/source"},
+    "quizzes": {"type": "array", "items": {"$ref": "#/$defs/quiz"}},
+    "structures": {"type": "array", "items": {"$ref": "#/$defs/structure"}},
+    "questions": {"type": "array", "items": {"$ref": "#/$defs/question"}},
+    "assets": {"type": "array", "items": {"$ref": "#/$defs/asset"}},
+    "resources": {"type": "array", "items": {"$ref": "#/$defs/resource"}},
+    "relationships": {"type": "array", "items": {"$ref": "#/$defs/relationship"}},
+    "evidence": {"type": "array", "items": {"$ref": "#/$defs/evidence"}},
+    "lineage": {"type": "array", "items": {"$ref": "#/$defs/lineage"}},
+    "settings_observations": {"type": "array", "items": {"$ref": "#/$defs/settingObservation"}},
+    "annotations": {"type": "array", "items": {"$ref": "#/$defs/annotation"}},
+    "diagnostics": {"type": "array", "items": {"$ref": "#/$defs/diagnostic"}},
+    "extensions": {"$ref": "#/$defs/extensions"}
+  }
+}

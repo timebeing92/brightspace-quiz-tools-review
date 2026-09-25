@@ -1,0 +1,212 @@
+{
+  "schema": "coursecraft.quiz/1",
+  "model_id": "cc:model:quiz:mixed-storage-example",
+  "run_id": "cc:run:quiz:mixed-storage-example",
+  "source": {
+    "source_key": "cc:source:1111111111111111111111111111111111111111111111111111111111111111",
+    "source_lineage_key": "cc:lineage:fixture:mixed-storage",
+    "source_kind": "fixture",
+    "fingerprint": {
+      "algorithm": "sha256",
+      "digest": "1111111111111111111111111111111111111111111111111111111111111111",
+      "scope": "file_set"
+    },
+    "references": ["tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank"],
+    "extensions": {}
+  },
+  "quizzes": [
+    {
+      "entity_key": "cc:quiz:fixture:mixed-quiz",
+      "identity": {
+        "strategy": "source_alias",
+        "permanent_code": null,
+        "source_aliases": [
+          {
+            "namespace": "d2l.assessment.ident",
+            "value": "MIXED_QUIZ",
+            "scope": "file",
+            "source_evidence_keys": ["ev.quiz"],
+            "extensions": {}
+          }
+        ],
+        "content_fingerprints": [],
+        "extensions": {}
+      },
+      "title": "Synthetic Mixed Storage Quiz",
+      "source_evidence_keys": ["ev.quiz"],
+      "diagnostic_ids": [],
+      "extensions": {}
+    }
+  ],
+  "structures": [
+    {
+      "entity_key": "cc:structure:fixture:root-bank",
+      "identity": {"strategy": "assigned", "permanent_code": null, "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "bank",
+      "source_kind": "objectbank",
+      "title": "Question Library Root Items",
+      "ordinal": 0,
+      "selection": {"mode": "all", "requested_count": null, "available_count": 1, "extensions": {}},
+      "source_evidence_keys": ["ev.root-question"],
+      "diagnostic_ids": [],
+      "extensions": {"d2l.location": "root-level objectbank item"}
+    },
+    {
+      "entity_key": "cc:structure:fixture:section-bank",
+      "identity": {"strategy": "assigned", "permanent_code": null, "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "bank",
+      "source_kind": "objectbank.section",
+      "title": "Section Bank",
+      "ordinal": 1,
+      "selection": {"mode": "all", "requested_count": null, "available_count": 1, "extensions": {}},
+      "source_evidence_keys": ["ev.section-question"],
+      "diagnostic_ids": [],
+      "extensions": {}
+    },
+    {
+      "entity_key": "cc:structure:fixture:container",
+      "identity": {"strategy": "assigned", "permanent_code": null, "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "quiz_root",
+      "source_kind": "section",
+      "title": "Quiz Root",
+      "ordinal": 0,
+      "selection": {"mode": "all", "requested_count": null, "available_count": 3, "extensions": {}},
+      "source_evidence_keys": ["ev.quiz"],
+      "diagnostic_ids": [],
+      "extensions": {}
+    },
+    {
+      "entity_key": "cc:structure:fixture:fixed-section",
+      "identity": {"strategy": "assigned", "permanent_code": null, "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "section",
+      "source_kind": "section",
+      "title": "Fixed Questions",
+      "ordinal": 1,
+      "selection": {"mode": "fixed", "requested_count": 2, "available_count": 2, "extensions": {}},
+      "source_evidence_keys": ["ev.quiz"],
+      "diagnostic_ids": [],
+      "extensions": {}
+    },
+    {
+      "entity_key": "cc:structure:fixture:random-section",
+      "identity": {"strategy": "assigned", "permanent_code": null, "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "draw",
+      "source_kind": "RAND_section",
+      "title": "Random Draw",
+      "ordinal": 2,
+      "selection": {"mode": "random", "requested_count": 1, "available_count": 1, "extensions": {}},
+      "source_evidence_keys": ["ev.quiz"],
+      "diagnostic_ids": [],
+      "extensions": {}
+    }
+  ],
+  "questions": [
+    {
+      "entity_key": "cc:question:fixture:root-q",
+      "identity": {"strategy": "permanent_code", "permanent_code": "ROOT_Q", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "multiple_choice",
+      "source_kind": "Multiple Choice",
+      "title": "Synthetic root question",
+      "prompt": {"format": "plain_text", "content": "Which synthetic option is keyed?", "extensions": {}},
+      "type_payload": {
+        "options": [
+          {"option_key": "A", "content": {"format": "plain_text", "content": "Alpha", "extensions": {}}, "correct": true, "weight": "100", "source_evidence_keys": ["ev.root-question"], "extensions": {}},
+          {"option_key": "B", "content": {"format": "plain_text", "content": "Beta", "extensions": {}}, "correct": false, "weight": "0", "source_evidence_keys": ["ev.root-question"], "extensions": {}}
+        ],
+        "accepted_responses": [],
+        "blanks": [],
+        "match_pairs": [],
+        "correct_order": [],
+        "raw_response_models": [{"source_kind": "response_lid/render_choice", "payload": {"cardinality": "Single"}, "source_evidence_keys": ["ev.root-question"], "extensions": {}}],
+        "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "exact", "maximum_points": 1, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "roundtrip_verified", "receipt_refs": ["docs/IMPORT_TEST_LOG.md"], "notes": [], "extensions": {}},
+      "source_evidence_keys": ["ev.root-question"],
+      "diagnostic_ids": [],
+      "extensions": {}
+    },
+    {
+      "entity_key": "cc:question:fixture:section-q",
+      "identity": {"strategy": "permanent_code", "permanent_code": "SECTION_Q", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "short_answer",
+      "source_kind": "Short Answer",
+      "title": "Synthetic section question",
+      "prompt": {"format": "plain_text", "content": "Enter the synthetic token.", "extensions": {}},
+      "type_payload": {
+        "options": [],
+        "accepted_responses": [{"value": "token", "case_sensitive": false, "weight": "100", "extensions": {}}],
+        "blanks": [],
+        "match_pairs": [],
+        "correct_order": [],
+        "raw_response_models": [{"source_kind": "response_str/render_fib", "payload": {}, "source_evidence_keys": ["ev.section-question"], "extensions": {}}],
+        "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "exact", "maximum_points": 1, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "extraction_only", "receipt_refs": [], "notes": ["Observed extraction shape; not claimed by the current builder."], "extensions": {}},
+      "source_evidence_keys": ["ev.section-question"],
+      "diagnostic_ids": [],
+      "extensions": {}
+    },
+    {
+      "entity_key": "cc:question:fixture:inline-q",
+      "identity": {"strategy": "permanent_code", "permanent_code": "INLINE_Q", "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "kind": "true_false",
+      "source_kind": "True/False",
+      "title": null,
+      "prompt": {"format": "plain_text", "content": "This question exists only in the quiz payload.", "extensions": {}},
+      "type_payload": {
+        "options": [
+          {"option_key": "T", "content": {"format": "plain_text", "content": "True", "extensions": {}}, "correct": true, "weight": "100", "source_evidence_keys": ["ev.inline-question"], "extensions": {}},
+          {"option_key": "F", "content": {"format": "plain_text", "content": "False", "extensions": {}}, "correct": false, "weight": "0", "source_evidence_keys": ["ev.inline-question"], "extensions": {}}
+        ],
+        "accepted_responses": [],
+        "blanks": [],
+        "match_pairs": [],
+        "correct_order": [],
+        "raw_response_models": [],
+        "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "exact", "maximum_points": 1, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "roundtrip_verified", "receipt_refs": ["docs/IMPORT_TEST_LOG.md"], "notes": [], "extensions": {}},
+      "source_evidence_keys": ["ev.inline-question"],
+      "diagnostic_ids": [],
+      "extensions": {"d2l.storage": "quiz-local inline item"}
+    }
+  ],
+  "assets": [],
+  "resources": [],
+  "relationships": [
+    {"relationship_key": "cc:relationship:fixture:quiz-root", "kind": "contains", "source_kind": "nested section", "from_entity_key": "cc:quiz:fixture:mixed-quiz", "to_entity_key": "cc:structure:fixture:container", "status": "resolved", "ordinal": 0, "attributes": {}, "candidates": [], "source_evidence_keys": ["ev.quiz"], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:root-fixed", "kind": "contains", "source_kind": "nested section", "from_entity_key": "cc:structure:fixture:container", "to_entity_key": "cc:structure:fixture:fixed-section", "status": "resolved", "ordinal": 1, "attributes": {}, "candidates": [], "source_evidence_keys": ["ev.quiz"], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:root-random", "kind": "contains", "source_kind": "nested section", "from_entity_key": "cc:structure:fixture:container", "to_entity_key": "cc:structure:fixture:random-section", "status": "resolved", "ordinal": 2, "attributes": {}, "candidates": [], "source_evidence_keys": ["ev.quiz"], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:itemref-root", "kind": "itemref", "source_kind": "itemref/linkrefid", "from_entity_key": "cc:structure:fixture:fixed-section", "to_entity_key": "cc:question:fixture:root-q", "status": "resolved", "ordinal": 1, "attributes": {"linkrefid": "ROOT_Q", "file_href": "questiondb.xml"}, "candidates": [], "source_evidence_keys": ["ev.quiz", "ev.root-question"], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:itemref-section", "kind": "itemref", "source_kind": "itemref/linkrefid", "from_entity_key": "cc:structure:fixture:random-section", "to_entity_key": "cc:question:fixture:section-q", "status": "resolved", "ordinal": 1, "attributes": {"linkrefid": "SECTION_Q", "file_href": "questiondb.xml"}, "candidates": [], "source_evidence_keys": ["ev.quiz", "ev.section-question"], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:inline", "kind": "contains", "source_kind": "inline item", "from_entity_key": "cc:structure:fixture:fixed-section", "to_entity_key": "cc:question:fixture:inline-q", "status": "resolved", "ordinal": 2, "attributes": {"storage": "inline"}, "candidates": [], "source_evidence_keys": ["ev.inline-question"], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:root-bank-member", "kind": "member_of", "source_kind": "root objectbank item", "from_entity_key": "cc:question:fixture:root-q", "to_entity_key": "cc:structure:fixture:root-bank", "status": "resolved", "ordinal": 0, "attributes": {}, "candidates": [], "source_evidence_keys": ["ev.root-question"], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:section-bank-member", "kind": "member_of", "source_kind": "section-nested objectbank item", "from_entity_key": "cc:question:fixture:section-q", "to_entity_key": "cc:structure:fixture:section-bank", "status": "resolved", "ordinal": 1, "attributes": {}, "candidates": [], "source_evidence_keys": ["ev.section-question"], "diagnostic_ids": [], "extensions": {}}
+  ],
+  "evidence": [
+    {"evidence_key": "ev.quiz", "source_key": "cc:source:1111111111111111111111111111111111111111111111111111111111111111", "kind": "xml_element", "source_ref": "quiz_d2l_mixed.xml", "locator": "/questestinterop/assessment", "content": null, "content_ref": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/quiz_d2l_mixed.xml", "sha256": null, "extraction_method": "deterministic", "extensions": {}},
+    {"evidence_key": "ev.root-question", "source_key": "cc:source:1111111111111111111111111111111111111111111111111111111111111111", "kind": "xml_element", "source_ref": "questiondb.xml", "locator": "/questestinterop/objectbank/item[@ident='ROOT_Q']", "content": null, "content_ref": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/questiondb.xml", "sha256": null, "extraction_method": "deterministic", "extensions": {}},
+    {"evidence_key": "ev.section-question", "source_key": "cc:source:1111111111111111111111111111111111111111111111111111111111111111", "kind": "xml_element", "source_ref": "questiondb.xml", "locator": "/questestinterop/objectbank/section/item[@ident='SECTION_Q']", "content": null, "content_ref": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/questiondb.xml", "sha256": null, "extraction_method": "deterministic", "extensions": {}},
+    {"evidence_key": "ev.inline-question", "source_key": "cc:source:1111111111111111111111111111111111111111111111111111111111111111", "kind": "xml_element", "source_ref": "quiz_d2l_mixed.xml", "locator": "/questestinterop/assessment/section/section/item[@ident='INLINE_Q']", "content": null, "content_ref": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/quiz_d2l_mixed.xml", "sha256": null, "extraction_method": "deterministic", "extensions": {}}
+  ],
+  "lineage": [
+    {"lineage_id": "lin.root", "subject_entity_key": "cc:question:fixture:root-q", "stage": "normalized", "method": "deterministic_normalization", "status": "lossless", "predecessor_entity_keys": [], "input_evidence_keys": ["ev.root-question"], "actor": "scripts.extract_quiz_pool_review", "timestamp": null, "receipt_ref": null, "notes": [], "extensions": {}},
+    {"lineage_id": "lin.section", "subject_entity_key": "cc:question:fixture:section-q", "stage": "normalized", "method": "deterministic_normalization", "status": "lossless", "predecessor_entity_keys": [], "input_evidence_keys": ["ev.section-question"], "actor": "scripts.extract_quiz_pool_review", "timestamp": null, "receipt_ref": null, "notes": [], "extensions": {}},
+    {"lineage_id": "lin.inline", "subject_entity_key": "cc:question:fixture:inline-q", "stage": "normalized", "method": "deterministic_normalization", "status": "lossless", "predecessor_entity_keys": [], "input_evidence_keys": ["ev.inline-question"], "actor": "scripts.extract_quiz_pool_review", "timestamp": null, "receipt_ref": null, "notes": [], "extensions": {}}
+  ],
+  "settings_observations": [
+    {"target_entity_key": "cc:quiz:fixture:mixed-quiz", "name": "is_active", "state": "observed", "raw_value": "yes", "normalized_value": true, "source_evidence_keys": ["ev.quiz"], "extensions": {}},
+    {"target_entity_key": "cc:quiz:fixture:mixed-quiz", "name": "time_limit", "state": "observed", "raw_value": "30", "normalized_value": 30, "source_evidence_keys": ["ev.quiz"], "extensions": {"unit": "minutes"}}
+  ],
+  "annotations": [
+    {"annotation_id": "ann.inline-note", "target_entity_key": "cc:question:fixture:inline-q", "field_path": "/prompt/content", "kind": "reviewer_annotation", "value": "Keep visibly classified as quiz-local.", "actor": "fixture-reviewer", "timestamp": "2026-07-15T12:00:00Z", "source_evidence_keys": ["ev.inline-question"], "status": "informational", "extensions": {}}
+  ],
+  "diagnostics": [],
+  "extensions": {"coursecraft.phase": "phase-2-contract-example"}
+}

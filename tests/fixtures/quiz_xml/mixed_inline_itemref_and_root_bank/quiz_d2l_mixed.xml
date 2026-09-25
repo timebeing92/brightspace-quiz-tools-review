@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns:d2l_2p0="http://desire2learn.com/xsd/d2lcp_v2p0">
+  <assessment ident="MIXED_QUIZ" title="Mixed storage fixture">
+    <assessmentcontrol hintswitch="no" feedbackswitch="no" />
+    <assess_procextension>
+      <is_active>yes</is_active>
+      <d2l_2p0:attempts_allowed>2</d2l_2p0:attempts_allowed>
+      <d2l_2p0:time_limit>30</d2l_2p0:time_limit>
+    </assess_procextension>
+    <section ident="CONTAINER_SECTION">
+      <section ident="FIXED" title="Fixed references">
+        <itemref linkrefid="ROOT_Q">
+          <d2l_2p0:file href="questiondb.xml" />
+          <d2l_2p0:points>1</d2l_2p0:points>
+        </itemref>
+      </section>
+      <section ident="RAND_SECTION" title="Random reference">
+        <qtimetadata>
+          <qti_metadatafield><fieldlabel>qmd_numberofitems</fieldlabel><fieldentry>1</fieldentry></qti_metadatafield>
+        </qtimetadata>
+        <itemref linkrefid="SECTION_Q">
+          <d2l_2p0:file href="questiondb.xml" />
+          <d2l_2p0:points>2</d2l_2p0:points>
+        </itemref>
+      </section>
+      <section ident="INLINE" title="Inline local item">
+        <item ident="INLINE_OBJECT" label="INLINE_Q" title="Inline item">
+          <itemmetadata>
+            <qtimetadata>
+              <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>True/False</fieldentry></qti_metadatafield>
+              <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1</fieldentry></qti_metadatafield>
+              <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>INLINE001</fieldentry></qti_metadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <material><mattext texttype="text/html">&lt;p&gt;Synthetic inline prompt?&lt;/p&gt;</mattext></material>
+            <response_lid ident="INLINE_LID" rcardinality="Single">
+              <render_choice>
+                <response_label ident="INLINE_TRUE"><material><mattext texttype="text/plain">True</mattext></material></response_label>
+                <response_label ident="INLINE_FALSE"><material><mattext texttype="text/plain">False</mattext></material></response_label>
+              </render_choice>
+            </response_lid>
+          </presentation>
+          <resprocessing>
+            <respcondition><conditionvar><varequal respident="INLINE_LID">INLINE_TRUE</varequal></conditionvar><setvar>100</setvar></respcondition>
+          </resprocessing>
+        </item>
+      </section>
+    </section>
+  </assessment>
+</questestinterop>

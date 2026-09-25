@@ -1,0 +1,43 @@
+{
+  "schema": "coursecraft.quiz_run/1",
+  "run_id": "cc:run:quiz:mixed-storage-example",
+  "started_at": "2026-07-15T12:00:00Z",
+  "finished_at": "2026-07-15T12:00:02Z",
+  "producer": {
+    "name": "coursecraft-workbench quiz contract example",
+    "version": "phase-2",
+    "commit": null,
+    "release": null,
+    "command": "python3 scripts/validate_quiz_contract.py ...",
+    "extensions": {"note": "Synthetic example; real runs record the producer commit."}
+  },
+  "source": {
+    "source_key": "cc:source:1111111111111111111111111111111111111111111111111111111111111111",
+    "source_lineage_key": "cc:lineage:fixture:mixed-storage",
+    "source_kind": "fixture",
+    "fingerprint": {"algorithm": "sha256", "digest": "1111111111111111111111111111111111111111111111111111111111111111", "scope": "file_set"},
+    "references": ["tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank"],
+    "extensions": {}
+  },
+  "contract_versions": [
+    {"schema": "coursecraft.quiz/1", "schema_sha256": "6164a91b5d427abb18cd8f7b69c1b330f9ff0cd43684bf3028a5b5154080b42b", "extensions": {}},
+    {"schema": "coursecraft.quiz_run/1", "schema_sha256": "815a58eea9588c645ec6bc37afeb435dd574036792fd641324a42013d158a3ce", "extensions": {}},
+    {"schema": "coursecraft.quiz_settings/1", "schema_sha256": "d9f09ff10df7a89b2c0ecd420ccd60bcd4f562b67e25fb3e8c0f0d7bf641859d", "extensions": {}}
+  ],
+  "inputs": [
+    {"path": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/questiondb.xml", "role": "input", "media_type": "application/xml", "sha256": "d0e56ca7afd5159048e9d0688de2e77b6f201ef8a9344e9c467d9e41719fe5ab", "bytes": 2544, "status": "read", "extensions": {}},
+    {"path": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/quiz_d2l_mixed.xml", "role": "input", "media_type": "application/xml", "sha256": "c1c5b241f8cee2a634501141d63414bab21279931e2361239d835c6ca40aa3a8", "bytes": 2586, "status": "read", "extensions": {}}
+  ],
+  "artifacts": [
+    {"path": "workspace/reference/schemas/quiz/examples/mixed_storage.example.json", "role": "model", "media_type": "application/json", "sha256": "59db480eb817f38d351ab6879092e89601ed9a1d896255d5a624cc9fdcd64a89", "bytes": 15333, "status": "emitted", "extensions": {}}
+  ],
+  "capabilities": [
+    {"name": "source_fingerprint", "status": "completed", "started_at": null, "finished_at": null, "artifact_paths": ["tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/questiondb.xml", "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/quiz_d2l_mixed.xml"], "diagnostic_ids": [], "notes": [], "extensions": {}},
+    {"name": "normalize_questions", "status": "completed", "started_at": null, "finished_at": null, "artifact_paths": ["workspace/reference/schemas/quiz/examples/mixed_storage.example.json"], "diagnostic_ids": [], "notes": [], "extensions": {}},
+    {"name": "resolve_missing_external_bank", "status": "skipped", "started_at": null, "finished_at": null, "artifact_paths": [], "diagnostic_ids": ["diag.not-requested"], "notes": ["No external bank was requested for the fixture."], "extensions": {}}
+  ],
+  "diagnostics": [
+    {"diagnostic_id": "diag.not-requested", "severity": "info", "code": "capability_not_requested", "message": "External bank resolution was not requested.", "status": "not_applicable", "details": {}, "extensions": {}}
+  ],
+  "extensions": {"coursecraft.example": true}
+}

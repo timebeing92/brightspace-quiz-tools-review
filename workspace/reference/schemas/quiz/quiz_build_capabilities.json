@@ -1,0 +1,130 @@
+{
+  "schema": "coursecraft.quiz_build_capabilities/1",
+  "updated_at": "2026-07-20",
+  "policy": {
+    "authoring_model": "coursecraft.quiz/1",
+    "settings_receipt": "coursecraft.quiz_settings/1",
+    "run_receipt": "coursecraft.quiz_run/1",
+    "minimum_question_build_support": ["import_verified", "roundtrip_verified"],
+    "unknown_or_unlisted": "reject_without_transforming",
+    "live_verification_boundary": "Phase 5"
+  },
+  "question_kinds": {
+    "multiple_choice": {
+      "target_question_type": "MULTICHOICE",
+      "status": "roundtrip_verified",
+      "evidence_level": "L4",
+      "receipt_refs": ["docs/IMPORT_TEST_LOG.md#receipt-4--2026-06-16--quiz-package-m5m7--l4"]
+    },
+    "true_false": {
+      "target_question_type": "TRUEFALSE",
+      "status": "roundtrip_verified",
+      "evidence_level": "L4",
+      "receipt_refs": ["docs/IMPORT_TEST_LOG.md#receipt-4--2026-06-16--quiz-package-m5m7--l4"]
+    },
+    "multi_select": {
+      "target_question_type": "MULTISELECT",
+      "status": "roundtrip_verified",
+      "evidence_level": "L4",
+      "constraints": {"scoring_modes": ["all_or_nothing"]},
+      "receipt_refs": ["docs/IMPORT_TEST_LOG.md#receipt-4--2026-06-16--quiz-package-m5m7--l4"]
+    },
+    "long_answer": {
+      "target_question_type": "WRITTEN_RESPONSE",
+      "status": "roundtrip_verified",
+      "evidence_level": "L4",
+      "receipt_refs": ["docs/IMPORT_TEST_LOG.md#receipt-4--2026-06-16--quiz-package-m5m7--l4"]
+    },
+    "short_answer": {"status": "extraction_only", "evidence_level": "L0"},
+    "multi_short_answer": {"status": "extraction_only", "evidence_level": "L0"},
+    "fill_in_blanks": {"status": "extraction_only", "evidence_level": "L0"},
+    "matching": {"status": "extraction_only", "evidence_level": "L0"},
+    "ordering": {"status": "extraction_only", "evidence_level": "L0"},
+    "unknown": {"status": "unsupported", "evidence_level": "preserved_only"}
+  },
+  "structures": {
+    "question_library_banks": {"status": "roundtrip_verified", "evidence_level": "L4"},
+    "itemref_joins": {"status": "roundtrip_verified", "evidence_level": "L4"},
+    "random_draw_sections": {"status": "roundtrip_verified", "evidence_level": "L4"},
+    "grade_item_join": {"status": "roundtrip_verified", "evidence_level": "L4"},
+    "module_placement": {"status": "roundtrip_verified", "evidence_level": "L4"},
+    "library_only_package": {"status": "roundtrip_verified", "evidence_level": "L4"}
+  },
+  "settings": {
+    "is_active": {
+      "status": "roundtrip_verified",
+      "evidence_level": "L4",
+      "type": "boolean",
+      "receipt_refs": ["workspace/review/quiz_binder_fable/27_PHASE5_REMEDIATION_CLOSEOUT_AND_REGISTRY_PROPOSAL.md"]
+    },
+    "attempts_allowed": {
+      "status": "roundtrip_verified",
+      "evidence_level": "L4",
+      "type": "positive_integer",
+      "receipt_refs": ["workspace/review/quiz_binder_fable/27_PHASE5_REMEDIATION_CLOSEOUT_AND_REGISTRY_PROPOSAL.md"]
+    },
+    "time_limit": {
+      "status": "roundtrip_verified",
+      "evidence_level": "L4",
+      "type": "nonnegative_integer",
+      "unit": "minutes",
+      "receipt_refs": ["workspace/review/quiz_binder_fable/27_PHASE5_REMEDIATION_CLOSEOUT_AND_REGISTRY_PROPOSAL.md"]
+    },
+    "show_clock": {
+      "status": "roundtrip_verified",
+      "evidence_level": "L4",
+      "type": "boolean",
+      "receipt_refs": ["workspace/review/quiz_binder_fable/27_PHASE5_REMEDIATION_CLOSEOUT_AND_REGISTRY_PROPOSAL.md"]
+    },
+    "enforce_time_limit": {
+      "status": "roundtrip_verified",
+      "evidence_level": "L4",
+      "type": "boolean",
+      "receipt_refs": ["workspace/review/quiz_binder_fable/27_PHASE5_REMEDIATION_CLOSEOUT_AND_REGISTRY_PROPOSAL.md"]
+    },
+    "is_forward_only": {
+      "status": "roundtrip_verified",
+      "evidence_level": "L4",
+      "type": "boolean",
+      "receipt_refs": ["workspace/review/quiz_binder_fable/27_PHASE5_REMEDIATION_CLOSEOUT_AND_REGISTRY_PROPOSAL.md"]
+    },
+    "randomize_answers": {
+      "status": "roundtrip_verified",
+      "evidence_level": "L4",
+      "type": "boolean",
+      "receipt_refs": ["workspace/review/quiz_binder_fable/27_PHASE5_REMEDIATION_CLOSEOUT_AND_REGISTRY_PROPOSAL.md"]
+    }
+  },
+  "assets": {
+    "resolved_question_assets": {
+      "status": "roundtrip_verified",
+      "evidence_level": "L4",
+      "constraints": {
+        "tested_path_forms": ["nested", "shared_reference", "percent_encoded_uri_reference"],
+        "archive_member_rule": "Percent-encoded URI references map to safely decoded physical archive members."
+      },
+      "receipt_refs": ["workspace/review/quiz_binder_fable/27_PHASE5_REMEDIATION_CLOSEOUT_AND_REGISTRY_PROPOSAL.md"],
+      "notes": ["Nested, shared-reference, and percent-encoded URI path forms rendered at their intended use sites and round-tripped byte-identically in the Phase 5 KEEP capsule."]
+    }
+  },
+  "authoring_routes": {
+    "strict_model_projection": {
+      "status": "roundtrip_verified",
+      "evidence_level": "L4",
+      "tested_scope": {
+        "question_kinds": ["multiple_choice", "true_false", "multi_select", "long_answer"],
+        "structures": ["question_library_banks", "itemref_joins", "random_draw_sections", "grade_item_join", "module_placement"],
+        "authorization": "exact promoted Phase 5 candidate only"
+      },
+      "receipt_refs": [
+        "tests/test_quiz_phase5_authorization.py",
+        "workspace/review/quiz_binder_fable/16_CODEX_INTEGRATION_AUDIT_OF_STAGE1_AND_PHASE5_PROPOSAL.md",
+        "workspace/review/quiz_binder_fable/27_PHASE5_REMEDIATION_CLOSEOUT_AND_REGISTRY_PROPOSAL.md"
+      ],
+      "notes": [
+        "Local projection is verified through contract, readiness, build, and package validation checks.",
+        "The named tested scope passed the Phase 5 TWIN live import and round-trip campaign; this does not broaden the named kinds, structures, or exact-candidate authorization constraint."
+      ]
+    }
+  }
+}
