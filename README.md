@@ -209,3 +209,20 @@ control; the default `output/` folder is ignored. Included examples are syntheti
 
 AGPL-3.0-or-later. See [LICENSE](LICENSE), [license details](LICENSE_POSTURE.md),
 and [commercial terms](COMMERCIAL.md).
+
+## Part of the CourseCraft ecosystem
+
+Brightspace Quiz Tools is part of a broader CourseCraft tooling ecosystem being
+documented, packaged, and prepared in batches for public sharing. Each tool is
+released independently, with its own supported features and level of readiness.
+
+| Tool | What it does | Public link |
+| --- | --- | --- |
+| **Blueprint Wizard** | A guided local workflow that turns a Brightspace course export into a course blueprint and review reports. | [Repository and installation guide](https://github.com/timebeing92/brightspace-blueprint-runner) |
+| **Rubric Loom** | Local tools for extracting, reviewing, drafting, and packaging Brightspace rubrics. | [Repository and installation guide](https://github.com/timebeing92/brightspace-rubric-loom-runner) |
+| **Workshop Hall** | A hosted preview that brings selected CourseCraft tools together in a browser. | [Public hosted preview](https://huggingface.co/spaces/timebeing92/coursecraft-workshop) |
+
+Workshop Hall's hosted app was unavailable when checked on September 25, 2026.
+Its public page remains linked here for availability updates. For the local
+tools, follow each repository's installation guide and release notes for the
+current downloads, supported features, and limitations.

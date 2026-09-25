@@ -31,7 +31,7 @@
     },
     {
       "path": "README.md",
-      "sha256": "e7fc9feeb0a8f5765e62bb4d7213e320f7b374bae19494861f1500b3eadeabf7"
+      "sha256": "ba89269d2998c1e7c08d06ca6d14c6ae73aaf6153170b1f02f2b24650c2f9b29"
     },
     {
       "path": "START_HERE.md",
@@ -95,7 +95,7 @@
     },
     {
       "path": "sbom/runtime.cdx.json",
-      "sha256": "04ad45fd722a022f2e6b8470d77dc24e18c54161cf627e616035d6a12fadd419"
+      "sha256": "93a3a52088dc0b68813d5a49a52c3ccef95a47d59f643cf55b4cae0073355960"
     },
     {
       "path": "scripts/bootstrap_env.py",
