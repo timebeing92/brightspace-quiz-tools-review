@@ -2,7 +2,7 @@
   "bomFormat": "CycloneDX",
   "specVersion": "1.5",
   "serialNumber": "urn:uuid:e7e9ed0d-9c11-53cc-bdef-c4122908fbf3",
-  "version": 1,
+  "version": 2,
   "metadata": {
     "component": {
       "type": "application",
@@ -78,7 +78,7 @@
   ],
   "dependencies": [
     {
-      "ref": "pkg:github/timebeing92/brightspace-quiz-bundle@0.1.0-rc.6",
+      "ref": "pkg:github/timebeing92/brightspace-quiz-bundle@0.1.0-rc.8",
       "dependsOn": [
         "pkg:pypi/jsonschema@4.26.0",
         "pkg:pypi/openpyxl@3.1.5"

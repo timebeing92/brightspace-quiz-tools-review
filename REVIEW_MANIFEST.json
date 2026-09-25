@@ -95,7 +95,7 @@
     },
     {
       "path": "sbom/runtime.cdx.json",
-      "sha256": "04ad45fd722a022f2e6b8470d77dc24e18c54161cf627e616035d6a12fadd419"
+      "sha256": "93a3a52088dc0b68813d5a49a52c3ccef95a47d59f643cf55b4cae0073355960"
     },
     {
       "path": "scripts/bootstrap_env.py",
