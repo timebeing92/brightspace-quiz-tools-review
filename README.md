@@ -222,7 +222,12 @@ released independently, with its own supported features and level of readiness.
 | **Rubric Loom** | Local tools for extracting, reviewing, drafting, and packaging Brightspace rubrics. | [Repository and installation guide](https://github.com/timebeing92/brightspace-rubric-loom-runner) |
 | **Workshop Hall** | A hosted preview that brings selected CourseCraft tools together in a browser. | [Public hosted preview](https://huggingface.co/spaces/timebeing92/coursecraft-workshop) |
 
-Workshop Hall's hosted app was unavailable when checked on September 25, 2026.
-Its public page remains linked here for availability updates. For the local
-tools, follow each repository's installation guide and release notes for the
-current downloads, supported features, and limitations.
+Workshop Hall has its own browser interface and run environment, using separately
+versioned tool releases. Its Quiz Binder bench currently uses an older release and
+will be updated after testing. Features and output layouts can therefore differ
+from the local tools in this repository. For now, the Hall's quiz bench handles
+extraction and review (**Unbind**); **Compose** and **Rebind** are available through
+the local Quiz Workshop.
+
+For the local tools, follow each repository's installation guide and release notes
+for the current downloads, supported features, and limitations.
