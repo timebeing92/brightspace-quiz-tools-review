@@ -9,6 +9,16 @@ interfaces, standalone commands, blank drafting templates, and synthetic example
 It runs locally. A Brightspace or Google Drive account is not needed to run the
 tools; installation downloads Python dependencies.
 
+### Current sandbox verification
+
+The September 26, 2026 sandbox check found and repaired a Multi-Select answer-key
+import defect. A second import preserved the key, workbook edits, replacement
+image, added question and tested settings. The re-export confirmed all six
+questions, keys, image bytes, pool membership and accepted settings. A preview
+attempt scored 5/5. Brightspace changed the unedited clock-display flag.
+See the [verification record](docs/SANDBOX_VERIFICATION_2026-09-26.md)
+before treating this snapshot as ready for course imports.
+
 ## Start here
 
 You need **Python 3.11, 3.12, or 3.13**. This development snapshot was verified with
@@ -115,7 +125,8 @@ compose/
   native_source_DO_NOT_EDIT.xlsx        Original workbook representation
   model.json                           Structured source content
   assessment-review.json               Layout and companion-file manifest
-  Images/                              Locally copied image files
+  Images/                              Original images (protected)
+  Replacement Images/                  Add replacement files here when needed
   README.md                            Packet-specific instructions
 ```
 
@@ -123,6 +134,9 @@ Image links are relative to the workbook. Original rich markup is retained
 separately from readable cell text. Import checks source identity, protected cells,
 file hashes, and question coverage before collecting changes. Image or equation
 content that cannot safely be revised through text cells remains held for review.
+To replace an image, add a PNG/JPEG/GIF under `Replacement Images/`, enter its
+relative filename on the matching `Image Replacements` row, and mark it accepted.
+Compose checks the bytes and Rebind includes the replacement file.
 
 An export containing only a question library receives a question inventory.
 Quiz Workshop does not invent assessments for it. The `All Questions` sheet also
@@ -147,8 +161,11 @@ JSON input formats.
 
 Draft intake creates a structured, unapproved draft and validation reports.
 It supports nine question types at intake; package-building support is narrower.
-Use the blank template for new questions and the extracted workbook for revisions
-to existing questions. [Read the intake contract](docs/project/quiz-consolidation/DETERMINISTIC_QUIZ_DRAFT_INTAKE_2026-09-16.md).
+Within an extracted assessment packet, use `New Questions` and `New Responses`
+to add questions to an existing pool. Copy the target identities from `Target
+Pools` and explicitly accept the new question. The pool grows; its random draw
+count stays unchanged. Use the blank template for independent drafting and new
+assessments. Keep the protected source rows unchanged. [Read the intake contract](docs/project/quiz-consolidation/DETERMINISTIC_QUIZ_DRAFT_INTAKE_2026-09-16.md).
 
 ## Run individual steps or review the source
 
@@ -183,10 +200,31 @@ Run the included demonstration, then recheck its recorded files:
 .venv/bin/python scripts/make_release_asset.py --check-only
 ```
 
-The originating development checkout passed **795 tests with one intentional
-skip** on Python 3.13 before this snapshot was prepared. This repository includes
-the executable synthetic demonstration and its fixtures. The broader private
-test corpus is not included, so `pytest` here does not reproduce that result.
+This checkout includes a runnable regression suite. After installing development
+dependencies, run:
+
+```sh
+.venv/bin/python -m pytest tests
+```
+
+The current Python 3.13 run is **652 passed, one skipped**. The intentional skip
+needs a private historical import-receipt log; that log is not distributed.
+The 24 focused SME scenarios and two terminal integration tests cover accepted
+prompt/options/key edits, image replacement, new questions, settings, exact
+candidate authorization, package validation, and re-extraction. Two distribution
+checks verify archive completeness and fixture sanitization.
+
+The repository's GitHub Actions workflow runs the public suite and demonstration on
+Python 3.11, 3.12 and 3.13, and checks the pinned source and distribution inputs.
+It does not approve or merge pull requests; maintainers review contributions.
+
+The fixtures are synthetic or sanitized native XML shapes. Real course prose,
+resource links, access settings and raw tenant exports are excluded. Source
+checkouts and generated review archives include the same public test corpus.
+See [`tests/README.md`](tests/README.md) for coverage and limits. Review acceptance
+does not grant build approval: extracted questions need accepted permanent codes,
+resolved scoring where required, and import evidence or an exact sandbox candidate
+authorization before Rebind.
 
 Extraction success does not establish package readiness. Unsupported content,
 unresolved references, missing assets, or missing build approval can prevent
@@ -197,8 +235,9 @@ implemented.
 
 This is a development snapshot based on `0.1.0-rc.8`, with newer assessment-review
 changes. `VERSION` identifies that release base.
-[REVIEW_MANIFEST.json](REVIEW_MANIFEST.json) records the originating commits and
-snapshot file hashes; [the upstream pin](upstream/workbench_pin.json) identifies
+In source checkouts, `REVIEW_MANIFEST.json` records the originating commits and
+snapshot file hashes. Generated archives include `RELEASE_MANIFEST.json` with
+their own file hashes. [The upstream pin](upstream/workbench_pin.json) identifies
 the shared implementation. See [repository scope](docs/REPOSITORY_BOUNDARY.md)
 for ownership and change guidance.
 

@@ -3,7 +3,7 @@
 `brightspace-quiz-tools-review` is a standalone, runnable source snapshot of
 Quiz Workshop, Bindery Ledger, and their shared quiz tools. It begins with new
 Git history and includes the runtime, documentation, schemas, drafting templates,
-and synthetic fixtures needed by the demonstration.
+and synthetic or sanitized fixtures for the included regression suite.
 
 ## Source projects
 
@@ -20,9 +20,11 @@ implementation is included under `scripts/`.
 release base, and file hashes for this snapshot. Its `candidate_commit` belongs
 to the originating bundle; this repository has its own commit history. The
 manifest excludes its own bytes and generated or ignored files.
+Generated archives instead include `RELEASE_MANIFEST.json`, which records the
+packaged file set, archive-specific hashes, and source commits.
 
 `upstream/workbench_pin.json` records hashes for the shared files included here.
-It is the runtime subset of the source bundle's larger pin. `VERSION` records the
+It identifies the selected runtime and public regression sources. `VERSION` records the
 `0.1.0-rc.8` base; the assessment-review additions are development changes above
 that release. There is no release tag for this snapshot.
 
@@ -70,6 +72,7 @@ the maintainer's reviewed promotion process.
 Contributions will be acknowledged in this repository, with accepted improvements
 credited in project documentation or release notes.
 
-The full test suite runs in the development projects. This repository provides
-the built-in synthetic demonstration and drift/input checks. No local check
+The included public suite runs in this repository and its review archive. The
+private development projects contain additional tests and live evidence logs.
+See [test coverage](../tests/README.md) for reproducible commands and exclusions. No local check
 establishes a successful live Brightspace import or rendering result.

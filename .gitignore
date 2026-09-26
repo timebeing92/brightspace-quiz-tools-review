@@ -15,6 +15,11 @@ htmlcov/
 /dist/
 *.zip
 *.tar.gz
+/workspace/review/quiz_binder_runs/
+/workspace/review/quiz_capability_lab_r1/*
+!/workspace/review/quiz_capability_lab_r1/fixtures/
+/workspace/review/quiz_capability_lab_r1/fixtures/*
+!/workspace/review/quiz_capability_lab_r1/fixtures/specimens/
 
 # Local settings and editor files
 .env

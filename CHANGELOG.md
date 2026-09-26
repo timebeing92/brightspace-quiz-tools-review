@@ -1,5 +1,30 @@
 # Release changes
 
+## Unreleased — verified workbook roundtrip, 2026-09-26
+
+- Apply accepted prompt, response-option and answer-key revisions, alongside
+  accepted replacement images, new pool questions and quiz settings.
+- Carry replacement assets through Compose and Rebind; preserve native pool
+  membership, draw counts and draw weighting. Stop Compose when an accepted
+  revision cannot safely be applied.
+- Keep authored content unchanged when image promotion is rejected, and recheck
+  that replacement files resolve inside the review packet before applying them.
+- Repair Multi-Select serialization using the native Brightspace scoring shape.
+  Validate generated choice keys against the authoring model and reject the
+  earlier generic scoring shape that lost its key during import.
+- Include the synthetic and sanitized public regression corpus in the checkout
+  and review archive, with complete pinned specimens and terminal roundtrip tests.
+- Add pull-request checks for supported Python versions, the vendor pin,
+  distribution inputs, regression tests and the synthetic demonstration.
+- Verify a synthetic sandbox import, native re-export and 5/5 preview score.
+  Accepted edits and settings survived; the unedited clock-display flag changed.
+  See the [verification record](docs/SANDBOX_VERIFICATION_2026-09-26.md) for scope
+  and remaining limits.
+
+This remains a development snapshot above the rc.8 release base. The sandbox
+result applies to the documented synthetic candidate; it does not approve other
+course packages or upgrade their build evidence.
+
 ## Unreleased — assessment review handoff, 2026-09-25
 
 - Add one editable tab per assessment with labelled source pools, collapsible
@@ -13,9 +38,10 @@
 - Connect the adapter to Quiz Workshop, Bindery Ledger real-export Unbind and
   the synthetic demonstration. Add independent prepare/import commands.
 
-This is a local development candidate. No new release or Brightspace import has
-been published. The recorded VERSION still identifies the rc.8 release base;
-the exact candidate code is identified by its Git commit and Workbench pin.
+At this handoff, no new release or Brightspace import had been completed. The
+September 26 entry records the subsequent sandbox verification. VERSION still
+identifies the rc.8 release base; the exact candidate code is identified by its
+Git commit and Workbench pin.
 
 ## 0.1.0-rc.8 — 2026-09-17
 

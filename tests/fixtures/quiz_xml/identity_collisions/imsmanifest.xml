@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="IDENTITY_COLLISIONS_FIXTURE">
+  <resources>
+    <resource identifier="res_quiz" type="webcontent" d2l_material_type="d2lquiz" href="quiz_d2l_identity_collisions.xml" />
+    <resource identifier="res_asset" type="webcontent" href="shared.svg" />
+    <resource identifier="res_variant_asset" type="webcontent" href="variant.svg" />
+  </resources>
+</manifest>

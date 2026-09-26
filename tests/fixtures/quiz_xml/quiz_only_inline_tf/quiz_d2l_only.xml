@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns:d2l_2p0="http://desire2learn.com/xsd/d2lcp_v2p0">
+  <assessment ident="QUIZ_ONLY" title="Quiz-only inline fixture">
+    <assessmentcontrol hintswitch="no" feedbackswitch="no" />
+    <assess_procextension>
+      <is_active>yes</is_active>
+      <d2l_2p0:attempts_allowed>1</d2l_2p0:attempts_allowed>
+    </assess_procextension>
+    <section ident="ONLY_SECTION" title="Inline only section">
+      <item ident="ONLY_OBJECT" label="ONLY_Q" title="Inline only item">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>True/False</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>ONLY001</fieldentry></qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material><mattext texttype="text/html">&lt;p&gt;QUIZUNBINDCANARYPROMPT — is this synthetic prompt true or false?&lt;/p&gt;</mattext></material>
+          <response_lid ident="ONLY_LID" rcardinality="Single">
+            <render_choice>
+              <response_label ident="ONLY_TRUE"><material><mattext texttype="text/plain">True</mattext></material></response_label>
+              <response_label ident="ONLY_FALSE"><material><mattext texttype="text/plain">False</mattext></material></response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <respcondition><conditionvar><varequal respident="ONLY_LID">ONLY_TRUE</varequal></conditionvar><setvar>100</setvar></respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

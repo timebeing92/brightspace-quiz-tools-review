@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop>
+  <objectbank ident="QLIB_ANS">
+    <section ident="SECT_ANS" title="Answer Pool">
+      <item ident="OBJ_SA_1" label="LIB_SA_1" title="1">
+        <itemmetadata><qtimetadata><qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Short Answer</fieldentry></qti_metadatafield></qtimetadata></itemmetadata>
+        <presentation><flow><material><mattext texttype="text/html">&lt;p&gt;Compute 2 + 6.&lt;/p&gt;</mattext></material></flow></presentation>
+        <resprocessing><respcondition><conditionvar><varequal respident="LIB_SA_1_ANS" case="no">8</varequal></conditionvar><setvar action="Set">100.000000000</setvar></respcondition></resprocessing>
+      </item>
+      <item ident="OBJ_MS_1" label="LIB_MS_1" title="2">
+        <itemmetadata><qtimetadata><qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Multi-Select</fieldentry></qti_metadatafield></qtimetadata></itemmetadata>
+        <presentation>
+          <flow>
+            <material><mattext texttype="text/html">&lt;p&gt;Select the prime numbers.&lt;/p&gt;</mattext></material>
+            <response_lid ident="LIB_MS_1_LID" rcardinality="Multiple">
+              <render_choice shuffle="no">
+                <flow_label class="Block"><response_label ident="LIB_MS_1_A1"><flow_mat><material><mattext texttype="text/html">&lt;p&gt;2&lt;/p&gt;</mattext></material></flow_mat></response_label></flow_label>
+                <flow_label class="Block"><response_label ident="LIB_MS_1_A2"><flow_mat><material><mattext texttype="text/html">&lt;p&gt;4&lt;/p&gt;</mattext></material></flow_mat></response_label></flow_label>
+                <flow_label class="Block"><response_label ident="LIB_MS_1_A3"><flow_mat><material><mattext texttype="text/html">&lt;p&gt;5&lt;/p&gt;</mattext></material></flow_mat></response_label></flow_label>
+              </render_choice>
+            </response_lid>
+          </flow>
+        </presentation>
+        <resprocessing><respcondition title="Scoring for the correct answers" continue="yes"><conditionvar><varequal respident="LIB_MS_1_LID">LIB_MS_1_A1</varequal><varequal respident="LIB_MS_1_LID">LIB_MS_1_A3</varequal><not><varequal respident="LIB_MS_1_LID">LIB_MS_1_A2</varequal></not></conditionvar><setvar action="Add">1</setvar></respcondition></resprocessing>
+      </item>
+      <item ident="OBJ_LA_1" label="LIB_LA_1" title="3">
+        <itemmetadata><qtimetadata><qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Long Answer</fieldentry></qti_metadatafield></qtimetadata></itemmetadata>
+        <presentation><flow><material><mattext texttype="text/html">&lt;p&gt;Explain your strategy.&lt;/p&gt;</mattext></material></flow></presentation>
+      </item>
+    </section>
+  </objectbank>
+</questestinterop>

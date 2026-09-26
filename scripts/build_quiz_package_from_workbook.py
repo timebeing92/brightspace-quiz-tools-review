@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from copy import deepcopy
 from datetime import datetime, timezone
 import hashlib
 import html
@@ -420,19 +421,29 @@ def add_choice_question(
         # do NOT — canonical D2L MC/TF resprocessing has no outcomes/decvar.
         outcomes = ET.SubElement(resprocessing, "outcomes")
         ET.SubElement(outcomes, "decvar", {"vartype": "Integer", "defaultval": "0"})
-        respcondition = ET.SubElement(resprocessing, "respcondition", {"title": "All correct selections"})
+        # Native D2L import recognizes this Add 1 / complementary Add 0
+        # profile. Generic QTI Set 100 / empty fallback lost the answer key
+        # in the 2026-09-26 sandbox import, despite local re-extraction passing.
+        respcondition = ET.SubElement(resprocessing, "respcondition", {
+            "title": "Scoring for the correct answers", "continue": "yes"})
         conditionvar = ET.SubElement(respcondition, "conditionvar")
-        and_block = ET.SubElement(conditionvar, "and")
         for option_ident, _option_text in option_idents:
             if option_ident in correct_idents:
-                ET.SubElement(and_block, "varequal", {"respident": lid_ident}).text = option_ident
-            else:
-                not_block = ET.SubElement(and_block, "not")
+                ET.SubElement(conditionvar, "varequal", {"respident": lid_ident}).text = option_ident
+        incorrect_idents = [ident for ident, _ in option_idents if ident not in correct_idents]
+        if incorrect_idents:
+            not_block = ET.SubElement(conditionvar, "not")
+            for option_ident in incorrect_idents:
                 ET.SubElement(not_block, "varequal", {"respident": lid_ident}).text = option_ident
-        ET.SubElement(respcondition, "setvar", {"action": "Set"}).text = "100.000000000"
-        fallback = ET.SubElement(resprocessing, "respcondition", {"title": "Incorrect selections"})
-        ET.SubElement(fallback, "conditionvar")
-        ET.SubElement(fallback, "setvar", {"action": "Set"}).text = "0.000000000"
+        ET.SubElement(respcondition, "setvar", {"action": "Add"}).text = "1"
+        fallback = ET.SubElement(resprocessing, "respcondition", {
+            "title": "Scoring for the incorrect answers", "continue": "no"})
+        complement = ET.SubElement(ET.SubElement(ET.SubElement(fallback, "conditionvar"), "and"), "not")
+        complement.extend(deepcopy(list(conditionvar)))
+        ET.SubElement(fallback, "setvar", {"action": "Add"}).text = "0"
+        for index in range(1, len(option_idents) + 1):
+            feedback = ET.SubElement(item, "itemfeedback", {"ident": f"{question.label}_IF{index:04d}"})
+            ET.SubElement(ET.SubElement(feedback, "material"), "mattext", {"texttype": "text/html"})
         return
 
     # MC / TF: one respcondition per option (conditionvar -> setvar ->
@@ -876,7 +887,7 @@ def build_package(args: argparse.Namespace) -> Path:
             source_path,
             quiz_entity_key=args.quiz_entity_key,
             settings_path=Path(args.settings).expanduser().resolve() if args.settings else None,
-            asset_root=Path(args.asset_root).expanduser().resolve() if args.asset_root else None,
+            asset_root=[Path(root).expanduser().resolve() for root in args.asset_root] or None,
             promotion_receipt_path=(
                 Path(args.promotion_receipt).expanduser().resolve()
                 if args.promotion_receipt
@@ -1188,7 +1199,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--library-only", action="store_true", help="Emit only the question library (questiondb + manifest); no quiz, grade item, or placement.")
     parser.add_argument("--quiz-entity-key", default="", help="Quiz entity key to build when a model contains more than one quiz.")
     parser.add_argument("--settings", default="", help="Optional validated coursecraft.quiz_settings/1 receipt (model input only).")
-    parser.add_argument("--asset-root", default="", help="Root for relative model asset source_path values (default: model directory).")
+    parser.add_argument("--asset-root", action="append", default=[], help="Root for relative model asset source_path values; repeat to supply multiple folders (default: model directory).")
     parser.add_argument("--promotion-receipt", default="", help="Verified Quiz Binder promotion receipt to chain into a strict-model build.")
     parser.add_argument("--phase5-candidate-authorization", default="", help="Exact local-only authorization for an extraction_only Phase 5 candidate build; requires --promotion-receipt.")
     parser.add_argument("--receipt-dir", default="", help="Receipt output directory (default: sibling <package>__receipts; excluded from import ZIP).")

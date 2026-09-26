@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest>
+  <resources>
+    <resource identifier="RES_QDB" href="questiondb.xml" />
+    <resource identifier="RES_QUIZ" href="quiz_d2l_math.xml" />
+  </resources>
+</manifest>

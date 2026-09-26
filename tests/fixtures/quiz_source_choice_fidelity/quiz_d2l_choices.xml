@@ -1,0 +1,399 @@
+<?xml version='1.0' encoding='utf-8'?>
+<questestinterop>
+  <assessment ident="QUIZ_CHOICE_FIDELITY" title="Synthetic choice fidelity">
+    <section ident="SECTION_1" title="Synthetic choices">
+      <item ident="ITEM_DUPLICATE" label="LABEL_DUPLICATE" title="DUPLICATE">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield>
+              <fieldlabel>qmd_questiontype</fieldlabel>
+              <fieldentry>Multiple Choice</fieldentry>
+            </qti_metadatafield>
+            <qti_metadatafield>
+              <fieldlabel>qmd_weighting</fieldlabel>
+              <fieldentry>1</fieldentry>
+            </qti_metadatafield>
+            <qti_metadatafield>
+              <fieldlabel>qmd_globalid</fieldlabel>
+              <fieldentry>synthetic-DUPLICATE</fieldentry>
+            </qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;p&gt;Synthetic prompt DUPLICATE&lt;/p&gt;</mattext>
+          </material>
+          <response_lid ident="DUPLICATE_RESPONSE" rcardinality="Single">
+            <render_choice>
+              <response_label ident="DUPLICATE_SOURCE_1">
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;Same label&lt;/p&gt;</mattext>
+                </material>
+              </response_label>
+              <response_label ident="DUPLICATE_SOURCE_2">
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;Other&lt;/p&gt;</mattext>
+                </material>
+              </response_label>
+              <response_label ident="DUPLICATE_SOURCE_3">
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;Same label&lt;/p&gt;</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="DUPLICATE_RESPONSE">DUPLICATE_SOURCE_1</varequal>
+            </conditionvar>
+            <setvar action="Set">100</setvar>
+          </respcondition>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="DUPLICATE_RESPONSE">DUPLICATE_SOURCE_2</varequal>
+            </conditionvar>
+            <setvar action="Set">0</setvar>
+          </respcondition>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="DUPLICATE_RESPONSE">DUPLICATE_SOURCE_3</varequal>
+            </conditionvar>
+            <setvar action="Set">0</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="ITEM_IMAGES" label="LABEL_IMAGES" title="IMAGES">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield>
+              <fieldlabel>qmd_questiontype</fieldlabel>
+              <fieldentry>Multiple Choice</fieldentry>
+            </qti_metadatafield>
+            <qti_metadatafield>
+              <fieldlabel>qmd_weighting</fieldlabel>
+              <fieldentry>1</fieldentry>
+            </qti_metadatafield>
+            <qti_metadatafield>
+              <fieldlabel>qmd_globalid</fieldlabel>
+              <fieldentry>synthetic-IMAGES</fieldentry>
+            </qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;p&gt;Synthetic prompt IMAGES&lt;/p&gt;</mattext>
+          </material>
+          <response_lid ident="IMAGES_RESPONSE" rcardinality="Single">
+            <render_choice>
+              <response_label ident="IMAGES_SOURCE_1">
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;&lt;img src="shape-a.svg" alt=""/&gt;&lt;/p&gt;</mattext>
+                </material>
+              </response_label>
+              <response_label ident="IMAGES_SOURCE_2">
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;&lt;img src="shape-b.svg" alt=""/&gt;&lt;/p&gt;</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="IMAGES_RESPONSE">IMAGES_SOURCE_1</varequal>
+            </conditionvar>
+            <setvar action="Set">0</setvar>
+          </respcondition>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="IMAGES_RESPONSE">IMAGES_SOURCE_2</varequal>
+            </conditionvar>
+            <setvar action="Set">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="ITEM_MATH" label="LABEL_MATH" title="MATH">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield>
+              <fieldlabel>qmd_questiontype</fieldlabel>
+              <fieldentry>Multiple Choice</fieldentry>
+            </qti_metadatafield>
+            <qti_metadatafield>
+              <fieldlabel>qmd_weighting</fieldlabel>
+              <fieldentry>1</fieldentry>
+            </qti_metadatafield>
+            <qti_metadatafield>
+              <fieldlabel>qmd_globalid</fieldlabel>
+              <fieldentry>synthetic-MATH</fieldentry>
+            </qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;p&gt;Synthetic prompt MATH&lt;/p&gt;</mattext>
+          </material>
+          <response_lid ident="MATH_RESPONSE" rcardinality="Single">
+            <render_choice>
+              <response_label ident="MATH_SOURCE_1">
+                <material>
+                  <mattext texttype="text/html">&lt;math xmlns="http://www.w3.org/1998/Math/MathML"&gt;&lt;mi&gt;x&lt;/mi&gt;&lt;/math&gt;</mattext>
+                </material>
+              </response_label>
+              <response_label ident="MATH_SOURCE_2">
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;A || B&lt;/p&gt;</mattext>
+                </material>
+              </response_label>
+              <response_label ident="MATH_SOURCE_3">
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;Other&lt;/p&gt;</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="MATH_RESPONSE">MATH_SOURCE_1</varequal>
+            </conditionvar>
+            <setvar action="Set">0</setvar>
+          </respcondition>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="MATH_RESPONSE">MATH_SOURCE_2</varequal>
+            </conditionvar>
+            <setvar action="Set">100</setvar>
+          </respcondition>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="MATH_RESPONSE">MATH_SOURCE_3</varequal>
+            </conditionvar>
+            <setvar action="Set">0</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="ITEM_MULTI" label="LABEL_MULTI" title="MULTI">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield>
+              <fieldlabel>qmd_questiontype</fieldlabel>
+              <fieldentry>Multi-Select</fieldentry>
+            </qti_metadatafield>
+            <qti_metadatafield>
+              <fieldlabel>qmd_weighting</fieldlabel>
+              <fieldentry>1</fieldentry>
+            </qti_metadatafield>
+            <qti_metadatafield>
+              <fieldlabel>qmd_globalid</fieldlabel>
+              <fieldentry>synthetic-MULTI</fieldentry>
+            </qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;p&gt;Synthetic prompt MULTI&lt;/p&gt;</mattext>
+          </material>
+          <response_lid ident="MULTI_RESPONSE" rcardinality="Multiple">
+            <render_choice>
+              <response_label ident="MULTI_SOURCE_1">
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;Same label&lt;/p&gt;</mattext>
+                </material>
+              </response_label>
+              <response_label ident="MULTI_SOURCE_2">
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;Other&lt;/p&gt;</mattext>
+                </material>
+              </response_label>
+              <response_label ident="MULTI_SOURCE_3">
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;Same label&lt;/p&gt;</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar vartype="Integer" defaultval="0" />
+          </outcomes>
+          <respcondition>
+            <conditionvar>
+              <and>
+                <varequal respident="MULTI_RESPONSE">MULTI_SOURCE_1</varequal>
+                <varequal respident="MULTI_RESPONSE">MULTI_SOURCE_2</varequal>
+                <not>
+                  <varequal respident="MULTI_RESPONSE">MULTI_SOURCE_3</varequal>
+                </not>
+              </and>
+            </conditionvar>
+            <setvar action="Set">100</setvar>
+          </respcondition>
+          <respcondition>
+            <conditionvar />
+            <setvar action="Set">0</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="ITEM_ORDER" label="LABEL_ORDER" title="ORDER">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield>
+              <fieldlabel>qmd_questiontype</fieldlabel>
+              <fieldentry>Ordering</fieldentry>
+            </qti_metadatafield>
+            <qti_metadatafield>
+              <fieldlabel>qmd_weighting</fieldlabel>
+              <fieldentry>1</fieldentry>
+            </qti_metadatafield>
+            <qti_metadatafield>
+              <fieldlabel>qmd_globalid</fieldlabel>
+              <fieldentry>synthetic-ORDER</fieldentry>
+            </qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;p&gt;Synthetic prompt ORDER&lt;/p&gt;</mattext>
+          </material>
+          <response_grp respident="ORDER_RESPONSE" rcardinality="Ordered">
+            <render_choice>
+              <response_label ident="ORDER_SOURCE_1">
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;First&lt;/p&gt;</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ORDER_SOURCE_2">
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;Second&lt;/p&gt;</mattext>
+                </material>
+              </response_label>
+              <response_label ident="ORDER_SOURCE_3">
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;Third&lt;/p&gt;</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_grp>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar vartype="Integer" defaultval="0" varname="D2L_Correct" minvalue="0" />
+            <decvar vartype="Integer" defaultval="0" varname="D2L_Incorrect" minvalue="0" />
+            <decvar vartype="Integer" defaultval="0" varname="que_score" minvalue="0" />
+          </outcomes>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="ORDER_SOURCE_1">1</varequal>
+            </conditionvar>
+            <setvar action="Add" varname="D2L_Correct">1</setvar>
+          </respcondition>
+          <respcondition>
+            <conditionvar>
+              <not>
+                <varequal respident="ORDER_SOURCE_1">1</varequal>
+              </not>
+            </conditionvar>
+            <setvar action="Add" varname="D2L_Incorrect">1</setvar>
+          </respcondition>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="ORDER_SOURCE_2">2</varequal>
+            </conditionvar>
+            <setvar action="Add" varname="D2L_Correct">1</setvar>
+          </respcondition>
+          <respcondition>
+            <conditionvar>
+              <not>
+                <varequal respident="ORDER_SOURCE_2">2</varequal>
+              </not>
+            </conditionvar>
+            <setvar action="Add" varname="D2L_Incorrect">1</setvar>
+          </respcondition>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="ORDER_SOURCE_3">3</varequal>
+            </conditionvar>
+            <setvar action="Add" varname="D2L_Correct">1</setvar>
+          </respcondition>
+          <respcondition>
+            <conditionvar>
+              <not>
+                <varequal respident="ORDER_SOURCE_3">3</varequal>
+              </not>
+            </conditionvar>
+            <setvar action="Add" varname="D2L_Incorrect">1</setvar>
+          </respcondition>
+          <respcondition>
+            <conditionvar>
+              <vargte respident="D2L_Incorrect">0</vargte>
+            </conditionvar>
+            <setvar action="Set" varname="que_score">0</setvar>
+          </respcondition>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="D2L_Incorrect">0</varequal>
+            </conditionvar>
+            <setvar action="Set" varname="que_score">1</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+      <item ident="ITEM_TF" label="LABEL_TF" title="TF">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield>
+              <fieldlabel>qmd_questiontype</fieldlabel>
+              <fieldentry>True/False</fieldentry>
+            </qti_metadatafield>
+            <qti_metadatafield>
+              <fieldlabel>qmd_weighting</fieldlabel>
+              <fieldentry>1</fieldentry>
+            </qti_metadatafield>
+            <qti_metadatafield>
+              <fieldlabel>qmd_globalid</fieldlabel>
+              <fieldentry>synthetic-TF</fieldentry>
+            </qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material>
+            <mattext texttype="text/html">&lt;p&gt;Synthetic prompt TF&lt;/p&gt;</mattext>
+          </material>
+          <response_lid ident="TF_RESPONSE" rcardinality="Single">
+            <render_choice>
+              <response_label ident="TF_SOURCE_1">
+                <material>
+                  <mattext texttype="text/html">True</mattext>
+                </material>
+              </response_label>
+              <response_label ident="TF_SOURCE_2">
+                <material>
+                  <mattext texttype="text/html">False</mattext>
+                </material>
+              </response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="TF_RESPONSE">TF_SOURCE_1</varequal>
+            </conditionvar>
+            <setvar action="Set">0</setvar>
+          </respcondition>
+          <respcondition>
+            <conditionvar>
+              <varequal respident="TF_RESPONSE">TF_SOURCE_2</varequal>
+            </conditionvar>
+            <setvar action="Set">100</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

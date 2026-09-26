@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop>
+  <objectbank ident="QLIB_MATH">
+    <section ident="SECT_MATH" title="Math Pool">
+      <item ident="OBJ_MATH_1" label="LIB_MATH_1" title="1">
+        <itemmetadata><qtimetadata><qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Multiple Choice</fieldentry></qti_metadatafield></qtimetadata></itemmetadata>
+        <presentation><flow><material><mattext texttype="text/html">&lt;p&gt;Evaluate the expression &lt;img alt="10 plus 2 cross times open parentheses 3 minus 5 close parentheses plus 5." data-mathml="«math xmlns=¨http://www.w3.org/1998/Math/MathML¨»«mn»10«/mn»«mo»+«/mo»«mn»2«/mn»«mo»§#215;«/mo»«mfenced»«mrow»«mn»3«/mn»«mo»-«/mo»«mn»5«/mn»«/mrow»«/mfenced»«mo»+«/mo»«mn»5«/mn»«mo».«/mo»«/math»" /&gt;&lt;/p&gt;</mattext></material></flow></presentation>
+      </item>
+      <item ident="OBJ_MATH_2" label="LIB_MATH_2" title="2">
+        <itemmetadata><qtimetadata><qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Short Answer</fieldentry></qti_metadatafield></qtimetadata></itemmetadata>
+        <presentation><flow><material><mattext texttype="text/html">&lt;p&gt;Evaluate the expression &lt;img alt="fraction numerator 18 x over denominator 9 end fraction minus 12" /&gt;&lt;/p&gt;</mattext></material></flow></presentation>
+      </item>
+    </section>
+  </objectbank>
+</questestinterop>

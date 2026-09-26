@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop>
+  <objectbank ident="QLIB_1">
+    <section ident="SECT_DUP" title="Duplicate Pool">
+      <item ident="OBJ_DUP_1" label="LIB_DUP_1" title="1">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Multiple Choice</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1.000000000</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>dup-1</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_globalid</fieldlabel><fieldentry>dup-global-1</fieldentry></qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <flow>
+            <material><mattext texttype="text/html">&lt;p&gt;What is 2 + 2?&lt;/p&gt;</mattext></material>
+            <response_lid ident="LIB_DUP_1_LID" rcardinality="Single">
+              <render_choice shuffle="no">
+                <flow_label class="Block"><response_label ident="A1"><flow_mat><material><mattext texttype="text/html">&lt;p&gt;4&lt;/p&gt;</mattext></material></flow_mat></response_label></flow_label>
+                <flow_label class="Block"><response_label ident="A2"><flow_mat><material><mattext texttype="text/html">&lt;p&gt;5&lt;/p&gt;</mattext></material></flow_mat></response_label></flow_label>
+              </render_choice>
+            </response_lid>
+          </flow>
+        </presentation>
+      </item>
+      <item ident="OBJ_DUP_2" label="LIB_DUP_2" title="2">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Multiple Choice</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1.000000000</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>dup-2</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_globalid</fieldlabel><fieldentry>dup-global-2</fieldentry></qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <flow>
+            <material><mattext texttype="text/html">&lt;p&gt;What is 2 + 2?&lt;/p&gt;</mattext></material>
+            <response_lid ident="LIB_DUP_2_LID" rcardinality="Single">
+              <render_choice shuffle="no">
+                <flow_label class="Block"><response_label ident="A1"><flow_mat><material><mattext texttype="text/html">&lt;p&gt;4&lt;/p&gt;</mattext></material></flow_mat></response_label></flow_label>
+                <flow_label class="Block"><response_label ident="A2"><flow_mat><material><mattext texttype="text/html">&lt;p&gt;5&lt;/p&gt;</mattext></material></flow_mat></response_label></flow_label>
+              </render_choice>
+            </response_lid>
+          </flow>
+        </presentation>
+      </item>
+    </section>
+    <section ident="SECT_SIM" title="Similarity Pool">
+      <item ident="OBJ_SIM_1" label="LIB_SIM_1" title="1">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Multiple Choice</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1.000000000</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>sim-1</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_globalid</fieldlabel><fieldentry>sim-global-1</fieldentry></qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <flow>
+            <material><mattext texttype="text/html">&lt;p&gt;Find the area of a triangle bounded by the x-axis, the y-axis, and the line f open parentheses x close parentheses equals 12 minus 1 third x.&lt;/p&gt;</mattext></material>
+            <response_lid ident="LIB_SIM_1_LID" rcardinality="Single">
+              <render_choice shuffle="no">
+                <flow_label class="Block"><response_label ident="A1"><flow_mat><material><mattext texttype="text/html">&lt;p&gt;12&lt;/p&gt;</mattext></material></flow_mat></response_label></flow_label>
+                <flow_label class="Block"><response_label ident="A2"><flow_mat><material><mattext texttype="text/html">&lt;p&gt;18&lt;/p&gt;</mattext></material></flow_mat></response_label></flow_label>
+              </render_choice>
+            </response_lid>
+          </flow>
+        </presentation>
+      </item>
+    </section>
+  </objectbank>
+</questestinterop>

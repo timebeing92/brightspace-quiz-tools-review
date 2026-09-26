@@ -17,6 +17,8 @@ from openpyxl import load_workbook
 from common_xml import clean, local_name
 from quiz_build_support import load_authoring_projection, package_member_path
 from quiz_contracts import validate_contract
+from extract_quiz_pool_review import extract_source_response_facts
+from quiz_normalization import source_choice_projection
 
 
 REQUIRED_FILES = [
@@ -311,6 +313,27 @@ def section_draw_count(section: ET.Element) -> int | None:
         return -1
 
 
+def validate_multiselect_keys(root: ET.Element | None, report: ValidationReport) -> None:
+    """Require the native scoring profile, not merely interpretable generic QTI."""
+    if root is None:
+        return
+    for item in root.iter('item'):
+        if metadata_value(item, 'qmd_questiontype') != 'Multi-Select':
+            continue
+        identity = metadata_value(item, 'qmd_displayid') or item.get('ident', '[unidentified]')
+        projection = source_choice_projection(extract_source_response_facts(item))
+        conditions = item.findall('resprocessing/respcondition')
+        setters = [c.find('setvar') for c in conditions]
+        native = (len(conditions) == 2 and all(s is not None for s in setters)
+            and [(s.get('action'), clean(s.text)) for s in setters] == [('Add', '1'), ('Add', '0')]
+            and conditions[0].find('conditionvar') is not None
+            and all(e.tag in {'varequal', 'not'} for e in conditions[0].find('conditionvar'))
+            and [clean(e.text) for e in item.iter() if local_name(e.tag) == 'grading_type'] == ['0'])
+        if not projection['recognized'] or not native:
+            report.error(f"Multi-Select question {identity} lacks a supported native answer key: "
+                         f"{projection['reason'] or 'expected native Add 1 / complementary Add 0 profile' }.")
+
+
 def itemref_file_href(itemref: ET.Element) -> str:
     for child in itemref:
         if local_name(child.tag) == "file":
@@ -437,7 +460,7 @@ def validate_authoring_projection(
             Path(args.model).expanduser().resolve(),
             quiz_entity_key=args.quiz_entity_key,
             settings_path=Path(args.settings).expanduser().resolve() if args.settings else None,
-            asset_root=Path(args.asset_root).expanduser().resolve() if args.asset_root else None,
+            asset_root=[Path(root).expanduser().resolve() for root in args.asset_root] or None,
             promotion_receipt_path=(
                 Path(args.promotion_receipt).expanduser().resolve()
                 if args.promotion_receipt
@@ -466,6 +489,7 @@ def validate_authoring_projection(
 
     questiondb_root = parse_xml(package_dir / "questiondb.xml", report)
     actual_shuffle: dict[str, bool] = {}
+    actual_keys: dict[str, list[str] | None] = {}
     if questiondb_root is not None:
         for item in questiondb_root.iter():
             if local_name(item.tag) != "item":
@@ -476,6 +500,18 @@ def validate_authoring_projection(
                 None,
             )
             actual_shuffle[code] = bool(render_choice is not None and render_choice.attrib.get("shuffle") == "yes")
+            if metadata_value(item, 'qmd_questiontype') in {'Multiple Choice', 'True/False', 'Multi-Select'}:
+                key = source_choice_projection(extract_source_response_facts(item))
+                actual_keys[code] = ([o['option_key'] for o in key['options'] if o['correct']]
+                                     if key['recognized'] else None)
+    for row in projection['questions']:
+        if row['target_question_type'] in {'MULTICHOICE', 'TRUEFALSE', 'MULTISELECT'}:
+            expected = row['correct_option_key'].split(';')
+            if row['target_question_type'] == 'TRUEFALSE':
+                expected = [{'T': 'A', 'F': 'B'}.get(key, key) for key in expected]
+            if actual_keys.get(row['question_code']) != expected:
+                report.error(f"Question answer-key projection mismatch: {row['question_code']}; "
+                             f"expected {expected}, found {actual_keys.get(row['question_code'])}.")
     expected_shuffle = {
         row["question_code"]: bool(row["randomize_answers"])
         for row in projection["questions"]
@@ -660,8 +696,10 @@ def validate_package(args: argparse.Namespace) -> ValidationReport:
     validate_local_asset_references(package_dir, report)
     library_items = collect_library_items(questiondb_root, report)
     validate_truefalse_answer_labels(questiondb_root, report)
+    validate_multiselect_keys(questiondb_root, report)
     for quiz_file, quiz_root in quiz_roots:
         validate_quiz_payload(package_dir, quiz_file, quiz_root, library_items, report)
+        validate_multiselect_keys(quiz_root, report)
     validate_workbook_coverage(Path(args.workbook).expanduser().resolve() if args.workbook else None, library_items, report)
     validate_authoring_projection(args, package_dir, library_items, quiz_roots, report)
     validate_zip(package_dir, Path(args.zip).expanduser().resolve() if args.zip else None, report)
@@ -681,7 +719,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--model", default="", help="Optional coursecraft.quiz/1 authoring model used to generate the package.")
     parser.add_argument("--settings", default="", help="Optional coursecraft.quiz_settings/1 receipt used by the model projection.")
     parser.add_argument("--quiz-entity-key", default="", help="Selected quiz key when the authoring model contains multiple quizzes.")
-    parser.add_argument("--asset-root", default="", help="Root for relative model asset source_path values.")
+    parser.add_argument("--asset-root", action="append", default=[], help="Root for relative model asset source_path values; repeat for multiple folders.")
     parser.add_argument("--promotion-receipt", default="", help="Optional verified Quiz Binder promotion receipt for a strict-model build.")
     parser.add_argument("--phase5-candidate-authorization", default="", help="Optional exact local-only Phase 5 candidate authorization; requires --promotion-receipt.")
     parser.add_argument("--run-receipt", default="", help="Optional coursecraft.quiz_run/1 build receipt to validate against emitted files.")

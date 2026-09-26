@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns:d2l_2p0="http://desire2learn.com/xsd/d2lcp_v2p0">
+  <assessment ident="VARIANT_COLLISION_QUIZ" title="Variant collision fixture quiz">
+    <section ident="RAND_VARIANTS" title="[SECTION]">
+      <item ident="QUIZ_ITEM_A" label="QUES_VARIANT_A" title="Variant A">
+        <itemmetadata><qtimetadata>
+          <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Multiple Choice</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_globalid</fieldlabel><fieldentry>00000000-0000-4000-8000-0000000000a1</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>QUIZ-VARIANT-A</fieldentry></qti_metadatafield>
+        </qtimetadata></itemmetadata>
+        <presentation>
+          <material><mattext texttype="text/html">&lt;p&gt;Identify the synthetic marker shown in the image. &lt;img src=&quot;variant-a.svg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</mattext></material>
+          <response_lid ident="LID_A" rcardinality="Single">
+            <render_choice>
+              <response_label ident="OPT_ALPHA"><material><mattext texttype="text/html">&lt;p&gt;Alpha&lt;/p&gt;</mattext></material></response_label>
+              <response_label ident="OPT_BETA"><material><mattext texttype="text/html">&lt;p&gt;Beta&lt;/p&gt;</mattext></material></response_label>
+              <response_label ident="OPT_GAMMA"><material><mattext texttype="text/html">&lt;p&gt;Gamma&lt;/p&gt;</mattext></material></response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <respcondition><conditionvar><varequal respident="LID_A">OPT_ALPHA</varequal></conditionvar><setvar>100</setvar></respcondition>
+        </resprocessing>
+      </item>
+      <item ident="QUIZ_ITEM_B" label="QUES_VARIANT_B" title="Variant B">
+        <itemmetadata><qtimetadata>
+          <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Multiple Choice</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>2.5</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_globalid</fieldlabel><fieldentry>00000000-0000-4000-8000-0000000000b2</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>QUIZ-VARIANT-B</fieldentry></qti_metadatafield>
+        </qtimetadata></itemmetadata>
+        <presentation>
+          <material><mattext texttype="text/html">&lt;p&gt;Identify the synthetic marker shown in the image. &lt;img src=&quot;variant-b.svg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</mattext></material>
+          <response_lid ident="LID_B" rcardinality="Single">
+            <render_choice>
+              <response_label ident="OPT_ALPHA"><material><mattext texttype="text/html">&lt;p&gt;Alpha&lt;/p&gt;</mattext></material></response_label>
+              <response_label ident="OPT_BETA"><material><mattext texttype="text/html">&lt;p&gt;Beta&lt;/p&gt;</mattext></material></response_label>
+              <response_label ident="OPT_GAMMA"><material><mattext texttype="text/html">&lt;p&gt;Gamma&lt;/p&gt;</mattext></material></response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <respcondition><conditionvar><varequal respident="LID_B">OPT_BETA</varequal></conditionvar><setvar>100</setvar></respcondition>
+        </resprocessing>
+      </item>
+      <item ident="QUIZ_ITEM_C" label="QUES_VARIANT_C" title="Variant C">
+        <itemmetadata><qtimetadata>
+          <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Multiple Choice</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_globalid</fieldlabel><fieldentry>00000000-0000-4000-8000-0000000000c3</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>QUIZ-VARIANT-C</fieldentry></qti_metadatafield>
+        </qtimetadata></itemmetadata>
+        <presentation>
+          <material><mattext texttype="text/html">&lt;p&gt;Identify the synthetic marker shown in the image. &lt;img src=&quot;variant-c.svg&quot; alt=&quot;&quot; /&gt;&lt;/p&gt;</mattext></material>
+          <response_lid ident="LID_C" rcardinality="Single">
+            <render_choice>
+              <response_label ident="OPT_ALPHA"><material><mattext texttype="text/html">&lt;p&gt;Alpha&lt;/p&gt;</mattext></material></response_label>
+              <response_label ident="OPT_BETA"><material><mattext texttype="text/html">&lt;p&gt;Beta&lt;/p&gt;</mattext></material></response_label>
+              <response_label ident="OPT_GAMMA"><material><mattext texttype="text/html">&lt;p&gt;Gamma&lt;/p&gt;</mattext></material></response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <respcondition><conditionvar><varequal respident="LID_C">OPT_GAMMA</varequal></conditionvar><setvar>100</setvar></respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<item ident="ID_1" label="ID_2" title="[TITLE-1]">
+      <itemmetadata>
+        <qtimetadata>
+          <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Multiple Choice</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>[META-1]</fieldentry></qti_metadatafield>
+        </qtimetadata>
+      </itemmetadata>
+      <presentation>
+        <material><mattext texttype="text/html">[PROMPT-1]</mattext></material>
+        <response_lid ident="ID_3" rcardinality="Single">
+          <render_choice>
+            <response_label ident="ID_4"><material><mattext texttype="text/html">[OPTION-1]</mattext></material></response_label>
+            <response_label ident="ID_5"><material><mattext texttype="text/html">[OPTION-2]</mattext></material></response_label>
+          </render_choice>
+        </response_lid>
+      </presentation>
+      <resprocessing>
+        <respcondition><conditionvar><varequal respident="ID_3">ID_4</varequal></conditionvar><setvar>100</setvar></respcondition>
+      </resprocessing>
+    </item>
+    
