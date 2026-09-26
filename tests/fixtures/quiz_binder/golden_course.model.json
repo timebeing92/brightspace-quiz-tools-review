@@ -1,0 +1,329 @@
+{
+  "schema": "coursecraft.quiz/1",
+  "model_id": "cc:model:quiz-binder:golden-course",
+  "run_id": "cc:run:quiz-binder:golden-course",
+  "source": {
+    "source_key": "cc:source:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "source_lineage_key": "cc:lineage:fixture:quiz-binder-golden",
+    "source_kind": "fixture",
+    "fingerprint": {
+      "algorithm": "sha256",
+      "digest": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "scope": "file_set"
+    },
+    "references": ["tests/fixtures/quiz_binder"],
+    "extensions": {}
+  },
+  "quizzes": [
+    {
+      "entity_key": "cc:quiz:fixture:binder-golden",
+      "identity": {
+        "strategy": "permanent_code",
+        "permanent_code": "BINDER-GOLDEN-QUIZ",
+        "source_aliases": [],
+        "content_fingerprints": [],
+        "extensions": {}
+      },
+      "title": "Synthetic Review-State Quiz",
+      "source_evidence_keys": [],
+      "diagnostic_ids": ["diag.fixture.open-setting"],
+      "extensions": {}
+    }
+  ],
+  "structures": [
+    {
+      "entity_key": "cc:structure:fixture:binder-pool-a",
+      "identity": {
+        "strategy": "permanent_code",
+        "permanent_code": "BINDER-POOL-A",
+        "source_aliases": [],
+        "content_fingerprints": [],
+        "extensions": {}
+      },
+      "kind": "pool",
+      "source_kind": "synthetic question-library pool",
+      "title": "Synthetic Pool A",
+      "ordinal": 1,
+      "selection": {
+        "mode": "all",
+        "requested_count": null,
+        "available_count": 2,
+        "extensions": {}
+      },
+      "source_evidence_keys": [],
+      "diagnostic_ids": [],
+      "extensions": {}
+    },
+    {
+      "entity_key": "cc:structure:fixture:binder-pool-b",
+      "identity": {
+        "strategy": "permanent_code",
+        "permanent_code": "BINDER-POOL-B",
+        "source_aliases": [],
+        "content_fingerprints": [],
+        "extensions": {}
+      },
+      "kind": "pool",
+      "source_kind": "synthetic question-library pool",
+      "title": "Synthetic Pool B",
+      "ordinal": 2,
+      "selection": {
+        "mode": "all",
+        "requested_count": null,
+        "available_count": 1,
+        "extensions": {}
+      },
+      "source_evidence_keys": [],
+      "diagnostic_ids": [],
+      "extensions": {}
+    }
+  ],
+  "questions": [
+    {
+      "entity_key": "cc:question:fixture:binder-direct",
+      "identity": {
+        "strategy": "permanent_code",
+        "permanent_code": "BINDER-Q001",
+        "source_aliases": [],
+        "content_fingerprints": [],
+        "extensions": {}
+      },
+      "kind": "multiple_choice",
+      "source_kind": "Multiple Choice",
+      "title": "Direct-link fixture question",
+      "prompt": {
+        "format": "plain_text",
+        "content": "SENTINEL_STEM_DIRECT",
+        "extensions": {}
+      },
+      "type_payload": {
+        "options": [
+          {
+            "option_key": "A",
+            "content": {"format": "plain_text", "content": "SENTINEL_OPTION_ALPHA", "extensions": {}},
+            "correct": true,
+            "weight": 100,
+            "source_evidence_keys": [],
+            "extensions": {}
+          },
+          {
+            "option_key": "B",
+            "content": {"format": "plain_text", "content": "SENTINEL_OPTION_BETA", "extensions": {}},
+            "correct": false,
+            "weight": 0,
+            "source_evidence_keys": [],
+            "extensions": {}
+          }
+        ],
+        "accepted_responses": [],
+        "blanks": [],
+        "match_pairs": [],
+        "correct_order": [],
+        "raw_response_models": [],
+        "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "exact", "maximum_points": 1, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "roundtrip_verified", "receipt_refs": ["docs/IMPORT_TEST_LOG.md#receipt-4--2026-06-16--quiz-package-m5m7--l4"], "notes": [], "extensions": {}},
+      "source_evidence_keys": [],
+      "diagnostic_ids": ["diag.fixture.missing-asset"],
+      "extensions": {
+        "coursecraft.binder.match_state": "direct_library_link",
+        "coursecraft.binder.reviewer_row": {"quiz": "Synthetic Review-State Quiz", "question_number": 1}
+      }
+    },
+    {
+      "entity_key": "cc:question:fixture:binder-exact",
+      "identity": {
+        "strategy": "permanent_code",
+        "permanent_code": "BINDER-Q002",
+        "source_aliases": [],
+        "content_fingerprints": [],
+        "extensions": {}
+      },
+      "kind": "true_false",
+      "source_kind": "True/False",
+      "title": "Exact-match fixture question",
+      "prompt": {"format": "plain_text", "content": "SENTINEL_STEM_EXACT", "extensions": {}},
+      "type_payload": {
+        "options": [
+          {
+            "option_key": "T",
+            "content": {"format": "plain_text", "content": "SENTINEL_TRUE", "extensions": {}},
+            "correct": true,
+            "weight": 100,
+            "source_evidence_keys": [],
+            "extensions": {}
+          },
+          {
+            "option_key": "F",
+            "content": {"format": "plain_text", "content": "SENTINEL_FALSE", "extensions": {}},
+            "correct": false,
+            "weight": 0,
+            "source_evidence_keys": [],
+            "extensions": {}
+          }
+        ],
+        "accepted_responses": [],
+        "blanks": [],
+        "match_pairs": [],
+        "correct_order": [],
+        "raw_response_models": [],
+        "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "exact", "maximum_points": 1, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "roundtrip_verified", "receipt_refs": ["docs/IMPORT_TEST_LOG.md#receipt-4--2026-06-16--quiz-package-m5m7--l4"], "notes": [], "extensions": {}},
+      "source_evidence_keys": [],
+      "diagnostic_ids": [],
+      "extensions": {
+        "coursecraft.binder.match_state": "exact_content_match",
+        "coursecraft.binder.reviewer_row": {"quiz": "Synthetic Review-State Quiz", "question_number": 2}
+      }
+    },
+    {
+      "entity_key": "cc:question:fixture:binder-probable",
+      "identity": {
+        "strategy": "permanent_code",
+        "permanent_code": "BINDER-Q003",
+        "source_aliases": [],
+        "content_fingerprints": [],
+        "extensions": {}
+      },
+      "kind": "long_answer",
+      "source_kind": "Long Answer",
+      "title": "Probable-match fixture question",
+      "prompt": {"format": "plain_text", "content": "SENTINEL_STEM_PROBABLE", "extensions": {}},
+      "type_payload": {
+        "options": [],
+        "accepted_responses": [],
+        "blanks": [],
+        "match_pairs": [],
+        "correct_order": [],
+        "manual_answer_key": {"format": "plain_text", "content": "SENTINEL_MANUAL_ANSWER", "extensions": {}},
+        "raw_response_models": [],
+        "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "manual", "maximum_points": 2, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "roundtrip_verified", "receipt_refs": ["docs/IMPORT_TEST_LOG.md#receipt-4--2026-06-16--quiz-package-m5m7--l4"], "notes": [], "extensions": {}},
+      "source_evidence_keys": [],
+      "diagnostic_ids": ["diag.fixture.ambiguous-library"],
+      "extensions": {
+        "coursecraft.binder.match_state": "probable_content_match",
+        "coursecraft.binder.reviewer_row": {"quiz": "Synthetic Review-State Quiz", "question_number": 3}
+      }
+    },
+    {
+      "entity_key": "cc:question:fixture:binder-no-safe",
+      "identity": {
+        "strategy": "permanent_code",
+        "permanent_code": "BINDER-Q004",
+        "source_aliases": [],
+        "content_fingerprints": [],
+        "extensions": {}
+      },
+      "kind": "short_answer",
+      "source_kind": "Short Answer",
+      "title": "No-safe-match fixture question",
+      "prompt": {"format": "plain_text", "content": "SENTINEL_STEM_NO_SAFE", "extensions": {}},
+      "type_payload": {
+        "options": [],
+        "accepted_responses": [{"value": "SENTINEL_ACCEPTED_RESPONSE", "case_sensitive": false, "weight": 100, "extensions": {}}],
+        "blanks": [],
+        "match_pairs": [],
+        "correct_order": [],
+        "raw_response_models": [],
+        "extensions": {}
+      },
+      "scoring": {"state": "known", "mode": "exact", "maximum_points": 1, "rules": [], "extensions": {}},
+      "feedback": [],
+      "build_support": {"level": "extraction_only", "receipt_refs": [], "notes": ["Preserved for review; not in the current build set."], "extensions": {}},
+      "source_evidence_keys": [],
+      "diagnostic_ids": ["diag.fixture.no-safe-match"],
+      "extensions": {
+        "coursecraft.binder.match_state": "no_safe_library_match",
+        "coursecraft.binder.reviewer_row": {"quiz": "Synthetic Review-State Quiz", "question_number": 4}
+      }
+    }
+  ],
+  "assets": [
+    {
+      "entity_key": "cc:asset:fixture:binder-missing-image",
+      "identity": {"strategy": "assigned", "permanent_code": null, "source_aliases": [], "content_fingerprints": [], "extensions": {}},
+      "source_path": "assets/synthetic-diagram.png",
+      "package_path": null,
+      "media_type": "image/png",
+      "fingerprint": null,
+      "status": "missing",
+      "source_evidence_keys": [],
+      "diagnostic_ids": ["diag.fixture.missing-asset"],
+      "extensions": {}
+    }
+  ],
+  "resources": [],
+  "relationships": [
+    {"relationship_key": "cc:relationship:fixture:binder-quiz-q1", "kind": "contains", "source_kind": "synthetic quiz membership", "from_entity_key": "cc:quiz:fixture:binder-golden", "to_entity_key": "cc:question:fixture:binder-direct", "status": "resolved", "ordinal": 1, "attributes": {}, "candidates": [], "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:binder-quiz-q2", "kind": "contains", "source_kind": "synthetic quiz membership", "from_entity_key": "cc:quiz:fixture:binder-golden", "to_entity_key": "cc:question:fixture:binder-exact", "status": "resolved", "ordinal": 2, "attributes": {}, "candidates": [], "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:binder-quiz-q3", "kind": "contains", "source_kind": "synthetic quiz membership", "from_entity_key": "cc:quiz:fixture:binder-golden", "to_entity_key": "cc:question:fixture:binder-probable", "status": "resolved", "ordinal": 3, "attributes": {}, "candidates": [], "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:binder-quiz-q4", "kind": "contains", "source_kind": "synthetic quiz membership", "from_entity_key": "cc:quiz:fixture:binder-golden", "to_entity_key": "cc:question:fixture:binder-no-safe", "status": "resolved", "ordinal": 4, "attributes": {}, "candidates": [], "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:binder-direct-pool", "kind": "member_of", "source_kind": "direct library link", "from_entity_key": "cc:question:fixture:binder-direct", "to_entity_key": "cc:structure:fixture:binder-pool-a", "status": "resolved", "ordinal": 1, "attributes": {}, "candidates": [], "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:binder-exact-pool", "kind": "member_of", "source_kind": "exact content inference", "from_entity_key": "cc:question:fixture:binder-exact", "to_entity_key": "cc:structure:fixture:binder-pool-a", "status": "resolved", "ordinal": 2, "attributes": {}, "candidates": [], "source_evidence_keys": [], "diagnostic_ids": [], "extensions": {}},
+    {
+      "relationship_key": "cc:relationship:fixture:binder-probable-pool",
+      "kind": "member_of",
+      "source_kind": "probable content inference",
+      "from_entity_key": "cc:question:fixture:binder-probable",
+      "to_entity_key": null,
+      "status": "ambiguous",
+      "ordinal": 3,
+      "attributes": {"score": 0.97},
+      "candidates": [
+        {"entity_key": "cc:structure:fixture:binder-pool-a", "score": 0.97, "basis": "synthetic probable match", "extensions": {}},
+        {"entity_key": "cc:structure:fixture:binder-pool-b", "score": 0.96, "basis": "synthetic close candidate", "extensions": {}}
+      ],
+      "source_evidence_keys": [],
+      "diagnostic_ids": ["diag.fixture.ambiguous-library"],
+      "extensions": {}
+    },
+    {"relationship_key": "cc:relationship:fixture:binder-no-safe-pool", "kind": "member_of", "source_kind": "no safe library match", "from_entity_key": "cc:question:fixture:binder-no-safe", "to_entity_key": null, "status": "incomplete", "ordinal": 4, "attributes": {}, "candidates": [], "source_evidence_keys": [], "diagnostic_ids": ["diag.fixture.no-safe-match"], "extensions": {}},
+    {"relationship_key": "cc:relationship:fixture:binder-q1-asset", "kind": "uses_asset", "source_kind": "synthetic asset reference", "from_entity_key": "cc:question:fixture:binder-direct", "to_entity_key": "cc:asset:fixture:binder-missing-image", "status": "proposed", "ordinal": 1, "attributes": {}, "candidates": [], "source_evidence_keys": [], "diagnostic_ids": ["diag.fixture.missing-asset"], "extensions": {}}
+  ],
+  "evidence": [],
+  "lineage": [],
+  "settings_observations": [
+    {
+      "target_entity_key": "cc:quiz:fixture:binder-golden",
+      "name": "time_limit",
+      "state": "unresolved",
+      "raw_value": null,
+      "normalized_value": null,
+      "source_evidence_keys": [],
+      "extensions": {"coursecraft.binder.reason": "Synthetic open setting"}
+    }
+  ],
+  "annotations": [
+    {
+      "annotation_id": "ann.fixture.open-proposal",
+      "target_entity_key": "cc:question:fixture:binder-exact",
+      "field_path": "/prompt/content",
+      "kind": "proposed_revision",
+      "value": "SENTINEL_PROPOSED_REVISION",
+      "actor": "Synthetic Reviewer",
+      "timestamp": "2026-07-20T12:00:00Z",
+      "source_evidence_keys": [],
+      "status": "open",
+      "extensions": {"coursecraft.binder.reason": "Synthetic marginalia fixture"}
+    }
+  ],
+  "diagnostics": [
+    {"diagnostic_id": "diag.fixture.ambiguous-library", "severity": "warning", "code": "ambiguous_library_match", "message": "Synthetic probable match has two close candidates.", "status": "open", "entity_keys": ["cc:question:fixture:binder-probable"], "evidence_keys": [], "details": {}, "extensions": {}},
+    {"diagnostic_id": "diag.fixture.no-safe-match", "severity": "warning", "code": "no_safe_library_match", "message": "Synthetic item has no defensible library match.", "status": "open", "entity_keys": ["cc:question:fixture:binder-no-safe"], "evidence_keys": [], "details": {}, "extensions": {}},
+    {"diagnostic_id": "diag.fixture.missing-asset", "severity": "error", "code": "missing_question_asset", "message": "Synthetic image reference is unresolved.", "status": "open", "entity_keys": ["cc:question:fixture:binder-direct", "cc:asset:fixture:binder-missing-image"], "evidence_keys": [], "details": {}, "extensions": {}},
+    {"diagnostic_id": "diag.fixture.open-setting", "severity": "warning", "code": "setting_requires_decision", "message": "Synthetic time limit is unresolved.", "status": "open", "entity_keys": ["cc:quiz:fixture:binder-golden"], "evidence_keys": [], "details": {}, "extensions": {}}
+  ],
+  "extensions": {
+    "coursecraft.binder_fixture": "golden-course-v1",
+    "coursecraft.synthetic_only": true
+  }
+}

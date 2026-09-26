@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns:d2l_2p0="http://desire2learn.com/xsd/d2lcp_v2p0">
+  <objectbank ident="QLIB_OCCURRENCE_FIXTURE">
+    <section ident="SECT_SHARED" title="[BANK]">
+      <item ident="OBJ_BANK_SHARED" label="SHARED_Q" title="[QUESTION]">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield>
+              <fieldlabel>qmd_questiontype</fieldlabel>
+              <fieldentry>Multiple Choice</fieldentry>
+            </qti_metadatafield>
+            <qti_metadatafield>
+              <fieldlabel>qmd_weighting</fieldlabel>
+              <fieldentry>1.000000000</fieldentry>
+            </qti_metadatafield>
+            <qti_metadatafield>
+              <fieldlabel>qmd_displayid</fieldlabel>
+              <fieldentry>fixture-shared-question</fieldentry>
+            </qti_metadatafield>
+            <qti_metadatafield>
+              <fieldlabel>qmd_globalid</fieldlabel>
+              <fieldentry>fixture-shared-global</fieldentry>
+            </qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <flow>
+            <material>
+              <mattext texttype="text/html">[PROMPT]</mattext>
+            </material>
+            <response_extension>
+              <d2l_2p0:grading_type>0</d2l_2p0:grading_type>
+            </response_extension>
+            <response_lid ident="BANK_LID" rcardinality="Single">
+              <render_choice shuffle="no">
+                <flow_label class="Block">
+                  <response_label ident="BANK_A">
+                    <material><mattext texttype="text/html">[OPTION-A]</mattext></material>
+                  </response_label>
+                </flow_label>
+                <flow_label class="Block">
+                  <response_label ident="BANK_B">
+                    <material><mattext texttype="text/html">[OPTION-B]</mattext></material>
+                  </response_label>
+                </flow_label>
+              </render_choice>
+            </response_lid>
+          </flow>
+        </presentation>
+        <resprocessing>
+          <outcomes>
+            <decvar vartype="Decimal" defaultval="0" varname="que_score" minvalue="0" maxvalue="100" />
+          </outcomes>
+          <respcondition title="[BANK-CORRECT]">
+            <conditionvar><varequal respident="BANK_LID">BANK_A</varequal></conditionvar>
+            <setvar action="Set">100.000000000</setvar>
+          </respcondition>
+          <respcondition title="[BANK-INCORRECT]">
+            <conditionvar><varequal respident="BANK_LID">BANK_B</varequal></conditionvar>
+            <setvar action="Set">0.000000000</setvar>
+          </respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </objectbank>
+</questestinterop>

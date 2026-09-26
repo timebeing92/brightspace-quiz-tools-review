@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns:d2l_2p0="http://desire2learn.com/xsd/d2lcp_v2p0">
+  <assessment ident="REUSE_POINTS_QUIZ" title="Authored reuse with placement points fixture">
+    <section ident="REUSE_POINTS_SECTION" title="Reused questions">
+      <item ident="REUSE_ITEM_ONE" label="REUSE_Q_ONE" title="Reused source item one">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>True/False</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_globalid</fieldlabel><fieldentry>00000000-0000-4000-8000-00000000aa01</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>REUSE-POINTS-ONE</fieldentry></qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material><mattext texttype="text/html">&lt;p&gt;The same authored question may carry placement-specific points.&lt;/p&gt;</mattext></material>
+          <response_lid ident="REUSE_ONE_LID" rcardinality="Single">
+            <render_choice>
+              <response_label ident="REUSE_ONE_TRUE"><material><mattext texttype="text/plain">True</mattext></material></response_label>
+              <response_label ident="REUSE_ONE_FALSE"><material><mattext texttype="text/plain">False</mattext></material></response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <respcondition><conditionvar><varequal respident="REUSE_ONE_LID">REUSE_ONE_TRUE</varequal></conditionvar><setvar>100</setvar></respcondition>
+        </resprocessing>
+      </item>
+      <item ident="REUSE_ITEM_TWO" label="REUSE_Q_TWO" title="Reused source item two">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>True/False</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>2.5</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_globalid</fieldlabel><fieldentry>00000000-0000-4000-8000-00000000aa02</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>REUSE-POINTS-TWO</fieldentry></qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material><mattext texttype="text/html">&lt;p&gt;The same authored question may carry placement-specific points.&lt;/p&gt;</mattext></material>
+          <response_lid ident="REUSE_TWO_LID" rcardinality="Single">
+            <render_choice>
+              <response_label ident="REUSE_TWO_TRUE"><material><mattext texttype="text/plain">True</mattext></material></response_label>
+              <response_label ident="REUSE_TWO_FALSE"><material><mattext texttype="text/plain">False</mattext></material></response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <respcondition><conditionvar><varequal respident="REUSE_TWO_LID">REUSE_TWO_TRUE</varequal></conditionvar><setvar>100</setvar></respcondition>
+        </resprocessing>
+      </item>
+      <item ident="REUSE_ITEM_THREE" label="REUSE_Q_THREE" title="Reused source item three">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>True/False</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>4</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_globalid</fieldlabel><fieldentry>00000000-0000-4000-8000-00000000aa03</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>REUSE-POINTS-THREE</fieldentry></qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material><mattext texttype="text/html">&lt;p&gt;The same authored question may carry placement-specific points.&lt;/p&gt;</mattext></material>
+          <response_lid ident="REUSE_THREE_LID" rcardinality="Single">
+            <render_choice>
+              <response_label ident="REUSE_THREE_TRUE"><material><mattext texttype="text/plain">True</mattext></material></response_label>
+              <response_label ident="REUSE_THREE_FALSE"><material><mattext texttype="text/plain">False</mattext></material></response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <respcondition><conditionvar><varequal respident="REUSE_THREE_LID">REUSE_THREE_TRUE</varequal></conditionvar><setvar>100</setvar></respcondition>
+        </resprocessing>
+      </item>
+    </section>
+    <section ident="RAND_REUSE_POINTS" title="Random Section #_reuse_1">
+      <qtimetadata>
+        <qti_metadatafield><fieldlabel>qmd_numberofitems</fieldlabel><fieldentry>1</fieldentry></qti_metadatafield>
+        <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>7.5</fieldentry></qti_metadatafield>
+      </qtimetadata>
+      <item ident="REUSE_ITEM_FOUR" label="REUSE_Q_FOUR" title="Reused source item four">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>True/False</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_globalid</fieldlabel><fieldentry>00000000-0000-4000-8000-00000000aa04</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>REUSE-POINTS-FOUR</fieldentry></qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material><mattext texttype="text/html">&lt;p&gt;The same authored question may carry placement-specific points.&lt;/p&gt;</mattext></material>
+          <response_lid ident="REUSE_FOUR_LID" rcardinality="Single">
+            <render_choice>
+              <response_label ident="REUSE_FOUR_TRUE"><material><mattext texttype="text/plain">True</mattext></material></response_label>
+              <response_label ident="REUSE_FOUR_FALSE"><material><mattext texttype="text/plain">False</mattext></material></response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <respcondition><conditionvar><varequal respident="REUSE_FOUR_LID">REUSE_FOUR_TRUE</varequal></conditionvar><setvar>100</setvar></respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

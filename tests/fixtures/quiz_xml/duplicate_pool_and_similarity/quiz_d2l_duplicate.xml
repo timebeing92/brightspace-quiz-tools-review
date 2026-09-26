@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns:d2l_2p0="http://desire2learn.com/xsd/d2lcp_v2p0">
+  <assessment ident="res_quiz_duplicate" title="Duplicate Quiz">
+    <section ident="CONTAINER_SECTION">
+      <section ident="RAND_1" title="Random Section 1">
+        <qtimetadata>
+          <qti_metadatafield><fieldlabel>qmd_numberofitems</fieldlabel><fieldentry>2</fieldentry></qti_metadatafield>
+        </qtimetadata>
+        <item ident="QUIZ_DUP" label="QUIZ_DUP" title="1">
+          <itemmetadata>
+            <qtimetadata>
+              <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Multiple Choice</fieldentry></qti_metadatafield>
+              <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1.000000000</fieldentry></qti_metadatafield>
+              <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>quiz-dup</fieldentry></qti_metadatafield>
+              <qti_metadatafield><fieldlabel>qmd_globalid</fieldlabel><fieldentry>quiz-dup-global</fieldentry></qti_metadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <flow>
+              <material><mattext texttype="text/html">&lt;p&gt;What is 2 + 2?&lt;/p&gt;</mattext></material>
+              <response_lid ident="QUIZ_DUP_LID" rcardinality="Single">
+                <render_choice shuffle="no">
+                  <flow_label class="Block"><response_label ident="A1"><flow_mat><material><mattext texttype="text/html">&lt;p&gt;4&lt;/p&gt;</mattext></material></flow_mat></response_label></flow_label>
+                  <flow_label class="Block"><response_label ident="A2"><flow_mat><material><mattext texttype="text/html">&lt;p&gt;5&lt;/p&gt;</mattext></material></flow_mat></response_label></flow_label>
+                </render_choice>
+              </response_lid>
+            </flow>
+          </presentation>
+          <resprocessing>
+            <respcondition><conditionvar><varequal respident="QUIZ_DUP_LID">A1</varequal></conditionvar><setvar action="Set">100.000000000</setvar></respcondition>
+            <respcondition><conditionvar><varequal respident="QUIZ_DUP_LID">A2</varequal></conditionvar><setvar action="Set">0.000000000</setvar></respcondition>
+          </resprocessing>
+        </item>
+        <item ident="QUIZ_SIM" label="QUIZ_SIM" title="2">
+          <itemmetadata>
+            <qtimetadata>
+              <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Multiple Choice</fieldentry></qti_metadatafield>
+              <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1.000000000</fieldentry></qti_metadatafield>
+              <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>quiz-sim</fieldentry></qti_metadatafield>
+              <qti_metadatafield><fieldlabel>qmd_globalid</fieldlabel><fieldentry>quiz-sim-global</fieldentry></qti_metadatafield>
+            </qtimetadata>
+          </itemmetadata>
+          <presentation>
+            <flow>
+              <material><mattext texttype="text/html">&lt;p&gt;Find the area of a triangle bounded by the x-axis, the y-axis, and the line f(x) = 12 - (1/3) x.&lt;/p&gt;</mattext></material>
+              <response_lid ident="QUIZ_SIM_LID" rcardinality="Single">
+                <render_choice shuffle="no">
+                  <flow_label class="Block"><response_label ident="A1"><flow_mat><material><mattext texttype="text/html">&lt;p&gt;12&lt;/p&gt;</mattext></material></flow_mat></response_label></flow_label>
+                  <flow_label class="Block"><response_label ident="A2"><flow_mat><material><mattext texttype="text/html">&lt;p&gt;18&lt;/p&gt;</mattext></material></flow_mat></response_label></flow_label>
+                </render_choice>
+              </response_lid>
+            </flow>
+          </presentation>
+          <resprocessing>
+            <respcondition><conditionvar><varequal respident="QUIZ_SIM_LID">A1</varequal></conditionvar><setvar action="Set">100.000000000</setvar></respcondition>
+            <respcondition><conditionvar><varequal respident="QUIZ_SIM_LID">A2</varequal></conditionvar><setvar action="Set">0.000000000</setvar></respcondition>
+          </resprocessing>
+        </item>
+      </section>
+    </section>
+  </assessment>
+</questestinterop>

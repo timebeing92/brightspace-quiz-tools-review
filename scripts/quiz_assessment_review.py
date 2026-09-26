@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 from collections import OrderedDict
 from copy import copy
+import hashlib
 import json
 import math
 from pathlib import Path
@@ -22,15 +23,18 @@ import xml.etree.ElementTree as ET
 from openpyxl import load_workbook
 from openpyxl.styles import Alignment, Font, PatternFill, Protection
 from openpyxl.utils import get_column_letter
+from openpyxl.worksheet.datavalidation import DataValidation
 
 from quiz_review_projection import build_quiz_review_projection
 from quiz_review_text import readable_html
+from quiz_contracts import validate_contract
 from quiz_review_workbook_reingest import (
     EDITABLE_HEADERS, SETTINGS_EDITABLE_HEADERS, ReingestError,
-    materialize_workbook_decisions, sha256_file,
+    _canonical_digest, _review_metadata, _stable_id, materialize_workbook_decisions, sha256_file,
 )
 
-SCHEMA = "coursecraft.assessment_review_packet/1"
+SCHEMA = "coursecraft.assessment_review_packet/2"
+LEGACY_SCHEMA = "coursecraft.assessment_review_packet/1"
 MARKER = "_Assessment Review"
 WORKING = "reviewer_working.xlsx"
 BASELINE = "reviewer_baseline_DO_NOT_EDIT.xlsx"
@@ -41,6 +45,22 @@ VISIBLE = {"question_number", "Source pool / folder", "question_type", "question
            "revised_question_text", "image_link", "response_options", "revised_response_options",
            "answer_key", "revised_answer_key", "revision_reason", "proposed_by", "approval_status",
            "reviewer_note", "source_points", "source_feedback", "content_preservation"}
+IMAGE_REPLACEMENT_SHEET = "Image Replacements"
+NEW_QUESTION_SHEET = "New Questions"
+NEW_RESPONSE_SHEET = "New Responses"
+IMAGE_HEADERS = ["replacement_id", "quiz_title", "question_title", "original_image",
+                 "original_asset", "replacement_file", "revision_reason", "approval_status",
+                 "proposed_by", "proposed_at", "approved_by", "approved_at"]
+NEW_QUESTION_HEADERS = ["question_code", "question_type", "question_text", "points",
+                        "target_quiz_entity_key", "target_pool_entity_key", "answer_key",
+                        "feedback", "content_format", "approval_status", "revision_reason",
+                        "proposed_by", "proposed_at", "approved_by", "approved_at"]
+NEW_RESPONSE_HEADERS = ["question_code", "response_key", "role", "text", "content_format",
+                        "correct", "case_sensitive", "group_key", "match_key", "position"]
+IMAGE_SIGNATURES = {".png": (b"\x89PNG\r\n\x1a\n", "image/png"),
+                    ".jpg": (b"\xff\xd8\xff", "image/jpeg"),
+                    ".jpeg": (b"\xff\xd8\xff", "image/jpeg"),
+                    ".gif": (b"GIF8", "image/gif")}
 TEAL, PALE, YELLOW = "175C72", "E9F4F7", "FFF2CC"
 RICH_MARKUP = re.compile(r"<(?:[\w.-]+:)?(?:math|img|matimage|sup|sub)\b", re.I)
 
@@ -60,6 +80,65 @@ def _inside(root: Path, relative: str) -> Path:
 
 def _ref(root: Path, path: Path) -> dict:
     return {"path": path.relative_to(root).as_posix(), "sha256": sha256_file(path)}
+
+
+def _replacement_image(root: Path, value: str) -> tuple[Path, str]:
+    rel = Path(value)
+    if rel.is_absolute() or ".." in rel.parts or not rel.parts or rel.parts[0] != "Replacement Images":
+        raise ReingestError("Replacement files must be placed under Replacement Images/ in this packet.")
+    path = _inside(root, rel.as_posix())
+    if not path.is_file() or path.stat().st_size == 0 or path.stat().st_size > 20 * 1024 * 1024:
+        raise ReingestError("Replacement image must be a nonempty file no larger than 20 MB.")
+    signature = IMAGE_SIGNATURES.get(path.suffix.lower())
+    if signature is None or not path.read_bytes().startswith(signature[0]):
+        raise ReingestError("Replacement image must be a matching PNG, JPEG, or GIF file.")
+    return path, signature[1]
+
+
+def _sheet_rows(workbook, title: str, expected_headers: list[str]) -> list[dict]:
+    if title not in workbook.sheetnames:
+        raise ReingestError(f"Workbook is missing required sheet {title!r}.")
+    sheet = workbook[title]
+    headers = [str(c.value or "").strip() for c in sheet[1]]
+    while headers and not headers[-1]:
+        headers.pop()
+    if headers != expected_headers:
+        raise ReingestError(f"{title} headers do not match the review packet contract.")
+    rows = []
+    for row_number in range(2, sheet.max_row + 1):
+        cells = [sheet.cell(row_number, col) for col in range(1, len(headers) + 1)]
+        if all(cell.value in (None, "") for cell in cells):
+            continue
+        if any(cell.data_type == "f" for cell in cells):
+            raise ReingestError(f"Formula cells are not accepted ({title} row {row_number}).")
+        rows.append({**dict(zip(headers, (cell.value for cell in cells))), "__row_number": row_number})
+    return rows
+
+
+def _annotation_pair(target: str, field: str, value: object, decision: str,
+                     row: dict, row_number: int, metadata_policy: str,
+                     source_sheet: str) -> list[dict]:
+    reason, proposer, proposed_at, approver, approved_at = _review_metadata(
+        row, row_number, decision, metadata_policy)
+    identity = {"target_entity_key": target, "field_path": field, "value": value,
+                "actor": proposer, "timestamp": proposed_at, "reason": reason}
+    proposal_id = _stable_id("ann.proposal", identity)
+    extensions = {"coursecraft.binder.reason": reason,
+                  "coursecraft.binder.workbook_sheet": source_sheet,
+                  "coursecraft.binder.workbook_row": row_number}
+    proposal = {"annotation_id": proposal_id, "target_entity_key": target,
+                "field_path": field, "kind": "proposed_revision", "value": value,
+                "actor": proposer, "timestamp": proposed_at, "source_evidence_keys": [],
+                "status": decision, "extensions": extensions}
+    if decision != "accepted":
+        return [proposal]
+    approval_identity = {"proposal_id": proposal_id, "actor": approver, "timestamp": approved_at}
+    approval = {"annotation_id": _stable_id("ann.approval", approval_identity),
+                "target_entity_key": target, "field_path": field,
+                "kind": "approved_change", "value": value, "actor": approver,
+                "timestamp": approved_at, "source_evidence_keys": [], "status": "accepted",
+                "extensions": {**extensions, "coursecraft.binder.proposal_id": proposal_id}}
+    return [proposal, approval]
 
 
 def _nodes(node: dict, name: str):
@@ -272,6 +351,7 @@ def prepare_review_packet(source_workbook: Path, model_path: Path, output_dir: P
         assessments.setdefault(occurrence["quiz_key"], []).append((row, values, occurrence))
     if seen != set(occurrences):
         raise ValueError("Native workbook does not cover every source occurrence")
+    quiz_titles = {q["entity_key"]: q.get("title") or q["entity_key"] for q in model.get("quizzes", [])}
     guide = book.create_sheet("START HERE", 0)
     source_label = ", ".join(model["source"].get("references", [])) or model["source"]["source_key"]
     guide_rows = [
@@ -283,7 +363,9 @@ def prepare_review_packet(source_workbook: Path, model_path: Path, output_dir: P
         ("Source content", "Original text and keys are protected. Readable text is paired with original markup columns and model.json."),
         ("Import edits", "Keep the complete packet, including hidden sheets and companion files. Compose collects assessment-tab edits automatically."),
         ("Quiz settings", "Quiz Settings retains its own editable proposed-value fields. Question edits belong on assessment tabs."),
-        ("New questions", "Use the separate blank drafting template and quiz_draft_intake.py. Do not insert or delete source question rows here."),
+        ("Replace an image", "Place a PNG, JPEG or GIF under Replacement Images/. In Image Replacements, enter its path for the matching question and source image, add a reason, and mark it accepted."),
+        ("New questions", "Add question rows to New Questions and answer rows to New Responses. Use exact quiz and pool keys from Target Pools; only explicitly accepted questions are added."),
+        ("Question types", "Use the type names and response fields from the blank quiz drafting template. The draft importer checks the content before accepted questions are promoted."),
         ("Math and diagrams", "Accepted revisions to questions containing equations or diagrams require a supported rich-content workflow. Drafts and notes can be collected for review."),
     ]
     for row in guide_rows:
@@ -404,6 +486,135 @@ def prepare_review_packet(source_workbook: Path, model_path: Path, output_dir: P
         dst.protection.formatRows = False
         dst.protection.formatColumns = False
         spec["sheets"].append(tab)
+
+    # Replacement rows are pre-bound to stable occurrence, question and asset
+    # identities. Reviewers add a file and decision; source image cells stay locked.
+    image_sheet = book.create_sheet(IMAGE_REPLACEMENT_SHEET)
+    image_sheet.append(IMAGE_HEADERS)
+    image_sheet.freeze_panes = "F2"
+    image_sheet.auto_filter.ref = f"A1:L1"
+    image_sheet.sheet_view.showGridLines = False
+    widths = [44, 34, 48, 38, 52, 48, 45, 18, 24, 28, 24, 28]
+    for col, (header, width) in enumerate(zip(IMAGE_HEADERS, widths), 1):
+        cell = image_sheet.cell(1, col)
+        cell.fill = PatternFill("solid", fgColor=TEAL)
+        cell.font = Font(name="Calibri", size=11, bold=True, color="FFFFFF")
+        cell.alignment = Alignment(wrap_text=True, vertical="center")
+        image_sheet.column_dimensions[get_column_letter(col)].width = width
+        image_sheet.column_dimensions[get_column_letter(col)].hidden = header in {"replacement_id", "original_asset"}
+    image_rows = []
+    asset_map = {a["entity_key"]: a for a in model.get("assets", [])}
+    relation_map: dict[tuple[str, str], dict] = {}
+    for relation in model.get("relationships", []):
+        if relation.get("kind") == "uses_asset" and relation.get("status") == "resolved":
+            relation_map[(relation["from_entity_key"], relation["to_entity_key"])] = relation
+    for occurrence_key, occurrence in occurrences.items():
+        question_key = occurrence.get("referenced_question_key") or occurrence.get("observed_question_entity_key")
+        if not question_key:
+            continue
+        qindex, question = questions[question_key]
+        for (owner, asset_key), relation in sorted(relation_map.items()):
+            if owner != question_key or asset_key not in asset_map:
+                continue
+            asset = asset_map[asset_key]
+            if not asset.get("package_path"):
+                continue
+            stable = hashlib.sha256(f"{occurrence_key}\0{asset_key}".encode()).hexdigest()[:24]
+            row_number = image_sheet.max_row + 1
+            image_sheet.append([stable, quiz_titles.get(occurrence["quiz_key"], occurrence["quiz_key"]),
+                                question.get("title") or question_key, asset["package_path"], asset_key,
+                                None, None, None, None, None, None, None])
+            for cell in image_sheet[row_number]:
+                cell.alignment = Alignment(wrap_text=True, vertical="top")
+                cell.protection = Protection(locked=cell.column not in {6, 7, 8, 9, 10, 11, 12})
+                if cell.column in {6, 7, 8, 9, 10, 11, 12}:
+                    cell.fill = PatternFill("solid", fgColor=YELLOW)
+            image_rows.append({"row": row_number, "replacement_id": stable,
+                               "occurrence_key": occurrence_key, "quiz_key": occurrence["quiz_key"],
+                               "question_entity_key": question_key, "asset_entity_key": asset_key,
+                               "package_path": asset["package_path"]})
+    image_sheet.row_dimensions[1].height = 36
+    image_sheet.protection.sheet = True
+    image_sheet.protection.selectLockedCells = False
+    image_sheet.protection.selectUnlockedCells = False
+    image_sheet.protection.formatRows = False
+    image_sheet.protection.formatColumns = False
+    status_validation = DataValidation(type="list", formula1='"open,accepted,rejected"', allow_blank=True)
+    image_sheet.add_data_validation(status_validation)
+    for item in image_rows:
+        status_validation.add(image_sheet.cell(item["row"], 8))
+    spec["image_replacements"] = {"sheet": IMAGE_REPLACEMENT_SHEET, "headers": IMAGE_HEADERS, "rows": image_rows}
+
+    # New questions use a dedicated row-addition lane that reuses the blank
+    # drafting workbook's typed question/response vocabulary. Source rows remain
+    # fixed; every new row needs a target quiz, existing pool and explicit status.
+    target_pools = {}
+    for quiz_key in assessments:
+        draws = {r["to_entity_key"] for r in model["relationships"]
+                 if r["kind"] == "contains" and r["status"] == "resolved" and r["from_entity_key"] == quiz_key}
+        pools = {r["to_entity_key"] for r in model["relationships"]
+                 if r["kind"] == "draws_from" and r["status"] == "resolved" and r["from_entity_key"] in draws}
+        for pool in pools:
+            structure = next((s for s in model["structures"] if s["entity_key"] == pool), None)
+            if structure:
+                target_pools[(quiz_key, pool)] = structure.get("title") or pool
+    targets = book.create_sheet("Target Pools")
+    targets.append(["target_quiz_entity_key", "target_pool_entity_key", "source_pool_title"])
+    for (quiz_key, pool_key), pool_title in sorted(target_pools.items()):
+        targets.append([quiz_key, pool_key, pool_title])
+    targets.freeze_panes = "A2"
+    targets.column_dimensions["A"].width = 72
+    targets.column_dimensions["B"].width = 76
+    targets.column_dimensions["C"].width = 52
+    for cells in targets:
+        for cell in cells:
+            cell.alignment = Alignment(wrap_text=True, vertical="top")
+            if cell.row == 1:
+                cell.fill = PatternFill("solid", fgColor=TEAL)
+                cell.font = Font(name="Calibri", size=11, bold=True, color="FFFFFF")
+    targets.protection.sheet = True
+    qsheet = book.create_sheet(NEW_QUESTION_SHEET)
+    qsheet.append(NEW_QUESTION_HEADERS)
+    qsheet.freeze_panes = "A2"
+    qsheet.auto_filter.ref = f"A1:{get_column_letter(len(NEW_QUESTION_HEADERS))}1"
+    qwidths = [24, 24, 58, 12, 72, 76, 48, 45, 18, 18, 42, 24, 28, 24, 28]
+    for col, (header, width) in enumerate(zip(NEW_QUESTION_HEADERS, qwidths), 1):
+        qsheet.column_dimensions[get_column_letter(col)].width = width
+        cell = qsheet.cell(1, col)
+        cell.fill = PatternFill("solid", fgColor=TEAL)
+        cell.font = Font(name="Calibri", size=11, bold=True, color="FFFFFF")
+        cell.alignment = Alignment(wrap_text=True, vertical="center")
+    qsheet.protection.sheet = True
+    qsheet.protection.selectLockedCells = False
+    qsheet.protection.selectUnlockedCells = False
+    qsheet.protection.formatRows = False
+    qsheet.protection.formatColumns = False
+    qsheet.protection.sheet = False
+    rsheet = book.create_sheet(NEW_RESPONSE_SHEET)
+    rsheet.append(NEW_RESPONSE_HEADERS)
+    rsheet.freeze_panes = "A2"
+    for col, header in enumerate(NEW_RESPONSE_HEADERS, 1):
+        rsheet.column_dimensions[get_column_letter(col)].width = 30 if header != "text" else 58
+        cell = rsheet.cell(1, col)
+        cell.fill = PatternFill("solid", fgColor=TEAL)
+        cell.font = Font(name="Calibri", size=11, bold=True, color="FFFFFF")
+        cell.alignment = Alignment(wrap_text=True, vertical="center")
+    rsheet.protection.sheet = True
+    rsheet.protection.selectLockedCells = False
+    rsheet.protection.selectUnlockedCells = False
+    rsheet.protection.formatRows = False
+    rsheet.protection.formatColumns = False
+    rsheet.protection.sheet = False
+    qstatus = DataValidation(type="list", formula1='"open,accepted,rejected"', allow_blank=True)
+    qsheet.add_data_validation(qstatus)
+    qstatus.add("J2:J1048576")
+    spec["question_additions"] = {"question_sheet": NEW_QUESTION_SHEET,
+                                   "question_headers": NEW_QUESTION_HEADERS,
+                                   "response_sheet": NEW_RESPONSE_SHEET,
+                                   "response_headers": NEW_RESPONSE_HEADERS,
+                                   "target_pool_sheet": "Target Pools",
+                                   "target_pools": [{"quiz_key": q, "pool_key": p, "title": t}
+                                                    for (q, p), t in sorted(target_pools.items())]}
     # The inventory is a readable source view too. Stable source aliases bind it
     # to model entities; ambiguous aliases are left intact instead of guessed.
     if "All Questions" in book:
@@ -438,11 +649,11 @@ def prepare_review_packet(source_workbook: Path, model_path: Path, output_dir: P
             dim.hidden, dim.width = False, 24
     # Native evidence tabs are snapshots. Quiz Settings remains an active native surface.
     for sheet in book:
-        if sheet.title in {"START HERE", "Quiz Settings", "Question Images", "All Questions"} or sheet.title in {s["title"] for s in spec["sheets"]}:
+        if sheet.title in {"START HERE", "Quiz Settings", "Question Images", "All Questions", IMAGE_REPLACEMENT_SHEET, NEW_QUESTION_SHEET, NEW_RESPONSE_SHEET, "Target Pools"} or sheet.title in {s["title"] for s in spec["sheets"]}:
             sheet.sheet_state = "visible"
         else:
             sheet.sheet_state = "hidden"
-        if sheet.title not in {s["title"] for s in spec["sheets"]} | {"Quiz Settings"}:
+        if sheet.title not in {s["title"] for s in spec["sheets"]} | {"Quiz Settings", NEW_QUESTION_SHEET, NEW_RESPONSE_SHEET}:
             for cells in sheet:
                 for cell in cells:
                     cell.protection = Protection(locked=True)
@@ -459,8 +670,8 @@ def prepare_review_packet(source_workbook: Path, model_path: Path, output_dir: P
     _json(output_dir / LAYOUT, spec)
     (output_dir / "README.md").write_text(
         "# Assessment review\n\nOpen `reviewer_working.xlsx` and start with START HERE. "
-        "Edit the yellow fields on assessment tabs. Keep this entire folder together; "
-        "Images/ holds the linked diagrams. Hidden source sheets and companion files are required for import.\n\n"
+        "Edit the yellow fields on assessment tabs and use the addition sheets as needed. Keep this entire folder together; "
+        "Images/ holds source diagrams and Replacement Images/ holds new files. Hidden source sheets and companion files are required for import.\n\n"
         "Use Quiz Workshop Compose, or run from the tool repository:\n\n"
         "```sh\npython scripts/quiz_assessment_review.py import --packet /path/to/this-folder "
         "--output /path/to/decisions.json\n```\n\n"
@@ -473,7 +684,7 @@ def prepare_review_packet(source_workbook: Path, model_path: Path, output_dir: P
 def validate_packet(packet_dir: Path) -> dict:
     packet_dir = Path(packet_dir)
     spec = json.loads((packet_dir / LAYOUT).read_text(encoding="utf-8"))
-    if spec.get("schema") != SCHEMA:
+    if spec.get("schema") not in {SCHEMA, LEGACY_SCHEMA}:
         raise ReingestError("Unknown assessment review packet version")
     # A copied packet must have ordinary local companions, not symlinked folders.
     if packet_dir.is_symlink() or any(p.is_symlink() for p in packet_dir.rglob("*")):
@@ -482,7 +693,147 @@ def validate_packet(packet_dir: Path) -> dict:
         path = _inside(packet_dir, ref["path"])
         if not path.is_file() or sha256_file(path) != ref["sha256"]:
             raise ReingestError("Review companion missing or changed: " + ref["path"])
+    if spec.get("image_replacements"):
+        if spec["image_replacements"].get("headers") != IMAGE_HEADERS:
+            raise ReingestError("Image replacement sheet schema is not supported.")
+    if spec.get("question_additions"):
+        draft = spec["question_additions"]
+        if draft.get("question_headers") != NEW_QUESTION_HEADERS or draft.get("response_headers") != NEW_RESPONSE_HEADERS:
+            raise ReingestError("New-question sheet schema is not supported.")
     return spec
+
+
+def _image_replacement_annotations(spec: dict, edited, packet: Path, metadata_policy: str) -> list[dict]:
+    layout = spec.get("image_replacements")
+    if not layout:
+        return []
+    sheet = edited[layout["sheet"]]
+    headers = {cell.value: cell.column for cell in sheet[1]}
+    by_id = {row["replacement_id"]: row for row in layout["rows"]}
+    if len(by_id) != len(layout["rows"]):
+        raise ReingestError("Image replacement layout repeats a stable replacement ID.")
+    annotations = []
+    seen = set()
+    for row_number in range(2, sheet.max_row + 1):
+        values = {h: sheet.cell(row_number, col).value for h, col in headers.items()}
+        if all(value in (None, "") for value in values.values()):
+            continue
+        stable_id = values.get("replacement_id")
+        spec_row = by_id.get(stable_id)
+        if spec_row is None or stable_id in seen or row_number != spec_row["row"]:
+            raise ReingestError("Image replacement row identity changed; use the pre-bound source row.")
+        seen.add(stable_id)
+        status = str(values.get("approval_status") or "open").strip().lower()
+        if status not in {"open", "accepted", "rejected"}:
+            raise ReingestError(f"Image Replacements row {row_number} approval_status must be open, accepted, or rejected.")
+        replacement_file = str(values.get("replacement_file") or "").strip()
+        if not replacement_file:
+            if status != "open" or values.get("revision_reason"):
+                raise ReingestError(f"Image Replacements row {row_number} needs a replacement file for its decision.")
+            continue
+        path, media_type = _replacement_image(packet, replacement_file)
+        value = {"quiz_entity_key": spec_row["quiz_key"],
+                 "occurrence_key": spec_row["occurrence_key"],
+                 "asset_entity_key": spec_row["asset_entity_key"],
+                 "original_package_path": spec_row["package_path"],
+                 "replacement_file": Path(replacement_file).as_posix(),
+                 "sha256": sha256_file(path), "media_type": media_type}
+        metadata = {"revision_reason": values.get("revision_reason"),
+                    "approval_status": status, "proposed_by": values.get("proposed_by"),
+                    "proposed_at": values.get("proposed_at"), "approved_by": values.get("approved_by"),
+                    "approved_at": values.get("approved_at")}
+        field_path = "/assets/replacements/" + spec_row["asset_entity_key"]
+        annotations.extend(_annotation_pair(spec_row["question_entity_key"], field_path,
+                                            value, status, metadata, row_number,
+                                            metadata_policy, layout["sheet"]))
+    if seen != set(by_id):
+        raise ReingestError("Image replacement rows were removed or moved.")
+    return annotations
+
+
+def _new_question_annotations(spec: dict, edited, model: dict, metadata_policy: str) -> tuple[list[dict], list[dict]]:
+    from quiz_draft_intake import ingest
+
+    cfg = spec.get("question_additions")
+    if not cfg:
+        return [], []
+    question_rows = _sheet_rows(edited, cfg["question_sheet"], NEW_QUESTION_HEADERS)
+    response_rows = _sheet_rows(edited, cfg["response_sheet"], NEW_RESPONSE_HEADERS)
+    pool_rows = cfg.get("target_pools", [])
+    targets = {(row["quiz_key"], row["pool_key"]): row["title"] for row in pool_rows}
+    if len(targets) != len(pool_rows):
+        raise ReingestError("Target Pools repeats a quiz/pool identity.")
+    questions_by_code = {}
+    for row in question_rows:
+        qcode = str(row.get("question_code") or "").strip()
+        status = str(row.get("approval_status") or "open").strip().lower()
+        if status not in {"open", "accepted", "rejected"}:
+            raise ReingestError(f"New Questions row {row['__row_number']} has an invalid approval_status.")
+        if not qcode:
+            if any(value not in (None, "") for key, value in row.items() if key != "__row_number"):
+                raise ReingestError(f"New Questions row {row['__row_number']} needs question_code.")
+            continue
+        if qcode in questions_by_code:
+            raise ReingestError(f"New Questions repeats question_code {qcode!r}.")
+        questions_by_code[qcode] = row
+    response_codes = {str(row.get("question_code") or "").strip() for row in response_rows}
+    if response_codes - set(questions_by_code):
+        raise ReingestError("New Responses contains a question_code absent from New Questions.")
+    accepted = [row for row in question_rows
+                if str(row.get("approval_status") or "open").strip().lower() == "accepted"
+                and str(row.get("question_code") or "").strip()]
+    decisions = [{"question_code": code,
+                  "status": str(row.get("approval_status") or "open").strip().lower()}
+                 for code, row in sorted(questions_by_code.items())]
+    if not accepted:
+        return [], decisions
+    model_codes = {q.get("identity", {}).get("permanent_code") for q in model.get("questions", [])}
+    for row in accepted:
+        qcode = str(row["question_code"]).strip()
+        if qcode in model_codes:
+            raise ReingestError(f"New question code {qcode!r} already exists in the source model.")
+        target = (str(row.get("target_quiz_entity_key") or "").strip(),
+                  str(row.get("target_pool_entity_key") or "").strip())
+        if target not in targets:
+            raise ReingestError(f"New Questions row {row['__row_number']} must select an exact quiz and pool from Target Pools.")
+    lineage = "review-additions-" + hashlib.sha256(
+        json.dumps([(row.get("question_code"), row.get("question_text"), row.get("target_pool_entity_key"))
+                    for row in accepted], ensure_ascii=False, sort_keys=True, default=str).encode()).hexdigest()[:20]
+    pool_pairs = sorted({(str(row["target_quiz_entity_key"]).strip(),
+                          str(row["target_pool_entity_key"]).strip()) for row in accepted})
+    pool_codes = {pair: f"TARGET{index:04d}" for index, pair in enumerate(pool_pairs, 1)}
+    accepted_codes = {str(row["question_code"]).strip() for row in accepted}
+    draft_data = {"config": {"schema": "coursecraft.quiz_draft/1", "lineage_code": lineage,
+                             "quiz_code": None, "quiz_title": None},
+                  "Questions": [], "Responses": [], "Pools": [], "Draws": []}
+    for pair, pool_code in pool_codes.items():
+        draft_data["Pools"].append({"pool_code": pool_code, "title": targets[pair]})
+    for row in accepted:
+        qcode = str(row["question_code"]).strip()
+        pair = (str(row["target_quiz_entity_key"]).strip(),
+                str(row["target_pool_entity_key"]).strip())
+        draft_data["Questions"].append({"question_code": qcode, "question_type": row.get("question_type"),
+            "question_text": row.get("question_text"), "points": row.get("points"),
+            "pool_code": pool_codes[pair], "answer_key": row.get("answer_key"),
+            "feedback": row.get("feedback"), "content_format": row.get("content_format")})
+    for row in response_rows:
+        if str(row.get("question_code") or "").strip() in accepted_codes:
+            draft_data["Responses"].append({key: row.get(key) for key in NEW_RESPONSE_HEADERS})
+    draft_model, report = ingest(draft_data, source_name="assessment review new-question rows", input_format="json")
+    if not report.get("valid_intake"):
+        raise ReingestError("New question rows did not pass draft intake validation.")
+    by_code = {q["identity"]["permanent_code"]: q for q in draft_model["questions"]}
+    annotations = []
+    for row in accepted:
+        qcode = str(row["question_code"]).strip()
+        qmodel = by_code[qcode]
+        addition = {"question": qmodel,
+                    "target_quiz_entity_key": str(row["target_quiz_entity_key"]).strip(),
+                    "target_pool_entity_key": str(row["target_pool_entity_key"]).strip(),
+                    "draft_model_sha256": draft_model["source"]["fingerprint"]["digest"]}
+        annotations.extend(_annotation_pair(addition["target_quiz_entity_key"], "/questions/add/" + qcode,
+            addition, "accepted", row, row["__row_number"], metadata_policy, cfg["question_sheet"]))
+    return annotations, decisions
 
 
 def materialize_assessment_decisions(model_path: Path, baseline_path: Path, edited_path: Path, *, metadata_policy="optional") -> dict:
@@ -533,6 +884,25 @@ def materialize_assessment_decisions(model_path: Path, baseline_path: Path, edit
         sheet = baseline["Quiz Settings"]
         allowed["Quiz Settings"] = {(r, c.column) for r in range(2, sheet.max_row+1)
                                     for c in sheet[1] if c.value in SETTINGS_EDITABLE_HEADERS}
+    image_layout = spec.get("image_replacements")
+    if image_layout:
+        sheet = baseline[image_layout["sheet"]]
+        cols = {cell.value: cell.column for cell in sheet[1]}
+        allowed[image_layout["sheet"]] = {
+            (item["row"], cols[name])
+            for item in image_layout["rows"]
+            for name in ("replacement_file", "revision_reason", "approval_status",
+                         "proposed_by", "proposed_at", "approved_by", "approved_at")
+        }
+    draft_layout = spec.get("question_additions")
+    if draft_layout:
+        for sheet_name in (draft_layout["question_sheet"], draft_layout["response_sheet"]):
+            sheet = baseline[sheet_name]
+            allowed[sheet_name] = {
+                (row, col)
+                for row in range(2, max(sheet.max_row, edited[sheet_name].max_row) + 1)
+                for col in range(1, sheet.max_column + 1)
+            }
     for before in baseline:
         after = edited[before.title]
         permitted = allowed.get(before.title, set())
@@ -576,7 +946,30 @@ def materialize_assessment_decisions(model_path: Path, baseline_path: Path, edit
         normalized.save(normalized_path)
         overlay = materialize_workbook_decisions(model_path, native_path, normalized_path, metadata_policy=metadata_policy)
     overlay["workbooks"] = {"baseline_sha256": sha256_file(baseline_path), "edited_sha256": sha256_file(edited_path)}
-    overlay["assessment_review"] = {"schema": SCHEMA, "layout_sha256": sha256_file(packet / LAYOUT), "question_count": spec["question_count"]}
+    overlay["assessment_review"] = {"schema": spec["schema"], "layout_sha256": sha256_file(packet / LAYOUT), "question_count": spec["question_count"]}
+    extra_annotations = _image_replacement_annotations(spec, edited, packet, metadata_policy)
+    draft_annotations, draft_decisions = _new_question_annotations(spec, edited, model, metadata_policy)
+    overlay["annotations"].extend(extra_annotations)
+    overlay["annotations"].extend(draft_annotations)
+    overlay["question_draft_decisions"] = draft_decisions
+    response_row_count = (sum(1 for row in edited[draft_layout["response_sheet"]].iter_rows(min_row=2)
+                              if any(cell.value not in (None, "") for cell in row))
+                          if draft_layout else 0)
+    overlay["content_minimized_summary"]["changed_row_count"] += len(draft_decisions) + response_row_count
+    overlay["content_minimized_summary"]["annotation_count"] = len(overlay["annotations"])
+    overlay["content_minimized_summary"]["accepted_change_count"] = sum(
+        annotation["kind"] == "approved_change" for annotation in overlay["annotations"])
+    if extra_annotations or draft_annotations:
+        check_model = json.loads(model_path.read_text(encoding="utf-8"))
+        check_model["annotations"].extend(extra_annotations + draft_annotations)
+        issues = validate_contract(check_model, mode="transform")
+        if issues:
+            raise ReingestError(f"Assessment addition decisions are invalid: {issues[0].render()}")
+        overlay["materialized_view_fingerprint"] = _canonical_digest({
+            "annotations": overlay["annotations"],
+            "settings_decisions": overlay["settings_decisions"],
+            "settings_inputs": overlay["settings_inputs"],
+        })
     return overlay
 
 

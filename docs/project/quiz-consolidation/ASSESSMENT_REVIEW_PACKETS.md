@@ -82,12 +82,30 @@ controls. Import emits a decision overlay, not an LMS import ZIP. Use the origin
 complete extraction workspace for readiness and building; the review packet's
 model retains its original asset references.
 
+For supported choice and written-response questions, normalization preserves
+bounded source prompt HTML separately from the readable workbook display.
+Unsupported native prompt material blocks building. A source image must remain
+referenced in projected question content; copying its file alone is insufficient.
+
+Image replacement is not yet an authoring control. Uploading a new file and
+describing it in `reviewer_note` records a request only. Changing the existing
+source image or its protected link is rejected. Use an existing question row for
+the note; added instruction rows are outside the original review coverage.
+
+Accepted revisions to supported question types can be applied to an extracted
+model copy before its first sandbox import. This leaves the question's
+`extraction_only` build-support status unchanged. Readiness and package generation
+still require recorded import evidence or an exact local candidate authorization;
+review acceptance alone does not make the package import-verified.
+
 Blank question-authoring templates and `quiz_draft_intake.py` remain a separate
 workflow. Do not append new source-question rows to an extracted reviewbook.
 
 ## Verification
 
 Run `python -m pytest tests/test_quiz_assessment_review.py
-tests/test_quiz_review_workbook_reingest.py`. Tests use synthetic questions and
+tests/test_quiz_review_workbook_reingest.py tests/test_quiz_sme_edit_scenarios.py`.
+The SME scenarios can also target a distribution checkout by setting
+`QUIZ_TOOLS_REPO=/absolute/path/to/checkout`. Tests use synthetic questions and
 exercise relocation, image links, unchanged import, accepted/draft edits, source
 protection, hidden layout, changed companions and rich-content holds.

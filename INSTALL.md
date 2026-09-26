@@ -116,10 +116,14 @@ python3.13 scripts/bootstrap_env.py --locked --dev
 
 On Windows, use `py -3.13` for bootstrap and
 `.venv\Scripts\python.exe -m pytest -q tests/test_quiz_sme_edit_scenarios.py`
-for the test command. The included suite has 18 scenarios: 15 pass and three
-strict expected failures document accepted edits this snapshot currently
-excludes. It is a focused, synthetic-only subset; the full originating
-development corpus is not included.
+for the focused suite. It has 21 synthetic reviewer scenarios, all passing on
+the promoted candidate. To run the broader included regression corpus, use
+`.venv/bin/python -m pytest -q tests` (Windows:
+`.venv\Scripts\python.exe -m pytest -q tests`). The included corpus covers
+the quiz tooling and contains synthetic fixtures; it is not the full private
+Workbench corpus and does not reproduce its full test result. At this snapshot,
+637 tests collect: 636 pass and one skips because its private import-receipt
+log is not included.
 
 ## Advanced synthetic proof
 

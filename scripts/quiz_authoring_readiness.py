@@ -74,7 +74,7 @@ def analyze_authoring_readiness(
     *,
     quiz_entity_key: str = "",
     settings_path: Path | None = None,
-    asset_root: Path | None = None,
+    asset_root: Path | list[Path] | None = None,
     promotion_receipt_path: Path | None = None,
     trial_authorization_path: Path | None = None,
 ) -> dict[str, Any]:
@@ -488,7 +488,8 @@ def analyze_authoring_readiness(
                 )
             )
 
-    root = (asset_root or model_path.parent).resolve()
+    root = ([item.resolve() for item in asset_root] if isinstance(asset_root, (list, tuple))
+            else (asset_root or model_path.parent).resolve())
     asset_keys: set[str] = set()
     resolved_assets: dict[str, dict[str, Any]] = {}
     package_paths: dict[str, tuple[str, str]] = {}

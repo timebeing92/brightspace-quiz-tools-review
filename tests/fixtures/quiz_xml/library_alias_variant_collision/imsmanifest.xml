@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="LIBRARY_ALIAS_VARIANT_COLLISION_FIXTURE">
+  <resources>
+    <resource identifier="res_questiondb" type="webcontent" href="questiondb.xml" />
+    <resource identifier="res_quiz" type="webcontent" d2l_material_type="d2lquiz" href="quiz_d2l_variant_collision.xml" />
+    <resource identifier="res_variant_a" type="webcontent" href="variant-a.svg" />
+    <resource identifier="res_variant_b" type="webcontent" href="variant-b.svg" />
+    <resource identifier="res_variant_c" type="webcontent" href="variant-c.svg" />
+  </resources>
+</manifest>

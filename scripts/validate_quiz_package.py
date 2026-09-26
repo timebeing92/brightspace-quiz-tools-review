@@ -437,7 +437,7 @@ def validate_authoring_projection(
             Path(args.model).expanduser().resolve(),
             quiz_entity_key=args.quiz_entity_key,
             settings_path=Path(args.settings).expanduser().resolve() if args.settings else None,
-            asset_root=Path(args.asset_root).expanduser().resolve() if args.asset_root else None,
+            asset_root=[Path(root).expanduser().resolve() for root in args.asset_root] or None,
             promotion_receipt_path=(
                 Path(args.promotion_receipt).expanduser().resolve()
                 if args.promotion_receipt
@@ -681,7 +681,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("--model", default="", help="Optional coursecraft.quiz/1 authoring model used to generate the package.")
     parser.add_argument("--settings", default="", help="Optional coursecraft.quiz_settings/1 receipt used by the model projection.")
     parser.add_argument("--quiz-entity-key", default="", help="Selected quiz key when the authoring model contains multiple quizzes.")
-    parser.add_argument("--asset-root", default="", help="Root for relative model asset source_path values.")
+    parser.add_argument("--asset-root", action="append", default=[], help="Root for relative model asset source_path values; repeat for multiple folders.")
     parser.add_argument("--promotion-receipt", default="", help="Optional verified Quiz Binder promotion receipt for a strict-model build.")
     parser.add_argument("--phase5-candidate-authorization", default="", help="Optional exact local-only Phase 5 candidate authorization; requires --promotion-receipt.")
     parser.add_argument("--run-receipt", default="", help="Optional coursecraft.quiz_run/1 build receipt to validate against emitted files.")

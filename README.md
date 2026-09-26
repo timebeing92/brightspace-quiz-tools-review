@@ -192,13 +192,18 @@ development dependencies:
 .venv/bin/python -m pytest -q tests/test_quiz_sme_edit_scenarios.py
 ```
 
-The suite covers **18 reviewer scenarios**: **15 pass** on this snapshot and
-three strict expected failures mark accepted prompt, response-option, and
-answer-key edits that this snapshot currently excludes. If any of those cases
-starts passing, pytest reports an unexpected pass so the expected-failure marker
-can be removed. The full private corpus is not included, so this focused suite
-does not reproduce the originating checkout's 795-test result. See
-[`tests/README.md`](tests/README.md) for its scope and synthetic fixture details.
+The focused suite now covers **21 reviewer scenarios**, including accepted
+prompt, response-option, and answer-key edits; replacing and linking images;
+adding questions to a selected pool; and guarded package/re-extraction checks.
+All 21 pass on the promoted Workbench candidate. The included broader suite
+collected 637 tests: **636 passed and one skipped**. It covers the public quiz
+tooling for extraction, review, authoring, and packaging. The one skip is the
+registry-link check that needs the omitted private import-receipt log. The suite
+uses synthetic fixtures; it does not include real course exports or the full
+private Workbench test corpus. See [`tests/README.md`](tests/README.md) for
+scope and commands. These reviewer edits remain subject to build support and import
+readiness checks; accepting content edits does not grant build approval. See
+[`tests/README.md`](tests/README.md) for the test boundary.
 
 Extraction success does not establish package readiness. Unsupported content,
 unresolved references, missing assets, or missing build approval can prevent

@@ -1,321 +1,760 @@
 {
-  "distribution_scope": "public_runtime_subset",
+  "schema": "coursecraft.workbench_vendor_pin/1",
+  "source_repository": "https://github.com/timebeing92/coursecraft-workbench.git",
+  "source_branch": "fix/quiz-reviewed-export-promotion",
+  "source_commit": "da77a7d019038d843d7da1194421811f3bf0a1a2",
+  "source_committed_at": "2026-09-25T23:46:19-04:00",
+  "policy": "byte-identical mechanical promotion; behavior changes upstream first",
   "files": [
     {
-      "sha256": "c3edab41506a938fc74544f6c84368c024b83c90bd500dafa82310c7e977d175",
       "source": "docs/project/quiz-consolidation/ASSESSMENT_REVIEW_PACKETS.md",
-      "target": "docs/project/quiz-consolidation/ASSESSMENT_REVIEW_PACKETS.md"
+      "target": "docs/project/quiz-consolidation/ASSESSMENT_REVIEW_PACKETS.md",
+      "sha256": "5b4de4ba11f4eaa625a408da36e743fb5c64efdded8b5a7184e4244bc3ebfab0"
     },
     {
-      "sha256": "61e5abcb87c6bf52c2983b70f818f33256ebf20c1f9b21be46d47e811155285a",
       "source": "docs/project/quiz-consolidation/DETERMINISTIC_QUIZ_DRAFT_INTAKE_2026-09-16.md",
-      "target": "docs/project/quiz-consolidation/DETERMINISTIC_QUIZ_DRAFT_INTAKE_2026-09-16.md"
+      "target": "docs/project/quiz-consolidation/DETERMINISTIC_QUIZ_DRAFT_INTAKE_2026-09-16.md",
+      "sha256": "61e5abcb87c6bf52c2983b70f818f33256ebf20c1f9b21be46d47e811155285a"
     },
     {
-      "sha256": "98e5256df601c9b23be69e22258fc4e7df727b2863a244b0f126ec4ef9875b76",
       "source": "docs/project/quiz-consolidation/QUIZ_PROJECTION_FIDELITY_GATES_2026-09-16.md",
-      "target": "docs/project/quiz-consolidation/QUIZ_PROJECTION_FIDELITY_GATES_2026-09-16.md"
+      "target": "docs/project/quiz-consolidation/QUIZ_PROJECTION_FIDELITY_GATES_2026-09-16.md",
+      "sha256": "98e5256df601c9b23be69e22258fc4e7df727b2863a244b0f126ec4ef9875b76"
     },
     {
-      "sha256": "8c52394cb579764478d55a786336c6b84e7f13cf69e3df3ab293bcfb62386936",
       "source": "scripts/build_quiz_package_from_workbook.py",
-      "target": "scripts/build_quiz_package_from_workbook.py"
+      "target": "scripts/build_quiz_package_from_workbook.py",
+      "sha256": "4e46c900906cbe31187a2d458d1ab72e50baa71586e759043f35613f16164604"
     },
     {
-      "sha256": "52d25bc2e584ddaa89e2854568d0bd50c76d562958e629cec079533d9bc9d3d2",
       "source": "scripts/check_package_conformance.py",
-      "target": "scripts/check_package_conformance.py"
+      "target": "scripts/check_package_conformance.py",
+      "sha256": "52d25bc2e584ddaa89e2854568d0bd50c76d562958e629cec079533d9bc9d3d2"
     },
     {
-      "sha256": "6e40c21ea0cf34e65c0ffa154f14e89b702762861cbb356f73770de1cb6182fb",
       "source": "scripts/check_quiz_authoring_readiness.py",
-      "target": "scripts/check_quiz_authoring_readiness.py"
+      "target": "scripts/check_quiz_authoring_readiness.py",
+      "sha256": "6f0b1cc6fec90e845177bb1ff3bc7247825492ed1b4d5a032ff6755d79bd13bd"
     },
     {
-      "sha256": "27e8e32971887eded7f4e1d54eb91a49e96eaebd0f51b942908feab6a9903430",
       "source": "scripts/common_xml.py",
-      "target": "scripts/common_xml.py"
+      "target": "scripts/common_xml.py",
+      "sha256": "27e8e32971887eded7f4e1d54eb91a49e96eaebd0f51b942908feab6a9903430"
     },
     {
-      "sha256": "320aff1d55e5d3bfc02c8d77b994e1994c8b053cfefa173d1345ca45c002b6ea",
       "source": "scripts/course_artifact_contracts.py",
-      "target": "scripts/course_artifact_contracts.py"
+      "target": "scripts/course_artifact_contracts.py",
+      "sha256": "320aff1d55e5d3bfc02c8d77b994e1994c8b053cfefa173d1345ca45c002b6ea"
     },
     {
-      "sha256": "e3987b82875cc1b7df65bf2a8e21dbf536c848a227d43f08bea05f9e067f50f9",
       "source": "scripts/creatorplus_package.py",
-      "target": "scripts/creatorplus_package.py"
+      "target": "scripts/creatorplus_package.py",
+      "sha256": "e3987b82875cc1b7df65bf2a8e21dbf536c848a227d43f08bea05f9e067f50f9"
     },
     {
-      "sha256": "57f0947a18ad634c3de66dcb35e416c1af3de9505fd90ba9c3e6853de9bea410",
       "source": "scripts/d2l_package_lib.py",
-      "target": "scripts/d2l_package_lib.py"
+      "target": "scripts/d2l_package_lib.py",
+      "sha256": "57f0947a18ad634c3de66dcb35e416c1af3de9505fd90ba9c3e6853de9bea410"
     },
     {
-      "sha256": "58ade0a470076b2811a57e62c60d02363bc2b826abcda455c99a4ebb36e4ca17",
       "source": "scripts/diff_packages.py",
-      "target": "scripts/diff_packages.py"
+      "target": "scripts/diff_packages.py",
+      "sha256": "58ade0a470076b2811a57e62c60d02363bc2b826abcda455c99a4ebb36e4ca17"
     },
     {
-      "sha256": "4982aede0de072bf6349f3b5e2d3cd94a4e88bc9b880ab6d49fb8fdf6126dfa1",
       "source": "scripts/extract_quiz_pool_review.py",
-      "target": "scripts/extract_quiz_pool_review.py"
+      "target": "scripts/extract_quiz_pool_review.py",
+      "sha256": "4982aede0de072bf6349f3b5e2d3cd94a4e88bc9b880ab6d49fb8fdf6126dfa1"
     },
     {
-      "sha256": "aedcd0c4ef1e4ed4b9241f3c8075a2bda63db43e513a656811dec7a132209144",
       "source": "scripts/local_evidence_output.py",
-      "target": "scripts/local_evidence_output.py"
+      "target": "scripts/local_evidence_output.py",
+      "sha256": "aedcd0c4ef1e4ed4b9241f3c8075a2bda63db43e513a656811dec7a132209144"
     },
     {
-      "sha256": "7bbb0bbbfc177db0ae8b57008ac2d2e4649936e324f377ea0ed9427bc8320a20",
       "source": "scripts/quiz_assessment_review.py",
-      "target": "scripts/quiz_assessment_review.py"
+      "target": "scripts/quiz_assessment_review.py",
+      "sha256": "cef8a0144aab0dd2e7e1b7c58973ce73fc1cbadd996cd9f2e9543a36115fadaa"
     },
     {
-      "sha256": "55267229fe59278b2ca79594f759b488fb2c6df45b2ea8d3a0e006a6dc971618",
       "source": "scripts/quiz_authoring_readiness.py",
-      "target": "scripts/quiz_authoring_readiness.py"
+      "target": "scripts/quiz_authoring_readiness.py",
+      "sha256": "0ae5cf83f057140f24a7fcdc5814739b91b1234ffc805c5322ad6a2bfcda2cc9"
     },
     {
-      "sha256": "9c71a2931668bc52b064489bf2d0e0c0fce431a87109db1a8448ce76a946a612",
       "source": "scripts/quiz_binder_station.py",
-      "target": "scripts/quiz_binder_station.py"
+      "target": "scripts/quiz_binder_station.py",
+      "sha256": "9c71a2931668bc52b064489bf2d0e0c0fce431a87109db1a8448ce76a946a612"
     },
     {
-      "sha256": "602a077093928bca2e1856cfe6592733d5e26324926290971f5e5b5c32fdf5d8",
       "source": "scripts/quiz_binder_strings.py",
-      "target": "scripts/quiz_binder_strings.py"
+      "target": "scripts/quiz_binder_strings.py",
+      "sha256": "602a077093928bca2e1856cfe6592733d5e26324926290971f5e5b5c32fdf5d8"
     },
     {
-      "sha256": "90222f45946f8d0e8e95f8144703c830860071340f00da32fd360a19000f61d3",
       "source": "scripts/quiz_build_support.py",
-      "target": "scripts/quiz_build_support.py"
+      "target": "scripts/quiz_build_support.py",
+      "sha256": "880d2f7afdb8263ad29381164ac518f9c5bf496239e9e4782f3fac2bd8c560f3"
     },
     {
-      "sha256": "4bb77a767086231c3a3ae4e5d2636a29c43444928d80b4fd2873b43140724d4a",
       "source": "scripts/quiz_contracts.py",
-      "target": "scripts/quiz_contracts.py"
+      "target": "scripts/quiz_contracts.py",
+      "sha256": "4bb77a767086231c3a3ae4e5d2636a29c43444928d80b4fd2873b43140724d4a"
     },
     {
-      "sha256": "c545aca10a4b9a8407580e01907b2d9fe1be7c5ed69b582fac95e36e20f9f070",
       "source": "scripts/quiz_draft_intake.py",
-      "target": "scripts/quiz_draft_intake.py"
+      "target": "scripts/quiz_draft_intake.py",
+      "sha256": "c545aca10a4b9a8407580e01907b2d9fe1be7c5ed69b582fac95e36e20f9f070"
     },
     {
-      "sha256": "7d5ac32feb852349e2c74bc205a49d76ebd5bb29b8d51616ae2ec412f0a59974",
       "source": "scripts/quiz_normalization.py",
-      "target": "scripts/quiz_normalization.py"
+      "target": "scripts/quiz_normalization.py",
+      "sha256": "02fe9b4cbdc4057638fe375634115750c40a5d92cb39828bf79edfcb7c060cfe"
     },
     {
-      "sha256": "6183b4a94ce542df09977537f4cf197b5ee2f7f4b8731e3756022bf3c945af28",
       "source": "scripts/quiz_phase5_authorization.py",
-      "target": "scripts/quiz_phase5_authorization.py"
+      "target": "scripts/quiz_phase5_authorization.py",
+      "sha256": "6183b4a94ce542df09977537f4cf197b5ee2f7f4b8731e3756022bf3c945af28"
     },
     {
-      "sha256": "9944e5ab22d9fe3267e11264b28bfeb87e7e38b4b42f6b37f7fce3c1a9c2c741",
       "source": "scripts/quiz_promote_revisions.py",
-      "target": "scripts/quiz_promote_revisions.py"
+      "target": "scripts/quiz_promote_revisions.py",
+      "sha256": "b8d7c786c154b6d20e345109aeedf8f3b9c1744da634dbbd8a2230e90e68a6b1"
     },
     {
-      "sha256": "16710869d919fc83b0c3713c5cda70d6c1239828a205ec83da164c1d6c153b80",
       "source": "scripts/quiz_question_types.py",
-      "target": "scripts/quiz_question_types.py"
+      "target": "scripts/quiz_question_types.py",
+      "sha256": "16710869d919fc83b0c3713c5cda70d6c1239828a205ec83da164c1d6c153b80"
     },
     {
-      "sha256": "545b336a7c26ba67c00f9ff0e220477279b7e3392af08e271e6a3f5cf3c5fb2e",
       "source": "scripts/quiz_review_projection.py",
-      "target": "scripts/quiz_review_projection.py"
+      "target": "scripts/quiz_review_projection.py",
+      "sha256": "545b336a7c26ba67c00f9ff0e220477279b7e3392af08e271e6a3f5cf3c5fb2e"
     },
     {
-      "sha256": "c2c17576f24860eb6d8ce1a3875ba19992bb16cba3a90c253e96c270787951d9",
       "source": "scripts/quiz_review_queues.py",
-      "target": "scripts/quiz_review_queues.py"
+      "target": "scripts/quiz_review_queues.py",
+      "sha256": "c2c17576f24860eb6d8ce1a3875ba19992bb16cba3a90c253e96c270787951d9"
     },
     {
-      "sha256": "f32ff0a8a6af373954099e945eef9888f1cff36f9d3a2d764f7a05d8b6fc6d33",
       "source": "scripts/quiz_review_station.py",
-      "target": "scripts/quiz_review_station.py"
+      "target": "scripts/quiz_review_station.py",
+      "sha256": "f32ff0a8a6af373954099e945eef9888f1cff36f9d3a2d764f7a05d8b6fc6d33"
     },
     {
-      "sha256": "df8cfa5756f1bdd713211e5f9d27c9c07d0f4a4567259f5ea31fcadcc96151cf",
       "source": "scripts/quiz_review_text.py",
-      "target": "scripts/quiz_review_text.py"
+      "target": "scripts/quiz_review_text.py",
+      "sha256": "df8cfa5756f1bdd713211e5f9d27c9c07d0f4a4567259f5ea31fcadcc96151cf"
     },
     {
-      "sha256": "ec3eae9a23e9f74bfcf30d6b0abecd3cf02b5d589b09ed42fce4de3270c730c7",
       "source": "scripts/quiz_review_workbook_reingest.py",
-      "target": "scripts/quiz_review_workbook_reingest.py"
+      "target": "scripts/quiz_review_workbook_reingest.py",
+      "sha256": "ec3eae9a23e9f74bfcf30d6b0abecd3cf02b5d589b09ed42fce4de3270c730c7"
     },
     {
-      "sha256": "e33aa0249bbcf5578edf9ec730a400d7c231d87b3366bb986ab0049d14063a13",
       "source": "scripts/quiz_share_gate.py",
-      "target": "scripts/quiz_share_gate.py"
+      "target": "scripts/quiz_share_gate.py",
+      "sha256": "e33aa0249bbcf5578edf9ec730a400d7c231d87b3366bb986ab0049d14063a13"
     },
     {
-      "sha256": "c5b912edc244a0d153765a15cf0620532cd5ebbdf97f1f345eed6017f6b85d77",
       "source": "scripts/quiz_unbind.py",
-      "target": "scripts/quiz_unbind.py"
+      "target": "scripts/quiz_unbind.py",
+      "sha256": "c5b912edc244a0d153765a15cf0620532cd5ebbdf97f1f345eed6017f6b85d77"
     },
     {
-      "sha256": "77b52b119cf3b5b3e530c10fd3055c93e12973723ad936867302f5f97276a68d",
       "source": "scripts/quiz_unbind_receipt.py",
-      "target": "scripts/quiz_unbind_receipt.py"
+      "target": "scripts/quiz_unbind_receipt.py",
+      "sha256": "77b52b119cf3b5b3e530c10fd3055c93e12973723ad936867302f5f97276a68d"
     },
     {
-      "sha256": "f402effb547229b36b13c46117a83e5fd9ea92192f369505f78840b0abc79abe",
       "source": "scripts/quiz_variant_control_matrix.py",
-      "target": "scripts/quiz_variant_control_matrix.py"
+      "target": "scripts/quiz_variant_control_matrix.py",
+      "sha256": "f402effb547229b36b13c46117a83e5fd9ea92192f369505f78840b0abc79abe"
     },
     {
-      "sha256": "4b86e15be51a87baca9a2fac83a710cc86163b32a30239fcbe67c14fa3468ef2",
       "source": "scripts/validate_quiz_contract.py",
-      "target": "scripts/validate_quiz_contract.py"
+      "target": "scripts/validate_quiz_contract.py",
+      "sha256": "4b86e15be51a87baca9a2fac83a710cc86163b32a30239fcbe67c14fa3468ef2"
     },
     {
-      "sha256": "fe6267c48e70505fdc2be66ae5fb7a3f72114c49be1572070eec170e63beb384",
       "source": "scripts/validate_quiz_package.py",
-      "target": "scripts/validate_quiz_package.py"
+      "target": "scripts/validate_quiz_package.py",
+      "sha256": "4b3a6a63d359064ed64fcb5be5802ec7995504df060ab1ac702afc1ab4befcfb"
     },
     {
-      "sha256": "bb1059cde0dfc46126960e4ad5285990ef59020b6e0b55bb069b7de235cbd508",
       "source": "scripts/verify_quiz_unbind_run.py",
-      "target": "scripts/verify_quiz_unbind_run.py"
+      "target": "scripts/verify_quiz_unbind_run.py",
+      "sha256": "bb1059cde0dfc46126960e4ad5285990ef59020b6e0b55bb069b7de235cbd508"
     },
     {
-      "sha256": "373a06806354c0c9ed5f1700882fd90b60043237dfa3e062ccc97e040da993da",
       "source": "tests/fixtures/quiz_authoring/assets/concept-map.svg",
-      "target": "tests/fixtures/quiz_authoring/assets/concept-map.svg"
+      "target": "tests/fixtures/quiz_authoring/assets/concept-map.svg",
+      "sha256": "373a06806354c0c9ed5f1700882fd90b60043237dfa3e062ccc97e040da993da"
     },
     {
-      "sha256": "90bac7036ae89ea462fb17b37b4bd4cbabc60cdb33e6d967fd9054ac7c4ab86b",
       "source": "tests/fixtures/quiz_authoring/buildable_quiz.model.json",
-      "target": "tests/fixtures/quiz_authoring/buildable_quiz.model.json"
+      "target": "tests/fixtures/quiz_authoring/buildable_quiz.model.json",
+      "sha256": "90bac7036ae89ea462fb17b37b4bd4cbabc60cdb33e6d967fd9054ac7c4ab86b"
     },
     {
-      "sha256": "12377b6fcf2a04867603605cebc0ac35e172b7bee6c8294395a048e919301683",
       "source": "tests/fixtures/quiz_authoring/buildable_quiz.settings.json",
-      "target": "tests/fixtures/quiz_authoring/buildable_quiz.settings.json"
+      "target": "tests/fixtures/quiz_authoring/buildable_quiz.settings.json",
+      "sha256": "12377b6fcf2a04867603605cebc0ac35e172b7bee6c8294395a048e919301683"
     },
     {
-      "sha256": "1a91d717787c5b2c5f08fd91258d92a823543bb588eb439c2436207c2077bc3c",
+      "source": "tests/fixtures/quiz_binder/golden_course.model.json",
+      "target": "tests/fixtures/quiz_binder/golden_course.model.json",
+      "sha256": "28a60592f619ceeb317830f8c2757ab83a929ad7875020cdf67d3d3adb8ad52a"
+    },
+    {
+      "source": "tests/fixtures/quiz_source_choice_fidelity/README.md",
+      "target": "tests/fixtures/quiz_source_choice_fidelity/README.md",
+      "sha256": "7328d59a97977c18a1ece099d66f59fb9a49ee95c0345673fe1a69a46cde68bb"
+    },
+    {
+      "source": "tests/fixtures/quiz_source_choice_fidelity/quiz_d2l_choices.xml",
+      "target": "tests/fixtures/quiz_source_choice_fidelity/quiz_d2l_choices.xml",
+      "sha256": "61cfdd024a8280bee0837a187cf7fa2940a4ad682a46d7e295050a0b7cd0dd9a"
+    },
+    {
+      "source": "tests/fixtures/quiz_source_choice_fidelity/shape-a.svg",
+      "target": "tests/fixtures/quiz_source_choice_fidelity/shape-a.svg",
+      "sha256": "28cc8c4f342fb0e605f05105731f099e10ef24ac74bbbf3964553826e2a9c291"
+    },
+    {
+      "source": "tests/fixtures/quiz_source_choice_fidelity/shape-b.svg",
+      "target": "tests/fixtures/quiz_source_choice_fidelity/shape-b.svg",
+      "sha256": "16f987a8d78f18eb7b0e7c7878354c9861ab6b431c890e796f8f11dc9a46efcd"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/README.md",
+      "target": "tests/fixtures/quiz_xml/README.md",
+      "sha256": "28e4b8fa625b00f770c41766981a30244db28b16382bf2e6ed9cfd0d3c28a5d6"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/answer_key_types/imsmanifest.xml",
+      "target": "tests/fixtures/quiz_xml/answer_key_types/imsmanifest.xml",
+      "sha256": "fbb767df2943f0cb32e927b76021178c85d08148861e18d85b6498f35d590ad0"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/answer_key_types/questiondb.xml",
+      "target": "tests/fixtures/quiz_xml/answer_key_types/questiondb.xml",
+      "sha256": "5d03e795933137d1d74509e643db46a8b3cb2ff0b01e4194347f4cdb08f28001"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/answer_key_types/quiz_d2l_answers.xml",
+      "target": "tests/fixtures/quiz_xml/answer_key_types/quiz_d2l_answers.xml",
+      "sha256": "e24cd3d5c81d58af4ba67388bf4e4368b185acc1998ca0bf0c5123fcc886b42f"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/authored_variant_reuse_points/imsmanifest.xml",
+      "target": "tests/fixtures/quiz_xml/authored_variant_reuse_points/imsmanifest.xml",
+      "sha256": "c6cce3cd974866309394c49a0a5e93c3caad1bbf5ef97e1f63445810d13191b6"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/authored_variant_reuse_points/quiz_d2l_reuse_points.xml",
+      "target": "tests/fixtures/quiz_xml/authored_variant_reuse_points/quiz_d2l_reuse_points.xml",
+      "sha256": "eb68f7e89515907c8db8cb71dc9724493e981aa3d85ce51d81b06e37e6d3e637"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/duplicate_pool_and_similarity/imsmanifest.xml",
+      "target": "tests/fixtures/quiz_xml/duplicate_pool_and_similarity/imsmanifest.xml",
+      "sha256": "054c826b7264703bb925aaddbfce18b2d305d2c5972f0f56ef183a23e1ffac63"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/duplicate_pool_and_similarity/questiondb.xml",
+      "target": "tests/fixtures/quiz_xml/duplicate_pool_and_similarity/questiondb.xml",
+      "sha256": "20b43ec16949109c42d4ed17b61d298feb050f8e6c7be31d211d81ce4ba203be"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/duplicate_pool_and_similarity/quiz_d2l_duplicate.xml",
+      "target": "tests/fixtures/quiz_xml/duplicate_pool_and_similarity/quiz_d2l_duplicate.xml",
+      "sha256": "a6ea85075e90d8e64f25eaf7cdf5aec742254b79e88e78a4d32152dcb646963e"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/fill_in_the_blanks_multiblank/imsmanifest.xml",
+      "target": "tests/fixtures/quiz_xml/fill_in_the_blanks_multiblank/imsmanifest.xml",
+      "sha256": "914bd32349b9efb95d4b4e3cefc78c189d70cb38034f0dc884b91b7b1148c115"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/fill_in_the_blanks_multiblank/questiondb.xml",
+      "target": "tests/fixtures/quiz_xml/fill_in_the_blanks_multiblank/questiondb.xml",
+      "sha256": "3b512a2f82a04c979a066462da16c1e871e39973be43eaf4ca0502e7e70cf230"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/fill_in_the_blanks_multiblank/quiz_d2l_5156.xml",
+      "target": "tests/fixtures/quiz_xml/fill_in_the_blanks_multiblank/quiz_d2l_5156.xml",
+      "sha256": "bd1cc2ac78a8dd4faf9333c3c497f621f5da27519e60c13886be4344651a4627"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/fixture_catalog.json",
+      "target": "tests/fixtures/quiz_xml/fixture_catalog.json",
+      "sha256": "36fe02781f108ffb751e2be718a3e404ba4ba44f1d21c709afbd30aadd27b4d0"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/identity_collisions/imsmanifest.xml",
+      "target": "tests/fixtures/quiz_xml/identity_collisions/imsmanifest.xml",
+      "sha256": "8ae9d19fcca7e65be17b4b2d2390b4aea0ed36e1ace0162b0da9dc9a2ea73ca2"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/identity_collisions/quiz_d2l_identity_collisions.xml",
+      "target": "tests/fixtures/quiz_xml/identity_collisions/quiz_d2l_identity_collisions.xml",
+      "sha256": "7dfd6187b0957edb8cd4e2dafc1826ce52e5a7c188f0a682916aa803ab86345e"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/identity_collisions/shared.svg",
+      "target": "tests/fixtures/quiz_xml/identity_collisions/shared.svg",
+      "sha256": "d12939e3904795eb4c03c9d8be22e4003169bbe1a3dee52f3807c62c154555e0"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/identity_collisions/variant.svg",
+      "target": "tests/fixtures/quiz_xml/identity_collisions/variant.svg",
+      "sha256": "664d735fd7ee9924f5fbed86a6c2d3bcc6f416a03dcca883de53183914f71b46"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/library_alias_variant_collision/imsmanifest.xml",
+      "target": "tests/fixtures/quiz_xml/library_alias_variant_collision/imsmanifest.xml",
+      "sha256": "197b95b3553efe62dc698ef969dc3674bd69b2e7f676a57a1b13e18336df571f"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/library_alias_variant_collision/questiondb.xml",
+      "target": "tests/fixtures/quiz_xml/library_alias_variant_collision/questiondb.xml",
+      "sha256": "5c2a10fa64ea6681b7a576320e48ca46ebbf41722d4e1717823bc7707dba12a2"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/library_alias_variant_collision/quiz_d2l_variant_collision.xml",
+      "target": "tests/fixtures/quiz_xml/library_alias_variant_collision/quiz_d2l_variant_collision.xml",
+      "sha256": "a0756b7eb35540b16c168a3f9513d3650abfac3ce8725b1330bcb8f7e02ad9b1"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/library_alias_variant_collision/variant-a.svg",
+      "target": "tests/fixtures/quiz_xml/library_alias_variant_collision/variant-a.svg",
+      "sha256": "573b5e7f2b60d419e1c0ca43a5c6a3a0c572487d362be3fa163187256978e04f"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/library_alias_variant_collision/variant-b.svg",
+      "target": "tests/fixtures/quiz_xml/library_alias_variant_collision/variant-b.svg",
+      "sha256": "2036fff360dd5988a41ff5bfd621e6082cbf77e56c91a9b73e2df4e37a2d027b"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/library_alias_variant_collision/variant-c.svg",
+      "target": "tests/fixtures/quiz_xml/library_alias_variant_collision/variant-c.svg",
+      "sha256": "1c4d8b7142b5bb16ec02d2253a129f37aaa90d23c2da83539552b9a57a6ab257"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/long_answer_with_answer_key/imsmanifest.xml",
+      "target": "tests/fixtures/quiz_xml/long_answer_with_answer_key/imsmanifest.xml",
+      "sha256": "24756386acc13730fa59b2ccb0188264a1cbd4b3799e5d3c5ef019b3461d6e91"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/long_answer_with_answer_key/questiondb.xml",
+      "target": "tests/fixtures/quiz_xml/long_answer_with_answer_key/questiondb.xml",
+      "sha256": "92991546001c481822aeef339bc2c58cea4a9d2493e09becc4918092903a65bb"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/long_answer_with_answer_key/quiz_d2l_5166.xml",
+      "target": "tests/fixtures/quiz_xml/long_answer_with_answer_key/quiz_d2l_5166.xml",
+      "sha256": "d03243cad5f5e40646baad0a05b5df4e92bb2e471142d4162b2cf00ecee48575"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/matching_response_groups/imsmanifest.xml",
+      "target": "tests/fixtures/quiz_xml/matching_response_groups/imsmanifest.xml",
+      "sha256": "24756386acc13730fa59b2ccb0188264a1cbd4b3799e5d3c5ef019b3461d6e91"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/matching_response_groups/questiondb.xml",
+      "target": "tests/fixtures/quiz_xml/matching_response_groups/questiondb.xml",
+      "sha256": "97efe354d750c4cbe4869b25a6baad1748faed5885c06036d8db67b0fa7250d9"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/matching_response_groups/quiz_d2l_5166.xml",
+      "target": "tests/fixtures/quiz_xml/matching_response_groups/quiz_d2l_5166.xml",
+      "sha256": "44fbc5e318f1876674afdaf32dcbad9343494006fc523849ff4a4558647ca811"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/math_rendering/imsmanifest.xml",
+      "target": "tests/fixtures/quiz_xml/math_rendering/imsmanifest.xml",
+      "sha256": "5f38cf622ab7d2a99e3a23a5f4588aff2c5bbd3659b757412df684f47a83bb95"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/math_rendering/questiondb.xml",
+      "target": "tests/fixtures/quiz_xml/math_rendering/questiondb.xml",
+      "sha256": "e0a318d015af07a23f19fa44140c0a51976251e572ae1379d42dd1e32d07e269"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/math_rendering/quiz_d2l_math.xml",
+      "target": "tests/fixtures/quiz_xml/math_rendering/quiz_d2l_math.xml",
+      "sha256": "38d481ab1d60fa099c8f5fc06c1058290423d75d3c46cc6a700d629a419ef2e9"
+    },
+    {
       "source": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/imsmanifest.xml",
-      "target": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/imsmanifest.xml"
+      "target": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/imsmanifest.xml",
+      "sha256": "1a91d717787c5b2c5f08fd91258d92a823543bb588eb439c2436207c2077bc3c"
     },
     {
-      "sha256": "d0e56ca7afd5159048e9d0688de2e77b6f201ef8a9344e9c467d9e41719fe5ab",
       "source": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/questiondb.xml",
-      "target": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/questiondb.xml"
+      "target": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/questiondb.xml",
+      "sha256": "d0e56ca7afd5159048e9d0688de2e77b6f201ef8a9344e9c467d9e41719fe5ab"
     },
     {
-      "sha256": "c1c5b241f8cee2a634501141d63414bab21279931e2361239d835c6ca40aa3a8",
       "source": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/quiz_d2l_mixed.xml",
-      "target": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/quiz_d2l_mixed.xml"
+      "target": "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/quiz_d2l_mixed.xml",
+      "sha256": "c1c5b241f8cee2a634501141d63414bab21279931e2361239d835c6ca40aa3a8"
     },
     {
-      "sha256": "17f56e6bbde8a7f8b1eebeb9397f3c3274358aefb6be6fabf8ef19bf67eea2e0",
+      "source": "tests/fixtures/quiz_xml/occurrence_scoped_source_facts/imsmanifest.xml",
+      "target": "tests/fixtures/quiz_xml/occurrence_scoped_source_facts/imsmanifest.xml",
+      "sha256": "b00ceb29860591a7dbc2efbad0025417f9e9aafd96bee62b94f2c31990442da4"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/occurrence_scoped_source_facts/questiondb.xml",
+      "target": "tests/fixtures/quiz_xml/occurrence_scoped_source_facts/questiondb.xml",
+      "sha256": "7656139000da1ca54509cbd95fa3330158a03385d4f299631f4adfbfd2c06bbb"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/occurrence_scoped_source_facts/quiz_d2l_occurrences.xml",
+      "target": "tests/fixtures/quiz_xml/occurrence_scoped_source_facts/quiz_d2l_occurrences.xml",
+      "sha256": "056e7606fcc7ffc3c57260531cf1bf35e5f65061313257b5914ecd62a30b2479"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/ordering_response_group/imsmanifest.xml",
+      "target": "tests/fixtures/quiz_xml/ordering_response_group/imsmanifest.xml",
+      "sha256": "24756386acc13730fa59b2ccb0188264a1cbd4b3799e5d3c5ef019b3461d6e91"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/ordering_response_group/questiondb.xml",
+      "target": "tests/fixtures/quiz_xml/ordering_response_group/questiondb.xml",
+      "sha256": "aec0db31f25224e1f9518cce5ce6a2c65db57c27ab964bd093b1061769bc6152"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/ordering_response_group/quiz_d2l_5166.xml",
+      "target": "tests/fixtures/quiz_xml/ordering_response_group/quiz_d2l_5166.xml",
+      "sha256": "172f9278234f242f165318d87bce401421be073173fc9f688a1283460d65a700"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/quiz_only_inline_tf/imsmanifest.xml",
+      "target": "tests/fixtures/quiz_xml/quiz_only_inline_tf/imsmanifest.xml",
+      "sha256": "56f54ac70ac57169dac6127b30c9a20a14ac7054b66e6aa52df456959d328f1f"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/quiz_only_inline_tf/quiz_d2l_only.xml",
+      "target": "tests/fixtures/quiz_xml/quiz_only_inline_tf/quiz_d2l_only.xml",
+      "sha256": "c6f12fb054ee9b4efc23963ef585c88f9e68ddcb996fd91b5b13560553d4f225"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/short_answer_projection/imsmanifest.xml",
+      "target": "tests/fixtures/quiz_xml/short_answer_projection/imsmanifest.xml",
+      "sha256": "2f5e9607211ac3a313e27854ebadbb9208ea6a7dab30f606cb1b00df03277413"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/short_answer_projection/questiondb.xml",
+      "target": "tests/fixtures/quiz_xml/short_answer_projection/questiondb.xml",
+      "sha256": "4c975e94e711b58debb4a5c7e39e6749fed1ffa3c3b56ea176005015c23efa0c"
+    },
+    {
+      "source": "tests/fixtures/quiz_xml/short_answer_projection/quiz_d2l_short_answer.xml",
+      "target": "tests/fixtures/quiz_xml/short_answer_projection/quiz_d2l_short_answer.xml",
+      "sha256": "86278c8b793a995cc04af7d56791837b6d4dd2a66e882c1ee644f73fb1c63980"
+    },
+    {
+      "source": "tests/test_diff_packages.py",
+      "target": "tests/test_diff_packages.py",
+      "sha256": "6e801f8cbda0b8d35a253864d46e3100e0c382498e50dd10a8e0302e98ce2f83"
+    },
+    {
+      "source": "tests/test_extract_quiz_pool_review.py",
+      "target": "tests/test_extract_quiz_pool_review.py",
+      "sha256": "c2d3112c2df36c351cf53d1a4806123ba760723ddf77736a0f597d2a3db93ce1"
+    },
+    {
+      "source": "tests/test_local_evidence_output.py",
+      "target": "tests/test_local_evidence_output.py",
+      "sha256": "4ee40e1044c0efac7b07826ac8603fe571aa76e0cf9c7b490daefc94eabc25c1"
+    },
+    {
+      "source": "tests/test_quiz_assessment_review.py",
+      "target": "tests/test_quiz_assessment_review.py",
+      "sha256": "d1e04064d395deebd0e5b98573244590fe4a444735449e12c4df0864e1331a4b"
+    },
+    {
+      "source": "tests/test_quiz_authoring_readiness.py",
+      "target": "tests/test_quiz_authoring_readiness.py",
+      "sha256": "427b842a26652e9aedccf90d0554ab1ea6b080f04ff9de0e512979c62038d36c"
+    },
+    {
+      "source": "tests/test_quiz_binder_station.py",
+      "target": "tests/test_quiz_binder_station.py",
+      "sha256": "836a10a14bdd2dc7fa7b0fbf5ce1ebd4c4bfc8cba0e6139f05b706dd8188c51d"
+    },
+    {
+      "source": "tests/test_quiz_contracts.py",
+      "target": "tests/test_quiz_contracts.py",
+      "sha256": "1f718eea0aa46fbc83eb8dc04d0cf8b74bd55167b1fee0bb314ee86f02a51ae7"
+    },
+    {
+      "source": "tests/test_quiz_draft_intake.py",
+      "target": "tests/test_quiz_draft_intake.py",
+      "sha256": "2070436e2daa15da4b363f489c01ac105447af51b21f69e0d8733a4e0ef0845a"
+    },
+    {
+      "source": "tests/test_quiz_normalization.py",
+      "target": "tests/test_quiz_normalization.py",
+      "sha256": "ca0ea9ec245e59671ee093e3ae5c8164b9fc32b8f6242b691bf3e48db5853a5a"
+    },
+    {
+      "source": "tests/test_quiz_package_builder_validator.py",
+      "target": "tests/test_quiz_package_builder_validator.py",
+      "sha256": "8ea51c2f88ec614e5199f446a30a51798c4e04e5adfe9afc94b2e06f41271970"
+    },
+    {
+      "source": "tests/test_quiz_phase5_authorization.py",
+      "target": "tests/test_quiz_phase5_authorization.py",
+      "sha256": "346398897b3a2145a0ff4cc783e2d1d402f216bf9c0265c726061846f126bff2"
+    },
+    {
+      "source": "tests/test_quiz_projection_fidelity.py",
+      "target": "tests/test_quiz_projection_fidelity.py",
+      "sha256": "74753e8d80c8ecf87be6e09140afacf5f80983cd0599dd4601ecbde4ec4b27c6"
+    },
+    {
+      "source": "tests/test_quiz_promotion.py",
+      "target": "tests/test_quiz_promotion.py",
+      "sha256": "3ab9df28917ea8772ad4a465bcfa01844aa8e8504f5c5d8713fae7183a01a124"
+    },
+    {
+      "source": "tests/test_quiz_review_projection.py",
+      "target": "tests/test_quiz_review_projection.py",
+      "sha256": "b4bef2b145e4a8ca523207640dccdcc124ec0b1c64dd8b1c8a8f6ee2d72c58ab"
+    },
+    {
+      "source": "tests/test_quiz_review_queues.py",
+      "target": "tests/test_quiz_review_queues.py",
+      "sha256": "6c2bb518ca5738cb989b8a7a97a386fb03706a05a6485b82fdb0da3682c963a9"
+    },
+    {
+      "source": "tests/test_quiz_review_station.py",
+      "target": "tests/test_quiz_review_station.py",
+      "sha256": "42815a961b481fb9b7b8c17cd803e3b361e6e0666b9853ba9570c28ef6221ee0"
+    },
+    {
+      "source": "tests/test_quiz_review_workbook_reingest.py",
+      "target": "tests/test_quiz_review_workbook_reingest.py",
+      "sha256": "696c814499782d52ba7a0f8cc935fb642c42a40acd439920014a6e003fd9e361"
+    },
+    {
+      "source": "tests/test_quiz_share_gate.py",
+      "target": "tests/test_quiz_share_gate.py",
+      "sha256": "5b9be831a2687fcb0ce4b4eb7d6d713ec5071b07d24b9dea14fdb9e8afef43d5"
+    },
+    {
+      "source": "tests/test_quiz_short_answer_consumers.py",
+      "target": "tests/test_quiz_short_answer_consumers.py",
+      "sha256": "bebfabbadde58e78b4604797b9708ef7e70ba8c04e19ddc509f776ac837a4b14"
+    },
+    {
+      "source": "tests/test_quiz_short_answer_projection.py",
+      "target": "tests/test_quiz_short_answer_projection.py",
+      "sha256": "46b7b982fddbbe6a6a55d641d8a3abccb9612bcd0950216b08b52be2ee4b53f8"
+    },
+    {
+      "source": "tests/test_quiz_source_choice_fidelity.py",
+      "target": "tests/test_quiz_source_choice_fidelity.py",
+      "sha256": "5c2d223a2a4e5f3cb04d1ed129168f6377c43fe226ecc0c78463aeffd641d20f"
+    },
+    {
+      "source": "tests/test_quiz_source_response_facts.py",
+      "target": "tests/test_quiz_source_response_facts.py",
+      "sha256": "bcf1822ed4c95276219fec911318255938e4d88d4e29103d3396a059e8e440a7"
+    },
+    {
+      "source": "tests/test_quiz_unbind.py",
+      "target": "tests/test_quiz_unbind.py",
+      "sha256": "8b731a5f2b53257229b02a7f7fc2f1060e4e8fcd28d19e172b939b271927271e"
+    },
+    {
+      "source": "tests/test_quiz_variant_control_matrix.py",
+      "target": "tests/test_quiz_variant_control_matrix.py",
+      "sha256": "86f589ec5f595cf57a9d79542c7351668e0dc0bd5c778552124d40abaf896206"
+    },
+    {
+      "source": "tests/test_quiz_variant_identity.py",
+      "target": "tests/test_quiz_variant_identity.py",
+      "sha256": "6bb924d6c9fddcafceef13c4c9784d359357c5a701b26bbe40725496bf4cbb03"
+    },
+    {
+      "source": "tests/test_quiz_xml_edge_fixtures.py",
+      "target": "tests/test_quiz_xml_edge_fixtures.py",
+      "sha256": "401ed2314196ad0ef087075e44335503e95ed3a9055875aba2ccd95f093de9a6"
+    },
+    {
       "source": "workspace/reference/examples/quiz_draft/README.md",
-      "target": "workspace/reference/examples/quiz_draft/README.md"
+      "target": "workspace/reference/examples/quiz_draft/README.md",
+      "sha256": "17f56e6bbde8a7f8b1eebeb9397f3c3274358aefb6be6fabf8ef19bf67eea2e0"
     },
     {
-      "sha256": "7c1beb720796c72b6bf05c124c042d6d7b74a6d34050800d5fe3805d3076c37c",
       "source": "workspace/reference/examples/quiz_draft/blank.xlsx",
-      "target": "workspace/reference/examples/quiz_draft/blank.xlsx"
+      "target": "workspace/reference/examples/quiz_draft/blank.xlsx",
+      "sha256": "7c1beb720796c72b6bf05c124c042d6d7b74a6d34050800d5fe3805d3076c37c"
     },
     {
-      "sha256": "cb85def7aa54410158e1b4fee335040d532e8b4c189b7558f4664838ec996b1c",
       "source": "workspace/reference/examples/quiz_draft/nine_types.json",
-      "target": "workspace/reference/examples/quiz_draft/nine_types.json"
+      "target": "workspace/reference/examples/quiz_draft/nine_types.json",
+      "sha256": "cb85def7aa54410158e1b4fee335040d532e8b4c189b7558f4664838ec996b1c"
     },
     {
-      "sha256": "08d73199d83d7a11c98a738c80f43e5f4f41124168902fb78efb9e6895309984",
       "source": "workspace/reference/examples/quiz_draft/nine_types.xlsx",
-      "target": "workspace/reference/examples/quiz_draft/nine_types.xlsx"
+      "target": "workspace/reference/examples/quiz_draft/nine_types.xlsx",
+      "sha256": "08d73199d83d7a11c98a738c80f43e5f4f41124168902fb78efb9e6895309984"
     },
     {
-      "sha256": "5cfd3246dd90309e65ee6dbb26592b06d77edb5e8982823bd875e08df3e3eded",
       "source": "workspace/reference/examples/quiz_draft/template-spec.json",
-      "target": "workspace/reference/examples/quiz_draft/template-spec.json"
+      "target": "workspace/reference/examples/quiz_draft/template-spec.json",
+      "sha256": "5cfd3246dd90309e65ee6dbb26592b06d77edb5e8982823bd875e08df3e3eded"
     },
     {
-      "sha256": "3e5a4153be4a5beeefb6ee26994baee15f924a9043a2abf742d4b93e873015e0",
       "source": "workspace/reference/schemas/course/component_package_receipt_schema.json",
-      "target": "workspace/reference/schemas/course/component_package_receipt_schema.json"
+      "target": "workspace/reference/schemas/course/component_package_receipt_schema.json",
+      "sha256": "3e5a4153be4a5beeefb6ee26994baee15f924a9043a2abf742d4b93e873015e0"
     },
     {
-      "sha256": "7f808284469aa70891c3a8d53d512af4f2daf7b683864a08e42c3a92dc0f651e",
       "source": "workspace/reference/schemas/quiz/BRIGHTSPACE_QUIZ_XML_SOURCE_OBSERVATIONS.md",
-      "target": "workspace/reference/schemas/quiz/BRIGHTSPACE_QUIZ_XML_SOURCE_OBSERVATIONS.md"
+      "target": "workspace/reference/schemas/quiz/BRIGHTSPACE_QUIZ_XML_SOURCE_OBSERVATIONS.md",
+      "sha256": "7f808284469aa70891c3a8d53d512af4f2daf7b683864a08e42c3a92dc0f651e"
     },
     {
-      "sha256": "5f0bdf2a26811b37a45e1fdbd53e569a3e006e91a825754f628d57759885393c",
       "source": "workspace/reference/schemas/quiz/QUIZ_CONTRACT_FAMILY.md",
-      "target": "workspace/reference/schemas/quiz/QUIZ_CONTRACT_FAMILY.md"
+      "target": "workspace/reference/schemas/quiz/QUIZ_CONTRACT_FAMILY.md",
+      "sha256": "5f0bdf2a26811b37a45e1fdbd53e569a3e006e91a825754f628d57759885393c"
     },
     {
-      "sha256": "59db480eb817f38d351ab6879092e89601ed9a1d896255d5a624cc9fdcd64a89",
       "source": "workspace/reference/schemas/quiz/examples/mixed_storage.example.json",
-      "target": "workspace/reference/schemas/quiz/examples/mixed_storage.example.json"
+      "target": "workspace/reference/schemas/quiz/examples/mixed_storage.example.json",
+      "sha256": "59db480eb817f38d351ab6879092e89601ed9a1d896255d5a624cc9fdcd64a89"
     },
     {
-      "sha256": "986c3c5318e233f78da8d2bb60341fca7d405a0ed3b5cb6d401228536ceb69a2",
       "source": "workspace/reference/schemas/quiz/examples/observed_question_kinds.example.json",
-      "target": "workspace/reference/schemas/quiz/examples/observed_question_kinds.example.json"
+      "target": "workspace/reference/schemas/quiz/examples/observed_question_kinds.example.json",
+      "sha256": "986c3c5318e233f78da8d2bb60341fca7d405a0ed3b5cb6d401228536ceb69a2"
     },
     {
-      "sha256": "56ea18e0554f08450d1049e433a4594535e5320d7a12f65ea297e88ec2d523aa",
       "source": "workspace/reference/schemas/quiz/examples/run_receipt.example.json",
-      "target": "workspace/reference/schemas/quiz/examples/run_receipt.example.json"
+      "target": "workspace/reference/schemas/quiz/examples/run_receipt.example.json",
+      "sha256": "56ea18e0554f08450d1049e433a4594535e5320d7a12f65ea297e88ec2d523aa"
     },
     {
-      "sha256": "af4a512d370251f03ecdbce3cc17e59a6b294431a94c0bc74f3e0e7c5b9e3f2c",
       "source": "workspace/reference/schemas/quiz/examples/settings_resolution.example.json",
-      "target": "workspace/reference/schemas/quiz/examples/settings_resolution.example.json"
+      "target": "workspace/reference/schemas/quiz/examples/settings_resolution.example.json",
+      "sha256": "af4a512d370251f03ecdbce3cc17e59a6b294431a94c0bc74f3e0e7c5b9e3f2c"
     },
     {
-      "sha256": "7c9a3bbac91d35aa2204b7cda9d396e88757ddf6728555103fe4afb3dce2e35c",
       "source": "workspace/reference/schemas/quiz/examples/unknown_incomplete.example.json",
-      "target": "workspace/reference/schemas/quiz/examples/unknown_incomplete.example.json"
+      "target": "workspace/reference/schemas/quiz/examples/unknown_incomplete.example.json",
+      "sha256": "7c9a3bbac91d35aa2204b7cda9d396e88757ddf6728555103fe4afb3dce2e35c"
     },
     {
-      "sha256": "9ff5949b4c9a659e9fb97d410ee3f9f63c2664a39c848099602a5d0bdadd50a5",
       "source": "workspace/reference/schemas/quiz/quiz_build_capabilities.json",
-      "target": "workspace/reference/schemas/quiz/quiz_build_capabilities.json"
+      "target": "workspace/reference/schemas/quiz/quiz_build_capabilities.json",
+      "sha256": "9ff5949b4c9a659e9fb97d410ee3f9f63c2664a39c848099602a5d0bdadd50a5"
     },
     {
-      "sha256": "1647c5c8526253da8e271bc46a612be4a2506d516427252f694da52de46fac41",
       "source": "workspace/reference/schemas/quiz/quiz_draft_intake_report_schema.json",
-      "target": "workspace/reference/schemas/quiz/quiz_draft_intake_report_schema.json"
+      "target": "workspace/reference/schemas/quiz/quiz_draft_intake_report_schema.json",
+      "sha256": "1647c5c8526253da8e271bc46a612be4a2506d516427252f694da52de46fac41"
     },
     {
-      "sha256": "e50074afcdd1a5278549ee971876fb853fc7d12e990c8b5588e5105f4a77ff4c",
       "source": "workspace/reference/schemas/quiz/quiz_draft_intake_schema.json",
-      "target": "workspace/reference/schemas/quiz/quiz_draft_intake_schema.json"
+      "target": "workspace/reference/schemas/quiz/quiz_draft_intake_schema.json",
+      "sha256": "e50074afcdd1a5278549ee971876fb853fc7d12e990c8b5588e5105f4a77ff4c"
     },
     {
-      "sha256": "6164a91b5d427abb18cd8f7b69c1b330f9ff0cd43684bf3028a5b5154080b42b",
       "source": "workspace/reference/schemas/quiz/quiz_model_schema.json",
-      "target": "workspace/reference/schemas/quiz/quiz_model_schema.json"
+      "target": "workspace/reference/schemas/quiz/quiz_model_schema.json",
+      "sha256": "6164a91b5d427abb18cd8f7b69c1b330f9ff0cd43684bf3028a5b5154080b42b"
     },
     {
-      "sha256": "815a58eea9588c645ec6bc37afeb435dd574036792fd641324a42013d158a3ce",
       "source": "workspace/reference/schemas/quiz/quiz_run_schema.json",
-      "target": "workspace/reference/schemas/quiz/quiz_run_schema.json"
+      "target": "workspace/reference/schemas/quiz/quiz_run_schema.json",
+      "sha256": "815a58eea9588c645ec6bc37afeb435dd574036792fd641324a42013d158a3ce"
     },
     {
-      "sha256": "d9f09ff10df7a89b2c0ecd420ccd60bcd4f562b67e25fb3e8c0f0d7bf641859d",
       "source": "workspace/reference/schemas/quiz/quiz_settings_schema.json",
-      "target": "workspace/reference/schemas/quiz/quiz_settings_schema.json"
+      "target": "workspace/reference/schemas/quiz/quiz_settings_schema.json",
+      "sha256": "d9f09ff10df7a89b2c0ecd420ccd60bcd4f562b67e25fb3e8c0f0d7bf641859d"
     },
     {
-      "sha256": "273db01720aecb78c90e8f94ab54d2902bdee498560e2000c9ae2c3e865731f2",
       "source": "workspace/reference/schemas/quiz/quiz_unbind_run_schema.json",
-      "target": "workspace/reference/schemas/quiz/quiz_unbind_run_schema.json"
+      "target": "workspace/reference/schemas/quiz/quiz_unbind_run_schema.json",
+      "sha256": "273db01720aecb78c90e8f94ab54d2902bdee498560e2000c9ae2c3e865731f2"
+    },
+    {
+      "source": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/asset_reference_forms.xml",
+      "target": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/asset_reference_forms.xml",
+      "sha256": "63f6a3e1f20e10091135976f04e6e4dd597ba10e17541fdc3a072ab71f796591"
+    },
+    {
+      "source": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/fib_fill_in_blanks.xml",
+      "target": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/fib_fill_in_blanks.xml",
+      "sha256": "2c43d546534d0486a07af2ffaddefad5aa57a8009ea14e65e10e34889ec5a8e1"
+    },
+    {
+      "source": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/grade_join_fragment__grade_item.xml",
+      "target": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/grade_join_fragment__grade_item.xml",
+      "sha256": "5727fc84b574996712a80fdaf935a03d77f3f1b49f3a8fb2d611b445179fd852"
+    },
+    {
+      "source": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/grade_join_fragment__grades_item.xml",
+      "target": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/grade_join_fragment__grades_item.xml",
+      "sha256": "cedf894c99daa97a35abb2dc56c0522480dd1af4e29bb3e3f5e5ffc924750f4a"
+    },
+    {
+      "source": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/inline_storage_quiz_item.xml",
+      "target": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/inline_storage_quiz_item.xml",
+      "sha256": "3db2a1e36bfe278a5c668d2b2909d07a0974120252a75502148bdc9fc44fa0ba"
+    },
+    {
+      "source": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/itemref_questiondb_pair__bank_item.xml",
+      "target": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/itemref_questiondb_pair__bank_item.xml",
+      "sha256": "f0888a671020f21e72cab2ae9193c2b661f5bc766731766e946cc33d27d7aa3a"
+    },
+    {
+      "source": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/itemref_questiondb_pair__itemref.xml",
+      "target": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/itemref_questiondb_pair__itemref.xml",
+      "sha256": "bfcf3ca536b5751ee6087702da90983d70b078a3186b4fd5add9482b1d16b385"
+    },
+    {
+      "source": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/matching_bijective_repeated_group.xml",
+      "target": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/matching_bijective_repeated_group.xml",
+      "sha256": "9c3c76ddc68b04715afd46bb2149134aa8f9e0e6fcb81644a4bdc65b98bde39d"
+    },
+    {
+      "source": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/matching_categorization_two_premise.xml",
+      "target": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/matching_categorization_two_premise.xml",
+      "sha256": "97eab09db861432508efc95061781041a1c89c019ef593ee9ba094299fe93694"
+    },
+    {
+      "source": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/msa_multi_short_answer.xml",
+      "target": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/msa_multi_short_answer.xml",
+      "sha256": "8b9329b0c8b9ed448aaf506fd320eb1a1faba1d483489cdc01afbd1a78406744"
+    },
+    {
+      "source": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/ordering_sequence.xml",
+      "target": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/ordering_sequence.xml",
+      "sha256": "1d5010d131f5a572ab189ba09f25bf29aeb8a51ad607af46fa6d981d2c6078f3"
+    },
+    {
+      "source": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/random_draw_section.xml",
+      "target": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/random_draw_section.xml",
+      "sha256": "0f99b2875489ff1532cae41695e57db57880ef910c1d4b5c5633133b45a5fd46"
+    },
+    {
+      "source": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/root_bank_item.xml",
+      "target": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/root_bank_item.xml",
+      "sha256": "9b8add24d7a7370c551a289dc028e57dc22efec9325d14fcaafc0295a815c013"
+    },
+    {
+      "source": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/sa_short_answer.xml",
+      "target": "workspace/review/quiz_capability_lab_r1/fixtures/specimens/sa_short_answer.xml",
+      "sha256": "fc6747babfc47d2fa6731ec216e106d5b969d2bb4bb0a2fe67fbb7828b106243"
     }
-  ],
-  "policy": "byte-identical mechanical promotion; behavior changes upstream first",
-  "schema": "coursecraft.workbench_vendor_pin/1",
-  "source_branch": "refine-quiz-assessment-review-20260925",
-  "source_commit": "093dc3e6c67eb6ff4955050381f769ed2035d2ff",
-  "source_committed_at": "2026-09-25T15:28:15-04:00",
-  "source_repository": "https://github.com/timebeing92/coursecraft-workbench.git"
+  ]
 }

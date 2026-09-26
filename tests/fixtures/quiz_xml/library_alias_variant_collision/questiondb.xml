@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop>
+  <objectbank ident="VARIANT_BANK">
+    <section ident="VARIANT_POOL" title="Variant pool">
+      <item ident="LIB_OBJECT" label="LIB_Q" title="Synthetic variant parent">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Multiple Choice</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_globalid</fieldlabel><fieldentry>00000000-0000-4000-8000-00000000lib0</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>LIB-VARIANT-PARENT</fieldentry></qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <material><mattext texttype="text/html">&lt;p&gt;Identify the synthetic marker shown in the image.&lt;/p&gt;</mattext></material>
+          <response_lid ident="LIB_LID" rcardinality="Single">
+            <render_choice>
+              <response_label ident="OPT_ALPHA"><material><mattext texttype="text/html">&lt;p&gt;Alpha&lt;/p&gt;</mattext></material></response_label>
+              <response_label ident="OPT_BETA"><material><mattext texttype="text/html">&lt;p&gt;Beta&lt;/p&gt;</mattext></material></response_label>
+              <response_label ident="OPT_GAMMA"><material><mattext texttype="text/html">&lt;p&gt;Gamma&lt;/p&gt;</mattext></material></response_label>
+            </render_choice>
+          </response_lid>
+        </presentation>
+        <resprocessing>
+          <respcondition><conditionvar><varequal respident="LIB_LID">OPT_ALPHA</varequal></conditionvar><setvar>100</setvar></respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </objectbank>
+</questestinterop>

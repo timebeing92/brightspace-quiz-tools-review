@@ -121,14 +121,14 @@ def package_member_path(value: str) -> PurePosixPath:
 def resolve_model_asset(
     asset: dict[str, Any],
     *,
-    asset_root: Path,
+    asset_root: Path | list[Path],
 ) -> dict[str, Any]:
     """Resolve one approved model asset without allowing source/package escape."""
     if asset["status"] != "resolved" or not asset["source_path"] or not asset["package_path"]:
         raise ValueError(f"Asset {asset['entity_key']} is not resolved with source_path and package_path.")
     package_path = _safe_package_path(asset["package_path"])
     archive_path = package_member_path(asset["package_path"])
-    root = asset_root.resolve()
+    roots = [root.resolve() for root in asset_root] if isinstance(asset_root, (list, tuple)) else [asset_root.resolve()]
     candidate_values = [
         asset["source_path"],
         asset.get("extensions", {}).get("review_copy_path"),
@@ -139,17 +139,16 @@ def resolve_model_asset(
         if not candidate_value:
             continue
         candidate_path = Path(candidate_value)
-        candidate = (
-            candidate_path.resolve()
-            if candidate_path.is_absolute()
-            else (root / candidate_path).resolve()
-        )
-        try:
-            candidate.relative_to(root)
-        except ValueError:
-            continue
-        if candidate.is_file():
-            source = candidate
+        for root in roots:
+            candidate = candidate_path.resolve() if candidate_path.is_absolute() else (root / candidate_path).resolve()
+            try:
+                candidate.relative_to(root)
+            except ValueError:
+                continue
+            if candidate.is_file():
+                source = candidate
+                break
+        if source is not None:
             break
     if source is None:
         raise ValueError(
@@ -233,8 +232,10 @@ def question_asset_reference_issues(
         if relation["kind"] == "uses_asset" and relation["status"] == "resolved":
             bound.setdefault(relation["from_entity_key"], set()).add(relation["to_entity_key"])
     issues: list[tuple[str, str, str]] = []
+    selected_asset_keys = {asset["entity_key"] for asset in resolved_assets}
     for question in questions:
         key = question["entity_key"]
+        referenced_assets: set[str] = set()
         payload = question["type_payload"]
         fields = [("prompt", question.get("prompt")), ("manual_answer_key", payload.get("manual_answer_key"))]
         fields += [(f"option[{index}]", row["content"]) for index, row in enumerate(payload["options"], 1)]
@@ -280,6 +281,15 @@ def question_asset_reference_issues(
                     issues.append(("html_asset_reference_not_bound", f"{where} has no matching selected asset and resolved uses_asset relationship at its package path.", key))
                 elif len(matches) != 1:
                     issues.append(("html_asset_reference_ambiguous", f"{where} matches multiple selected asset entities; resolve the asset binding explicitly.", key))
+                else:
+                    referenced_assets.add(matches[0])
+        missing_references = (bound.get(key, set()) & selected_asset_keys) - referenced_assets
+        has_source_facts = any(row.get("source_kind") == "d2l_qti_response_facts/0"
+                               for row in payload.get("raw_response_models", []))
+        projects_source_prompt = question["kind"] in {"multiple_choice", "true_false", "multi_select", "long_answer"}
+        if missing_references and has_source_facts and projects_source_prompt:
+            issues.append(("question_asset_content_not_projected",
+                           f"Question {key} has {len(missing_references)} source asset binding(s) absent from its projected content.", key))
     return issues
 
 
@@ -315,6 +325,8 @@ def question_projection_issues(
     key = question["entity_key"]
     issues: list[tuple[str, str]] = []
     prompt = question.get("prompt")
+    if (prompt or {}).get("extensions", {}).get("coursecraft.source_prompt_projection", {}).get("state") == "unresolved":
+        issues.append(("source_prompt_projection_unresolved", f"Question {key} has source prompt material requiring an explicit supported projection."))
     if prompt is None or not str(prompt.get("content", "")).strip():
         issues.append(("missing_question_prompt", f"Question {key} needs nonempty prompt content."))
     try:
@@ -709,7 +721,7 @@ def load_authoring_projection(
     *,
     quiz_entity_key: str = "",
     settings_path: Path | None = None,
-    asset_root: Path | None = None,
+    asset_root: Path | list[Path] | None = None,
     promotion_receipt_path: Path | None = None,
     trial_authorization_path: Path | None = None,
 ) -> dict[str, Any]:
@@ -908,7 +920,8 @@ def load_authoring_projection(
         raise ValueError(identifier_issues[0][1])
 
     projected_assets_by_key: dict[str, dict[str, Any]] = {}
-    root = (asset_root or model_path.parent).resolve()
+    root = ([item.resolve() for item in asset_root] if isinstance(asset_root, (list, tuple))
+            else (asset_root or model_path.parent).resolve())
     unresolved_asset_edges = [
         row
         for row in model["relationships"]
