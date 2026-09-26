@@ -106,9 +106,20 @@ Choose a new output directory each time:
 .venv/bin/python scripts/make_release_asset.py --check-only
 ```
 
-The originating development repositories contain the full test suite. It is not
-included here. `--dev` and `requirements-dev.txt` are retained for source-project
-development; installing those dependencies does not add the omitted tests.
+For the focused synthetic reviewer suite, create the environment with test
+dependencies and run:
+
+```bash
+python3.13 scripts/bootstrap_env.py --locked --dev
+.venv/bin/python -m pytest -q tests/test_quiz_sme_edit_scenarios.py
+```
+
+On Windows, use `py -3.13` for bootstrap and
+`.venv\Scripts\python.exe -m pytest -q tests/test_quiz_sme_edit_scenarios.py`
+for the test command. The included suite has 18 scenarios: 15 pass and three
+strict expected failures document accepted edits this snapshot currently
+excludes. It is a focused, synthetic-only subset; the full originating
+development corpus is not included.
 
 ## Advanced synthetic proof
 

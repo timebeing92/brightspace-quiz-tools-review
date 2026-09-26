@@ -184,9 +184,21 @@ Run the included demonstration, then recheck its recorded files:
 ```
 
 The originating development checkout passed **795 tests with one intentional
-skip** on Python 3.13 before this snapshot was prepared. This repository includes
-the executable synthetic demonstration and its fixtures. The broader private
-test corpus is not included, so `pytest` here does not reproduce that result.
+skip** on Python 3.13 before this snapshot was prepared. This repository also
+includes a focused, synthetic-only review test suite. Run it after installing
+development dependencies:
+
+```sh
+.venv/bin/python -m pytest -q tests/test_quiz_sme_edit_scenarios.py
+```
+
+The suite covers **18 reviewer scenarios**: **15 pass** on this snapshot and
+three strict expected failures mark accepted prompt, response-option, and
+answer-key edits that this snapshot currently excludes. If any of those cases
+starts passing, pytest reports an unexpected pass so the expected-failure marker
+can be removed. The full private corpus is not included, so this focused suite
+does not reproduce the originating checkout's 795-test result. See
+[`tests/README.md`](tests/README.md) for its scope and synthetic fixture details.
 
 Extraction success does not establish package readiness. Unsupported content,
 unresolved references, missing assets, or missing build approval can prevent
