@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<manifest identifier="QUIZ_ONLY_INLINE_TF_FIXTURE">
+  <resources>
+    <resource identifier="res_quiz" type="webcontent" d2l_material_type="d2lquiz" href="quiz_d2l_only.xml" />
+  </resources>
+</manifest>

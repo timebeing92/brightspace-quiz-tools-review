@@ -106,9 +106,24 @@ Choose a new output directory each time:
 .venv/bin/python scripts/make_release_asset.py --check-only
 ```
 
-The originating development repositories contain the full test suite. It is not
-included here. `--dev` and `requirements-dev.txt` are retained for source-project
-development; installing those dependencies does not add the omitted tests.
+For the focused synthetic reviewer suite, create the environment with test
+dependencies and run:
+
+```bash
+python3.13 scripts/bootstrap_env.py --locked --dev
+.venv/bin/python -m pytest -q tests/test_quiz_sme_edit_scenarios.py
+```
+
+On Windows, use `py -3.13` for bootstrap and
+`.venv\Scripts\python.exe -m pytest -q tests/test_quiz_sme_edit_scenarios.py`
+for the focused suite. It has 24 synthetic reviewer scenarios, all passing on
+the promoted candidate. To run the broader included regression corpus, use
+`.venv/bin/python -m pytest -q tests` (Windows:
+`.venv\Scripts\python.exe -m pytest -q tests`). The included corpus covers
+the quiz tooling and contains synthetic and sanitized native fixtures; it is not the full private
+Workbench corpus and does not reproduce its full test result. At this snapshot,
+653 tests collect: 652 pass and one skips because its private import-receipt
+log is not included.
 
 ## Advanced synthetic proof
 

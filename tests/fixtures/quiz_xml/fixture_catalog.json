@@ -1,0 +1,112 @@
+{
+  "fixtures": [
+    {
+      "name": "duplicate_pool_and_similarity",
+      "purpose": [
+        "duplicate question text within one pool",
+        "exact-match pool assignment where item identity is not unique",
+        "similarity fallback against a near-match prompt"
+      ]
+    },
+    {
+      "name": "math_rendering",
+      "purpose": [
+        "MathML-backed formula image rendering",
+        "verbal formula alt-text fallback rendering",
+        "math-specific review fields"
+      ]
+    },
+    {
+      "name": "answer_key_types",
+      "purpose": [
+        "single-selection answer keys",
+        "short-answer text-entry keys",
+        "multi-select keyed answers",
+        "manual-review long-answer marker"
+      ]
+    },
+    {
+      "name": "matching_response_groups",
+      "source_export": "D2LExport_11563_OWL-BIOL-1020_20210428020925_202641409",
+      "purpose": [
+        "matching question with repeated response_grp blocks",
+        "library-backed quiz item matched by exact signature",
+        "real Brightspace matching response structure for extractor refinement"
+      ]
+    },
+    {
+      "name": "ordering_response_group",
+      "source_export": "D2LExport_11563_OWL-BIOL-1020_20210428020925_202641409",
+      "purpose": [
+        "ordering question with response_grp rcardinality=Ordered",
+        "ordered answer sequence extraction",
+        "real Brightspace ordering resprocessing pattern"
+      ]
+    },
+    {
+      "name": "fill_in_the_blanks_multiblank",
+      "source_export": "D2LExport_11563_OWL-BIOL-1020_20210428020925_202641409",
+      "purpose": [
+        "multi-blank fill in the blanks item with two response_str blanks",
+        "quiz-local question absent from questiondb.xml",
+        "text-entry keys across multiple blanks"
+      ]
+    },
+    {
+      "name": "long_answer_with_answer_key",
+      "source_export": "D2LExport_11563_OWL-BIOL-1020_20210428020925_202641409",
+      "purpose": [
+        "long-answer item with populated answer_key_material",
+        "library-backed essay question matched into quiz payload",
+        "evidence that long-answer items may still expose keyed review text"
+      ]
+    },
+    {
+      "name": "mixed_inline_itemref_and_root_bank",
+      "source_shape": "sanitized composite from BUMK 515, APN 505, and ANAT 1005 relationship evidence",
+      "purpose": [
+        "root-level objectbank item alongside a section-nested library item",
+        "quiz containing direct questiondb itemrefs plus an inline quiz-local item",
+        "fixed and random-draw section membership",
+        "quiz settings vocabulary without authored course content"
+      ]
+    },
+    {
+      "name": "occurrence_scoped_source_facts",
+      "source_shape": "sanitized native-shaped Brightspace full-export fixture",
+      "purpose": [
+        "one itemref-backed and one inline occurrence resolving to one normalized question",
+        "different grading_type, renderer shuffle, and source identifiers per occurrence",
+        "occurrence-scoped raw response-fact records without first-match collapse"
+      ]
+    },
+    {
+      "name": "short_answer_projection",
+      "source_shape": "sanitized native-shaped Brightspace Short Answer full-export fixture",
+      "purpose": [
+        "agreeing itemref-backed and inline Short Answer occurrences with different platform identifiers",
+        "exact one-to-five synonym profile with Unicode, punctuation, XML entities, colon, bare slash, and exact spaced slash",
+        "positive renderer variants plus a merged renderer conflict that must refuse atomically"
+      ]
+    },
+    {
+      "name": "quiz_only_inline_tf",
+      "source_shape": "fully synthetic quiz-only Brightspace-style export",
+      "purpose": [
+        "quiz extraction without questiondb.xml",
+        "inline True/False item normalization",
+        "Unbind content-minimization and skipped library-resolution proof"
+      ]
+    },
+    {
+      "name": "library_alias_variant_collision",
+      "source_shape": "synthetic reduction of the ANAT 1005 and BIOL 1020 collapse defect",
+      "purpose": [
+        "three quiz items whose rendered prompt matches one question-library item",
+        "materially different keyed answers and ordered images per item",
+        "placement-scoped point divergence that must never split a question",
+        "regression guard for the authored-variant identity invariant"
+      ]
+    }
+  ]
+}

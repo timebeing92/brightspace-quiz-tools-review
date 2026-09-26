@@ -86,7 +86,8 @@ The selected policy is recorded in the Compose state and summary.
 Blank approval status means open. Only explicit accepted decisions are applied;
 rejected proposals remain excluded. Source, identity, supported-content and
 settings checks apply under either policy. This policy concerns revision
-intake; fresh question/library authoring remains a separate input contract.
+intake. Accepted `New Questions` and `New Responses` rows can add questions to an
+existing pool; the separate blank drafting template supports independent intake.
 
 Extracted questions remain evidence until their instance-level build support
 passes the pinned capability registry. Compose never upgrades that evidence by
@@ -121,6 +122,10 @@ Readable text is paired with original markup and the complete source model.
 Unsupported math displays are labelled for review. Accepted text/choice/key edits
 to questions containing equations or diagrams are held for a supported rich
 content workflow; open drafts and review notes are collected normally.
+Use `Image Replacements` for an explicitly accepted PNG/JPEG/GIF replacement
+under `Replacement Images/`. This operation replaces the bound image while
+preserving surrounding prose. `New Questions` and `New Responses` add accepted
+questions to an existing target pool without changing its draw count.
 
 Older native workspaces remain importable. The explicit `--asset-mode reference`
 route keeps native workbook layout and source links. The portable grouped layout
@@ -132,11 +137,11 @@ assessment packet without Quiz Workshop.
 ## Scope of this release
 
 The real-export interface is the guided, line-oriented terminal. The separate
-full-screen TUI remains a synthetic proof. The course-specific grouped review
-adapter, rich-math display/revision transport, typed-equation conversion and
-deterministic Word intake are separate adoption work; this release does not
-claim those capabilities. Existing rich content and source evidence follow the
-pinned producer's current fidelity and readiness rules.
+full-screen TUI remains a synthetic proof. Portable assessment-grouped review,
+image replacement and question additions are included in this snapshot.
+Rich-math revision transport, typed-equation conversion and deterministic Word
+intake remain outside its supported editing routes. Existing rich content and
+source evidence follow the pinned producer's fidelity and readiness rules.
 
 ## Sharing boundary
 

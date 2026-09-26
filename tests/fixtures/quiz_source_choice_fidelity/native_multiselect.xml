@@ -1,0 +1,122 @@
+<item xmlns:ns0="http://desire2learn.com/xsd/d2lcp_v2p0" ns0:id="4" ident="OBJ_NATIVE_MULTI" label="QUES_NATIVE_MULTI" ns0:page="1" title="Identify contract features">
+  <itemmetadata>
+    <qtimetadata>
+      <qti_metadatafield>
+        <fieldlabel>qmd_computerscored</fieldlabel>
+        <fieldentry>yes</fieldentry>
+      </qti_metadatafield>
+      <qti_metadatafield>
+        <fieldlabel>qmd_questiontype</fieldlabel>
+        <fieldentry>Multi-Select</fieldentry>
+      </qti_metadatafield>
+      <qti_metadatafield>
+        <fieldlabel>qmd_weighting</fieldlabel>
+        <fieldentry>1.000000000</fieldentry>
+      </qti_metadatafield>
+      <qti_metadatafield>
+        <fieldlabel>qmd_globalid</fieldlabel>
+        <fieldentry>11111111-1111-4111-8111-111111111111</fieldentry>
+      </qti_metadatafield>
+      <qti_metadatafield>
+        <fieldlabel>qmd_displayid</fieldlabel>
+        <fieldentry>CCQA-P4-Q003</fieldentry>
+      </qti_metadatafield>
+      <qti_metadatafield>
+        <fieldlabel>qmd_aihumanorigin</fieldlabel>
+        <fieldentry>HumanGenerated</fieldentry>
+      </qti_metadatafield>
+    </qtimetadata>
+  </itemmetadata>
+  <itemproc_extension>
+    <ns0:difficulty>3</ns0:difficulty>
+    <ns0:isbonus>no</ns0:isbonus>
+    <ns0:ismandatory>yes</ns0:ismandatory>
+  </itemproc_extension>
+  <presentation>
+    <flow>
+      <material>
+        <mattext texttype="text/html">&lt;p&gt;Select both contract features.&lt;/p&gt;</mattext>
+      </material>
+      <response_extension>
+        <ns0:display_style>2</ns0:display_style>
+        <ns0:enumeration>6</ns0:enumeration>
+        <ns0:grading_type>0</ns0:grading_type>
+      </response_extension>
+      <response_lid ident="QUES_NATIVE_MULTI_LID" rcardinality="Multiple">
+        <render_choice shuffle="no">
+          <flow_label class="Block">
+            <response_label ident="QUES_NATIVE_MULTI_A0001">
+              <flow_mat>
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;Versioned schema&lt;/p&gt;</mattext>
+                </material>
+              </flow_mat>
+            </response_label>
+          </flow_label>
+          <flow_label class="Block">
+            <response_label ident="QUES_NATIVE_MULTI_A0002">
+              <flow_mat>
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;Stable identity&lt;/p&gt;</mattext>
+                </material>
+              </flow_mat>
+            </response_label>
+          </flow_label>
+          <flow_label class="Block">
+            <response_label ident="QUES_NATIVE_MULTI_A0003">
+              <flow_mat>
+                <material>
+                  <mattext texttype="text/html">&lt;p&gt;Silent guessing&lt;/p&gt;</mattext>
+                </material>
+              </flow_mat>
+            </response_label>
+          </flow_label>
+        </render_choice>
+      </response_lid>
+    </flow>
+  </presentation>
+  <resprocessing>
+    <outcomes>
+      <decvar vartype="Integer" defaultval="0" />
+    </outcomes>
+    <respcondition title="Scoring for the correct answers" continue="yes">
+      <conditionvar>
+        <varequal respident="QUES_NATIVE_MULTI_LID">QUES_NATIVE_MULTI_A0001</varequal>
+        <varequal respident="QUES_NATIVE_MULTI_LID">QUES_NATIVE_MULTI_A0002</varequal>
+        <not>
+          <varequal respident="QUES_NATIVE_MULTI_LID">QUES_NATIVE_MULTI_A0003</varequal>
+        </not>
+      </conditionvar>
+      <setvar action="Add">1</setvar>
+    </respcondition>
+    <respcondition title="Scoring for the incorrect answers" continue="no">
+      <conditionvar>
+        <and>
+          <not>
+            <varequal respident="QUES_NATIVE_MULTI_LID">QUES_NATIVE_MULTI_A0001</varequal>
+            <varequal respident="QUES_NATIVE_MULTI_LID">QUES_NATIVE_MULTI_A0002</varequal>
+            <not>
+              <varequal respident="QUES_NATIVE_MULTI_LID">QUES_NATIVE_MULTI_A0003</varequal>
+            </not>
+          </not>
+        </and>
+      </conditionvar>
+      <setvar action="Add">0</setvar>
+    </respcondition>
+  </resprocessing>
+  <itemfeedback ident="QUES_NATIVE_MULTI_IF0001">
+    <material>
+      <mattext texttype="text/html" />
+    </material>
+  </itemfeedback>
+  <itemfeedback ident="QUES_NATIVE_MULTI_IF0002">
+    <material>
+      <mattext texttype="text/html" />
+    </material>
+  </itemfeedback>
+  <itemfeedback ident="QUES_NATIVE_MULTI_IF0003">
+    <material>
+      <mattext texttype="text/html" />
+    </material>
+  </itemfeedback>
+</item>

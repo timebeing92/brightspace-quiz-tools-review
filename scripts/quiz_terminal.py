@@ -579,7 +579,9 @@ def compose_workspace(
     )
     generated = root / "compose" / "generated"
     generated.mkdir(parents=True, exist_ok=True)
-    overlay_path = generated / "decision-overlay.json"
+    # Replacement paths are relative to the protected review packet.
+    overlay_path = baseline.parent / "decision-overlay.json"
+    asset_roots = list(dict.fromkeys([model_path.parent, baseline.parent]))
     promoted_path = generated / "promoted.model.json"
     promotion_path = generated / "promotion.receipt.json"
     readiness_dir = generated / "readiness"
@@ -592,6 +594,17 @@ def compose_workspace(
     promoted, promotion = promote_revisions(model_path, overlay_path, REGISTRY)
     write_json(promoted_path, promoted)
     write_json(promotion_path, promotion)
+    if promotion["excluded"]:
+        # Accepted edits must never disappear into an otherwise buildable ZIP.
+        state["compose"] = None
+        state["rebind"] = {}
+        state["stage"] = "compose_review_required"
+        save_state(root, state)
+        reasons = "; ".join(sorted({row["reason"] for row in promotion["excluded"]}))
+        raise WorkflowError(
+            f"{len(promotion['excluded'])} accepted revision(s) could not be applied: "
+            f"{reasons}. Inspect {promotion_path} and resolve before Rebind."
+        )
     authorization_path = (
         path_from_user(str(phase5_candidate_authorization))
         if phase5_candidate_authorization
@@ -608,7 +621,7 @@ def compose_workspace(
             promoted_path,
             quiz_entity_key=quiz_key,
             settings_path=settings_path,
-            asset_root=model_path.parent,
+            asset_root=asset_roots,
             promotion_receipt_path=promotion_path,
             trial_authorization_path=authorization_path,
         )
@@ -677,7 +690,7 @@ def compose_workspace(
         "decision_overlay": _artifact(root, overlay_path),
         "promoted_model": _artifact(root, promoted_path),
         "promotion_receipt": _artifact(root, promotion_path),
-        "asset_root": rel(root, model_path.parent),
+        "asset_roots": [rel(root, path) for path in asset_roots],
         "phase5_candidate_authorization": (
             _artifact(root, authorization_path) if authorization_path else None
         ),
@@ -754,7 +767,10 @@ def rebind_workspace(
     promoted = inside(root, compose["promoted_model"]["path"])
     promotion = inside(root, compose["promotion_receipt"]["path"])
     settings = inside(root, selected["settings_receipt"]["path"])
-    asset_root = inside(root, compose["asset_root"])
+    # Read earlier workspace records as well as the multiple-root form.
+    asset_roots = [inside(root, path) for path in
+                   compose.get("asset_roots", [compose.get("asset_root")])]
+    asset_args = [value for path in asset_roots for value in ("--asset-root", str(path))]
     authorization = compose.get("phase5_candidate_authorization")
     authorization_path = inside(root, authorization["path"]) if authorization else None
     rebind_root = (
@@ -783,8 +799,7 @@ def rebind_workspace(
         selected["quiz_entity_key"],
         "--settings",
         str(settings),
-        "--asset-root",
-        str(asset_root),
+        *asset_args,
         "--promotion-receipt",
         str(promotion),
     ]
@@ -800,8 +815,7 @@ def rebind_workspace(
         str(settings),
         "--quiz-entity-key",
         selected["quiz_entity_key"],
-        "--asset-root",
-        str(asset_root),
+        *asset_args,
         "--promotion-receipt",
         str(promotion),
         "--run-receipt",

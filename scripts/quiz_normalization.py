@@ -777,6 +777,56 @@ def _choice_fact_element(node: object) -> ET.Element:
     return element
 
 
+def _source_prompt_content(row: dict[str, Any], display_field: str) -> dict[str, Any] | None:
+    """Preserve bounded prompt material, excluding response/answer material."""
+    fallback = _formatted(str(row[display_field])) if row.get(display_field) else None
+    # Other kinds retain their existing extraction-only projections. In
+    # particular, inline blanks need a separate response/material contract.
+    kind = QUESTION_KIND_MAP.get(str(row.get("question_type", "")), "unknown")
+    if kind not in {"multiple_choice", "true_false", "multi_select", "long_answer"}:
+        return fallback
+    facts = row.get("source_response_facts")
+    if not isinstance(facts, dict):
+        return fallback
+    try:
+        presentation = _choice_fact_element(_single_fact_tree(facts, "presentation", "presentation"))
+        parts: list[tuple[str, str]] = []
+
+        def collect(element: ET.Element) -> None:
+            if element.tag.startswith("response_"):
+                return
+            if element.tag in {"presentation", "flow", "flow_mat", "material"}:
+                if (element.text or "").strip():
+                    raise ValueError("Unrecognized text outside prompt material.")
+                for child in element:
+                    collect(child)
+            elif element.tag == "mattext":
+                texttype = element.get("texttype", "text/plain")
+                if list(element) or texttype not in {"text/html", "text/plain"}:
+                    raise ValueError("Prompt material requires an explicit rich-content projection.")
+                parts.append(("html" if texttype == "text/html" else "plain_text", element.text or ""))
+            else:
+                raise ValueError("Prompt element requires an explicit projection: " + element.tag)
+
+        collect(presentation)
+        if not parts:
+            raise ValueError("No supported source prompt material.")
+        if len(parts) == 1:
+            fmt, content = parts[0]
+        elif any(fmt == "html" for fmt, _ in parts):
+            fmt = "html"
+            content = "\n".join(value if kind == "html" else html.escape(value) for kind, value in parts)
+        else:
+            fmt, content = "plain_text", "\n".join(value for _, value in parts)
+        return {"format": fmt, "content": content, "extensions": {}}
+    except (ValueError, TypeError) as exc:
+        fallback = fallback or _formatted("")
+        fallback["extensions"]["coursecraft.source_prompt_projection"] = {
+            "state": "unresolved", "reason": str(exc),
+        }
+        return fallback
+
+
 def source_choice_projection(facts: object) -> dict[str, Any]:
     """Recognize bounded native choice shapes, never infer keys from display text.
 
@@ -952,11 +1002,17 @@ def source_choice_projection(facts: object) -> dict[str, Any]:
             positive_action = None
             positive_value = None
             fallback_condition = None
+            native_complement = None
             for condition in conditions:
                 predicate, setter, value = condition_parts(condition)
                 if setter.get("varname", "SCORE") not in {"SCORE", "que_score"}:
                     raise ValueError("Unsupported multi-select score variable.")
                 score_variables.add(setter.get("varname", "SCORE"))
+                if value == 0 and setter.get("action", "Set") == "Add":
+                    if native_complement is not None:
+                        raise ValueError("Multi-select contains repeated native complements.")
+                    native_complement = condition
+                    continue
                 if value == 0 and setter.get("action", "Set") == "Set" and len(predicate) == 0:
                     if fallback_condition is not None:
                         raise ValueError("Multi-select contains repeated fallback conditions.")
@@ -979,6 +1035,22 @@ def source_choice_projection(facts: object) -> dict[str, Any]:
                 raise ValueError("Multi-select continuation changes the keyed result.")
             if (fallback_condition is None or positive_action == "Add") and default != 0:
                 raise ValueError("Multi-select grading requires a supported zero default.")
+            if native_complement is not None:
+                # Native D2L exports repeat the complete positive conjunction
+                # under conditionvar/and/not, then Add 0. Match the complete
+                # tree; arbitrary zero-valued programs remain unsupported.
+                complement = native_complement.find("conditionvar")
+                def signature(node):
+                    return (node.tag, sorted(node.attrib.items()), (node.text or "").strip(),
+                            tuple(signature(child) for child in node))
+                if (fallback_condition is not None or len(conditions) != 2
+                    or conditions[-1] is not native_complement or positive_action != "Add"
+                    or positive_condition.get("continue", "").lower() != "yes"
+                    or native_complement.get("continue", "").lower() != "no"
+                    or len(complement) != 1 or complement[0].tag != "and" or complement[0].attrib
+                    or len(complement[0]) != 1 or complement[0][0].tag != "not" or complement[0][0].attrib
+                    or tuple(signature(e) for e in complement[0][0]) != tuple(signature(e) for e in positive[0])):
+                    raise ValueError("Multi-select native complement does not match its full-credit condition.")
             terms: dict[str, bool] = {}
             def conjunction(node: ET.Element, negated: bool = False) -> None:
                 if node.tag in {"conditionvar", "and"} and not node.attrib and not negated and len(node):
@@ -2185,11 +2257,7 @@ def build_library_question_entities(
             "kind": QUESTION_KIND_MAP.get(str(row.get("question_type", "")), "unknown"),
             "source_kind": "questiondb.objectbank.item",
             "title": str(row.get("question_title") or "") or None,
-            "prompt": (
-                _formatted(str(row.get("plain_text")))
-                if row.get("plain_text")
-                else None
-            ),
+            "prompt": _source_prompt_content(row, "plain_text"),
             # Built through the same typed-payload path as a placed question, so
             # options, accepted responses, blanks, match pairs, and ordering are
             # read by one parser rather than two.
@@ -2816,10 +2884,9 @@ def build_normalized_model(
                     "parent_section_source_locator", ""
                 ),
                 # A draw section may declare the points it awards per drawn
-                # question. Every observed item also carries its own weight and
-                # the two never disagree, so this is not where points are read
-                # from; it is kept so the declaring structure can be
-                # reconstructed from the model.
+                # question independently of its library weight. Keep the raw
+                # structural value so authoring projection can preserve that
+                # draw's scoring without changing question-level evidence.
                 "section_weight": section.get("section_weight") or None,
                 "identity_basis": identity_basis,
             },
@@ -3003,11 +3070,7 @@ def build_normalized_model(
                 "title": row.get("quiz_item_title")
                 or row.get("pool_question_title")
                 or None,
-                "prompt": (
-                    _formatted(str(row["question_text"]))
-                    if row.get("question_text")
-                    else None
-                ),
+                "prompt": _source_prompt_content(row, "question_text"),
                 "type_payload": _type_payload(row, evidence_keys),
                 "scoring": {
                     "state": "known" if row.get("question_weight") else "unknown",

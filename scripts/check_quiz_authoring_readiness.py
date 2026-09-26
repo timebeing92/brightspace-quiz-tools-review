@@ -20,7 +20,7 @@ def parse_args(argv: list[str]) -> argparse.Namespace:
     parser.add_argument("model", type=Path, help="Reviewed coursecraft.quiz/1 JSON model.")
     parser.add_argument("--quiz-entity-key", default="", help="Quiz key when the model contains multiple quizzes.")
     parser.add_argument("--settings", type=Path, default=None, help="Optional coursecraft.quiz_settings/1 receipt.")
-    parser.add_argument("--asset-root", type=Path, default=None, help="Root for model asset source paths.")
+    parser.add_argument("--asset-root", type=Path, action="append", default=[], help="Root for model asset source paths; repeat for each source folder.")
     parser.add_argument("--promotion-receipt", type=Path, default=None, help="Verified Quiz Binder promotion receipt for strict-route chaining.")
     parser.add_argument("--phase5-candidate-authorization", type=Path, default=None, help="Exact local-only Phase 5 candidate authorization.")
     parser.add_argument(
@@ -40,7 +40,7 @@ def main(argv: list[str] | None = None) -> int:
         model_path,
         quiz_entity_key=args.quiz_entity_key,
         settings_path=args.settings.expanduser().resolve() if args.settings else None,
-        asset_root=args.asset_root.expanduser().resolve() if args.asset_root else None,
+        asset_root=[root.expanduser().resolve() for root in args.asset_root] or None,
         promotion_receipt_path=(
             args.promotion_receipt.expanduser().resolve()
             if args.promotion_receipt

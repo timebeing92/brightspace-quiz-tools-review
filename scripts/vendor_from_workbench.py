@@ -75,6 +75,7 @@ SOURCE_FILES = (
     "tests/test_quiz_short_answer_consumers.py",
     "tests/test_quiz_short_answer_projection.py",
     "tests/test_quiz_source_choice_fidelity.py",
+    "tests/test_quiz_sme_edit_scenarios.py",
     "tests/test_quiz_source_response_facts.py",
     "tests/test_quiz_unbind.py",
     "tests/test_quiz_variant_control_matrix.py",

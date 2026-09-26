@@ -1,0 +1,48 @@
+name: Verify quiz tools
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: verify-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  verify:
+    name: Python ${{ matrix.python }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+          cache-dependency-path: |
+            requirements-lock.txt
+            requirements-dev.txt
+            requirements.txt
+      - name: Install runtime and test dependencies
+        run: python scripts/bootstrap_env.py --locked --dev
+      - name: Verify source pin and distribution inputs
+        run: |
+          .venv/bin/python scripts/vendor_from_workbench.py --check
+          .venv/bin/python scripts/make_release_asset.py --check-only
+      - name: Run public regression suite
+        run: .venv/bin/python -m pytest tests
+      - name: Run and verify synthetic demonstration
+        run: |
+          .venv/bin/python scripts/run_synthetic_journey.py --output-dir output/ci-demo
+          .venv/bin/python scripts/render_quiz_binder_log.py --run-dir output/ci-demo

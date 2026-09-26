@@ -82,12 +82,42 @@ controls. Import emits a decision overlay, not an LMS import ZIP. Use the origin
 complete extraction workspace for readiness and building; the review packet's
 model retains its original asset references.
 
-Blank question-authoring templates and `quiz_draft_intake.py` remain a separate
-workflow. Do not append new source-question rows to an extracted reviewbook.
+For supported choice and written-response questions, normalization preserves
+bounded source prompt HTML separately from the readable workbook display.
+Unsupported native prompt material blocks building. A source image must remain
+referenced in projected question content; copying its file alone is insufficient.
+
+For an image replacement, put a PNG, JPEG or GIF in `Replacement Images/`,
+then enter its relative path on the matching `Image Replacements` row and set
+`approval_status` to `accepted`. The row identifies the exact question,
+occurrence and original asset. A reviewer note alone records a request. Original
+images and their protected links remain unchanged; promotion verifies the new
+file's bytes and rewrites only the selected question's supported references.
+
+The decision overlay must be saved in the packet root, beside `Replacement
+Images/`. Supply both the complete extraction directory and the packet directory
+as `--asset-root` values to readiness, building and validation. Quiz Workshop's
+Compose/Rebind workflow supplies these roots automatically.
+
+Accepted revisions to supported question types can be applied to an extracted
+model copy before its first sandbox import. This leaves the question's
+`extraction_only` build-support status unchanged. Readiness and package generation
+still require recorded import evidence or an exact local candidate authorization;
+review acceptance alone does not make the package import-verified.
+
+To add a question to an existing pool, use `New Questions` and `New Responses`.
+Copy the quiz and pool identities from `Target Pools`, use a unique permanent
+question code, and explicitly accept the question row. The available pool count
+increases; the configured random draw count does not. Do not append rows to the
+protected assessment tabs. Independent drafting and new assessments use the
+blank templates and `quiz_draft_intake.py`. Intake supports more types than the
+package builder; unsupported types still fail the build gate.
 
 ## Verification
 
 Run `python -m pytest tests/test_quiz_assessment_review.py
-tests/test_quiz_review_workbook_reingest.py`. Tests use synthetic questions and
+tests/test_quiz_review_workbook_reingest.py tests/test_quiz_sme_edit_scenarios.py`.
+The SME scenarios can also target a distribution checkout by setting
+`QUIZ_TOOLS_REPO=/absolute/path/to/checkout`. Tests use synthetic questions and
 exercise relocation, image links, unchanged import, accepted/draft edits, source
 protection, hidden layout, changed companions and rich-content holds.

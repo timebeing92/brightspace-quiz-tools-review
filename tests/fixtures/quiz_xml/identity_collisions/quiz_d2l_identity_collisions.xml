@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns:d2l_2p0="http://desire2learn.com/xsd/d2lcp_v2p0">
+  <assessment ident="IDENTITY_COLLISIONS" title="Identity collision fixture">
+    <section ident="RAND_A" title="[SECTION]">
+      <item ident="ITEM_A" label="LABEL_A" title="Shared occurrence A">
+        <itemmetadata><qtimetadata>
+          <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>True/False</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>COLLIDE_SHARED</fieldentry></qti_metadatafield>
+        </qtimetadata></itemmetadata>
+        <presentation>
+          <material><mattext texttype="text/html">&lt;p&gt;Synthetic shared prompt. &lt;img src=&quot;shared.svg&quot; alt=&quot;fixture mark&quot; /&gt;&lt;/p&gt;</mattext></material>
+          <response_lid ident="RESPONSE_A" rcardinality="Single"><render_choice>
+            <response_label ident="TRUE"><material><mattext>True</mattext></material></response_label>
+            <response_label ident="FALSE"><material><mattext>False</mattext></material></response_label>
+          </render_choice></response_lid>
+        </presentation>
+        <resprocessing><respcondition><conditionvar><varequal respident="RESPONSE_A">TRUE</varequal></conditionvar><setvar>100</setvar></respcondition></resprocessing>
+      </item>
+    </section>
+    <section ident="RAND_B" title="[SECTION]">
+      <item ident="ITEM_B" label="LABEL_B" title="Shared occurrence B">
+        <itemmetadata><qtimetadata>
+          <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>True/False</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>COLLIDE_SHARED</fieldentry></qti_metadatafield>
+        </qtimetadata></itemmetadata>
+        <presentation>
+          <material><mattext texttype="text/html">&lt;p&gt;Synthetic shared prompt. &lt;img src=&quot;shared.svg&quot; alt=&quot;fixture mark&quot; /&gt;&lt;/p&gt;</mattext></material>
+          <response_lid ident="RESPONSE_B" rcardinality="Single"><render_choice>
+            <response_label ident="TRUE"><material><mattext>True</mattext></material></response_label>
+            <response_label ident="FALSE"><material><mattext>False</mattext></material></response_label>
+          </render_choice></response_lid>
+        </presentation>
+        <resprocessing><respcondition><conditionvar><varequal respident="RESPONSE_B">TRUE</varequal></conditionvar><setvar>100</setvar></respcondition></resprocessing>
+      </item>
+    </section>
+    <section ident="RAND_C" title="[SECTION]">
+      <item ident="ITEM_C" label="LABEL_C" title="Distinct occurrence C">
+        <itemmetadata><qtimetadata>
+          <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>True/False</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1</fieldentry></qti_metadatafield>
+          <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>COLLIDE_DISTINCT</fieldentry></qti_metadatafield>
+        </qtimetadata></itemmetadata>
+        <presentation>
+          <material><mattext texttype="text/html">&lt;p&gt;Synthetic distinct prompt. &lt;img src=&quot;/content/enforced/FIXTURE/shared.svg&quot; alt=&quot;fixture mark&quot; /&gt;&lt;/p&gt;</mattext></material>
+          <response_lid ident="RESPONSE_C" rcardinality="Single"><render_choice>
+            <response_label ident="TRUE"><material><mattext>True</mattext></material></response_label>
+            <response_label ident="FALSE"><material><mattext>False</mattext></material></response_label>
+          </render_choice></response_lid>
+        </presentation>
+        <resprocessing><respcondition><conditionvar><varequal respident="RESPONSE_C">FALSE</varequal></conditionvar><setvar>100</setvar></respcondition></resprocessing>
+      </item>
+    </section>
+  </assessment>
+</questestinterop>

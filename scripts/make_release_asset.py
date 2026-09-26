@@ -34,6 +34,7 @@ STATIC_FILES = (
     "VERSION",
     "docs/REPOSITORY_BOUNDARY.md",
     "docs/SYNTHETIC_JOURNEY.md",
+    "docs/SANDBOX_VERIFICATION_2026-09-26.md",
     "docs/TERMINAL_WORKFLOW.md",
     "docs/UNBIND_TERMINAL.md",
     "docs/RUN_SCRIPTS.md",
@@ -62,12 +63,17 @@ BUNDLE_RUNTIME_FILES = (
     "scripts/run_synthetic_journey.py",
     "scripts/vendor_from_workbench.py",
 )
-# Public archives carry runtime code and only the synthetic fixtures required
-# by the built-in proof. The development repository has a broader test/evidence
-# corpus; shipping it would expose unrelated historical authored content.
+# The review distribution includes its sanitized tests and pinned specimens.
+# Selection remains explicit through the reviewed Workbench pin.
 PUBLIC_FIXTURE_PREFIXES = (
-    "tests/fixtures/quiz_authoring/",
-    "tests/fixtures/quiz_xml/mixed_inline_itemref_and_root_bank/",
+    "tests/",
+    "workspace/review/quiz_capability_lab_r1/fixtures/specimens/",
+)
+PUBLIC_TEST_FILES = (
+    "tests/conftest.py",
+    "tests/README.md",
+    "tests/test_quiz_terminal_roundtrip.py",
+    "tests/test_public_distribution.py",
 )
 # These checked-in examples are synthetic fresh-intake templates, not course
 # banks. The optional Node template generator remains in Workbench.
@@ -117,7 +123,7 @@ def release_files(pin: dict) -> list[str]:
         ):
             promoted.append(target)
     files = sorted(
-        set((*STATIC_FILES, *BUNDLE_RUNTIME_FILES, *promoted))
+        set((*STATIC_FILES, *BUNDLE_RUNTIME_FILES, *PUBLIC_TEST_FILES, *promoted))
     )
     for relative in files:
         safe_repo_file(relative)
@@ -133,7 +139,7 @@ def release_pin(pin: dict, files: list[str]) -> dict:
         for entry in pin.get("files", [])
         if entry.get("target") in included
     ]
-    result["distribution_scope"] = "public_runtime_subset"
+    result["distribution_scope"] = "public_review_with_tests"
     return result
 
 

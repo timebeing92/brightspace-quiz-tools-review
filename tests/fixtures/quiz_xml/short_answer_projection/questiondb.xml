@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns:d2l_2p0="http://desire2learn.com/xsd/d2lcp_v2p0">
+  <objectbank ident="QLIB_SHORT_ANSWER">
+    <section ident="SECT_SHORT_ANSWER" title="[BANK]">
+      <item ident="OBJ_BANK_AGREE" label="SA_AGREE" title="[AGREE]">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield><fieldlabel>qmd_computerscored</fieldlabel><fieldentry>yes</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Short Answer</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>2.500000000</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>fixture-sa-agree</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_globalid</fieldlabel><fieldentry>fixture-sa-agree-global</fieldentry></qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <flow>
+            <material><mattext texttype="text/html">[AGREE-PROMPT]</mattext></material>
+            <response_extension><d2l_2p0:grading_type>0</d2l_2p0:grading_type></response_extension>
+            <response_str ident="BANK_AGREE_STR" rcardinality="Single">
+              <render_fib rows="1" columns="60" prompt="Box" fibtype="String">
+                <response_label ident="BANK_AGREE_ANS" />
+              </render_fib>
+            </response_str>
+          </flow>
+        </presentation>
+        <resprocessing>
+          <outcomes><decvar vartype="Integer" minvalue="0" maxvalue="100" varname="Blank_1" /></outcomes>
+          <respcondition><conditionvar><varequal respident="BANK_AGREE_ANS" case="no">[ALPHA]</varequal></conditionvar><setvar action="Set">100.000000000</setvar></respcondition>
+          <respcondition><conditionvar><varequal respident="BANK_AGREE_ANS" case="no">Crème: β</varequal></conditionvar><setvar action="Set">100.000000000</setvar></respcondition>
+          <respcondition><conditionvar><varequal respident="BANK_AGREE_ANS" case="no">ratio/term</varequal></conditionvar><setvar action="Set">100.000000000</setvar></respcondition>
+          <respcondition><conditionvar><varequal respident="BANK_AGREE_ANS" case="no">A &amp; B</varequal></conditionvar><setvar action="Set">100.000000000</setvar></respcondition>
+          <respcondition><conditionvar><varequal respident="BANK_AGREE_ANS" case="no">left / right?!</varequal></conditionvar><setvar action="Set">100.000000000</setvar></respcondition>
+          <respcondition><conditionvar><other /></conditionvar><setvar varname="que_score" action="Set">D2L_Correct</setvar></respcondition>
+        </resprocessing>
+      </item>
+      <item ident="OBJ_BANK_CONFLICT" label="SA_CONFLICT" title="[CONFLICT]">
+        <itemmetadata>
+          <qtimetadata>
+            <qti_metadatafield><fieldlabel>qmd_computerscored</fieldlabel><fieldentry>yes</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_questiontype</fieldlabel><fieldentry>Short Answer</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_weighting</fieldlabel><fieldentry>1.000000000</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_displayid</fieldlabel><fieldentry>fixture-sa-conflict</fieldentry></qti_metadatafield>
+            <qti_metadatafield><fieldlabel>qmd_globalid</fieldlabel><fieldentry>fixture-sa-conflict-global</fieldentry></qti_metadatafield>
+          </qtimetadata>
+        </itemmetadata>
+        <presentation>
+          <flow>
+            <material><mattext texttype="text/html">[CONFLICT-PROMPT]</mattext></material>
+            <response_extension><d2l_2p0:grading_type>0</d2l_2p0:grading_type></response_extension>
+            <response_str ident="BANK_CONFLICT_STR" rcardinality="Single">
+              <render_fib rows="0" columns="20" prompt="Box" fibtype="String">
+                <response_label ident="BANK_CONFLICT_ANS" />
+              </render_fib>
+            </response_str>
+          </flow>
+        </presentation>
+        <resprocessing>
+          <outcomes><decvar vartype="Integer" minvalue="0" maxvalue="100" varname="Blank_1" /></outcomes>
+          <respcondition><conditionvar><varequal respident="BANK_CONFLICT_ANS" case="no">[CONFLICT-ANSWER]</varequal></conditionvar><setvar action="Set">100.000000000</setvar></respcondition>
+          <respcondition><conditionvar><other /></conditionvar><setvar varname="que_score" action="Set">D2L_Correct</setvar></respcondition>
+        </resprocessing>
+      </item>
+    </section>
+  </objectbank>
+</questestinterop>

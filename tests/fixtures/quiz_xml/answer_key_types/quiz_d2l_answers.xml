@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<questestinterop xmlns:d2l_2p0="http://desire2learn.com/xsd/d2lcp_v2p0">
+  <assessment ident="res_quiz_answers" title="Answer Quiz">
+    <section ident="CONTAINER_SECTION">
+      <section ident="RAND_ANS" title="Answer Section">
+        <qtimetadata>
+          <qti_metadatafield><fieldlabel>qmd_numberofitems</fieldlabel><fieldentry>3</fieldentry></qti_metadatafield>
+        </qtimetadata>
+      </section>
+    </section>
+  </assessment>
+</questestinterop>

@@ -13,10 +13,14 @@ from copy import deepcopy
 import hashlib
 import json
 from pathlib import Path
+import posixpath
 import re
 import sys
 from typing import Any
+from urllib.parse import quote, unquote, urlsplit, urlunsplit
+from html import unescape
 
+from quiz_build_support import resolve_projection_relationships
 from quiz_contracts import validate_contract
 from quiz_review_workbook_reingest import FORMAT as OVERLAY_FORMAT, sha256_file
 
@@ -165,6 +169,223 @@ def _apply_annotation(question: dict[str, Any], annotation: dict[str, Any]) -> N
         raise PromotionError(f"Unsupported Stage 1 revision field: {field_path}")
 
 
+def _rewrite_replacement_uri(content: str, original_path: str, replacement_path: str) -> tuple[str, int]:
+    from quiz_build_support import package_member_path
+
+    pattern = re.compile(
+        r"(?P<prefix>\b(?:src|href|xlink:href|data|poster|background)\s*=\s*)"
+        r"(?P<quote>['\"])(?P<value>.*?)(?P=quote)", re.I | re.S)
+    count = 0
+    original_member = package_member_path(original_path).as_posix()
+    encoded_replacement = quote(replacement_path, safe="/._-")
+
+    def replace(match):
+        nonlocal count
+        raw = unescape(match.group("value"))
+        parsed = urlsplit(raw)
+        try:
+            member = package_member_path(parsed.path).as_posix()
+        except ValueError:
+            return match.group(0)
+        if member != original_member:
+            return match.group(0)
+        count += 1
+        value = urlunsplit(("", "", encoded_replacement, parsed.query, parsed.fragment))
+        quote_char = match.group("quote")
+        return match.group("prefix") + quote_char + value + quote_char
+    return pattern.sub(replace, content), count
+
+
+def _replace_question_asset(model: dict[str, Any], question: dict[str, Any],
+                            annotation: dict[str, Any], packet_root: Path) -> None:
+    value = annotation.get("value")
+    if not isinstance(value, dict):
+        raise PromotionError("Image replacement annotation needs an explicit asset and file record.")
+    asset_key = value.get("asset_entity_key")
+    original_path = value.get("original_package_path")
+    relative = value.get("replacement_file")
+    source = Path(relative or "")
+    if (not isinstance(asset_key, str) or not isinstance(original_path, str)
+            or source.is_absolute() or ".." in source.parts
+            or not source.parts or source.parts[0] != "Replacement Images"):
+        raise PromotionError("Image replacement path or source asset identity is unsafe.")
+    source = packet_root / source
+    if (source.is_symlink() or not source.resolve().is_relative_to(packet_root.resolve())
+            or not source.is_file()):
+        raise PromotionError("Image replacement file is missing, symlinked, or outside its packet.")
+    if sha256_file(source) != value.get("sha256"):
+        raise PromotionError("Image replacement file checksum changed after review.")
+    old_asset = next((a for a in model.get("assets", []) if a["entity_key"] == asset_key), None)
+    if old_asset is None or old_asset.get("package_path") != original_path:
+        raise PromotionError("Image replacement does not match the exact source asset in this model.")
+    from quiz_review_projection import build_quiz_review_projection
+    occurrences = build_quiz_review_projection(model).get("question_occurrences", [])
+    matching_occurrences = [row for row in occurrences
+        if row.get("occurrence_key") == value.get("occurrence_key")
+        and row.get("referenced_question_key") == question["entity_key"]
+        and row.get("quiz_key") == value.get("quiz_entity_key")]
+    other_quizzes = {row["quiz_key"] for row in occurrences
+        if row.get("referenced_question_key") == question["entity_key"]
+        and row.get("quiz_key") != value.get("quiz_entity_key")}
+    if len(matching_occurrences) != 1 or other_quizzes:
+        raise PromotionError("Image replacement must map to one occurrence and a question used only by that quiz.")
+    media = {".png": (b"\x89PNG\r\n\x1a\n", "image/png"),
+             ".jpg": (b"\xff\xd8\xff", "image/jpeg"),
+             ".jpeg": (b"\xff\xd8\xff", "image/jpeg"),
+             ".gif": (b"GIF8", "image/gif")}
+    signature = media.get(source.suffix.lower())
+    if not signature or not source.read_bytes().startswith(signature[0]) or signature[1] != value.get("media_type"):
+        raise PromotionError("Replacement image bytes do not match a supported PNG, JPEG or GIF file.")
+    contents = []
+    prompt = question.get("prompt")
+    if isinstance(prompt, dict) and prompt.get("format") in {"html", "xhtml"}:
+        contents.append(("prompt", prompt, "content"))
+    payload = question.get("type_payload", {})
+    for index, option in enumerate(payload.get("options", [])):
+        content = option.get("content")
+        if isinstance(content, dict) and content.get("format") in {"html", "xhtml"}:
+            contents.append((f"option-{index}", content, "content"))
+    manual = payload.get("manual_answer_key")
+    if isinstance(manual, dict) and manual.get("format") in {"html", "xhtml"}:
+        contents.append(("manual-key", manual, "content"))
+    for index, feedback in enumerate(question.get("feedback", [])):
+        content = feedback.get("content")
+        if isinstance(content, dict) and content.get("format") in {"html", "xhtml"}:
+            contents.append((f"feedback-{index}", content, "content"))
+    total = 0
+    pending_rewrites = []
+    for _label, content, key in contents:
+        rewritten, hits = _rewrite_replacement_uri(
+            content.get(key, ""), original_path,
+            f"review-replacements/{value['sha256'][:20]}-{source.name}")
+        if hits:
+            pending_rewrites.append((content, key, rewritten))
+            total += hits
+    if total == 0:
+        raise PromotionError("Source image reference was not found in projected question content.")
+
+    relations = [r for r in model.get("relationships", [])
+                     if r["kind"] == "uses_asset"
+                     and r["from_entity_key"] == question["entity_key"]
+                     and r["to_entity_key"] == asset_key
+                     and r["status"] == "resolved"]
+    if not relations:
+        raise PromotionError("Question has no resolved relationship to the selected source image.")
+    old_asset_digest = old_asset.get("fingerprint", {}).get("digest")
+    new_asset_key = "cc:asset:review-replacement:" + hashlib.sha256(
+        f"{question['entity_key']}\0{asset_key}\0{value['sha256']}".encode()).hexdigest()[:28]
+    if any(a["entity_key"] == new_asset_key for a in model["assets"]):
+        raise PromotionError("This replacement image has already been applied to the question.")
+    new_package_path = f"review-replacements/{value['sha256'][:20]}-{source.name}"
+    new_asset = deepcopy(old_asset)
+    new_asset.update({
+        "entity_key": new_asset_key,
+        "identity": {"strategy": "assigned", "permanent_code": None, "source_aliases": [],
+                     "content_fingerprints": [], "extensions": {}},
+        "source_path": relative,
+        "package_path": new_package_path,
+        "media_type": signature[1],
+        "fingerprint": {"algorithm": "sha256", "digest": value["sha256"],
+                        "basis": "reviewer supplied replacement bytes", "extensions": {}},
+        "extensions": {"review_copy_path": relative,
+                       "coursecraft.replacement": {
+                           "source_asset_entity_key": asset_key,
+                           "source_asset_sha256": old_asset_digest,
+                           "annotation_id": annotation["annotation_id"],
+                           "replacement_sha256": value["sha256"],
+                       }},
+    })
+    # Apply only after every rejection check. Excluded decisions must leave
+    # authored content and asset bindings unchanged in the returned model.
+    for content, key, rewritten in pending_rewrites:
+        content[key] = rewritten
+    model["assets"].append(new_asset)
+    for relation in relations:
+        new_relation = deepcopy(relation)
+        new_relation.update({
+            "relationship_key": "cc:relationship:review-replacement:" + hashlib.sha256(
+                f"{annotation['annotation_id']}|{relation['relationship_key']}".encode()).hexdigest()[:24],
+            "to_entity_key": new_asset_key,
+            "source_kind": "accepted reviewer image replacement",
+            "attributes": {**relation.get("attributes", {}), "raw_ref": new_package_path},
+            "source_evidence_keys": [], "diagnostic_ids": [],
+            "extensions": {"coursecraft.replacement_annotation_id": annotation["annotation_id"]},
+        })
+        model["relationships"].remove(relation)
+        model["relationships"].append(new_relation)
+
+
+def _add_question_to_pool(model: dict[str, Any], annotation: dict[str, Any]) -> str:
+    value = annotation.get("value")
+    if not isinstance(value, dict) or not isinstance(value.get("question"), dict):
+        raise PromotionError("New-question decision needs a validated draft question and target pool.")
+    quiz_key = value.get("target_quiz_entity_key")
+    pool_key = value.get("target_pool_entity_key")
+    quiz = next((q for q in model.get("quizzes", []) if q["entity_key"] == quiz_key), None)
+    pool = next((s for s in model.get("structures", [])
+                 if s["entity_key"] == pool_key and s.get("kind") in {"pool", "bank"}), None)
+    if quiz is None or pool is None:
+        raise PromotionError("New question target quiz or pool does not exist in the reviewed source model.")
+    relations, _derivations = resolve_projection_relationships(model, quiz_key)
+    reachable = {quiz_key}
+    while True:
+        added = {r["to_entity_key"] for r in relations
+                 if r["kind"] == "contains" and r["status"] == "resolved"
+                 and r["from_entity_key"] in reachable}
+        if added <= reachable:
+            break
+        reachable |= added
+    draws = {r["from_entity_key"] for r in relations
+             if r["kind"] == "draws_from" and r["status"] == "resolved"
+             and r["to_entity_key"] == pool_key}
+    if pool_key not in reachable and not draws.intersection(reachable):
+        raise PromotionError("Target pool is not part of the selected quiz.")
+    question = deepcopy(value["question"])
+    code = question.get("identity", {}).get("permanent_code")
+    if not isinstance(code, str) or not PERMANENT_CODE_PATTERN.fullmatch(code):
+        raise PromotionError("New question needs a valid stable permanent code.")
+    if any(q.get("identity", {}).get("permanent_code") == code for q in model["questions"]):
+        raise PromotionError(f"New question code already exists: {code}")
+    question_key = "cc:question:review-addition:" + hashlib.sha256(
+        f"{quiz_key}\0{pool_key}\0{code}".encode()).hexdigest()[:28]
+    if any(q["entity_key"] == question_key for q in model["questions"]):
+        raise PromotionError("New question entity key collides with an existing question.")
+    question["entity_key"] = question_key
+    question["source_kind"] = "accepted quiz review draft"
+    question.setdefault("build_support", {"level": "extraction_only", "receipt_refs": [],
+                                           "notes": ["Fresh question; no import evidence."],
+                                           "extensions": {}})
+    question["build_support"]["level"] = "extraction_only"
+    question.setdefault("build_support", {}).setdefault("notes", []).append(
+        "Added to the selected quiz pool through an accepted review draft.")
+    question.setdefault("extensions", {})["coursecraft.review_addition"] = {
+        "annotation_id": annotation["annotation_id"],
+        "source_draft_model_sha256": value.get("draft_model_sha256"),
+    }
+    model["questions"].append(question)
+    ordinals = [r.get("ordinal") or 0 for r in relations
+                if r["kind"] == "member_of" and r["to_entity_key"] == pool_key]
+    model["relationships"].append({
+        "relationship_key": "cc:relationship:review-addition:" + hashlib.sha256(
+            annotation["annotation_id"].encode()).hexdigest()[:24],
+        "kind": "member_of", "source_kind": "accepted quiz review draft",
+        "from_entity_key": question_key, "to_entity_key": pool_key,
+        "status": "resolved", "ordinal": max(ordinals, default=0) + 1,
+        "attributes": {}, "candidates": [], "source_evidence_keys": [],
+        "diagnostic_ids": [], "extensions": {"coursecraft.review_addition_annotation_id": annotation["annotation_id"]},
+    })
+    if isinstance(pool.get("selection", {}).get("available_count"), int):
+        pool["selection"]["available_count"] = len({
+            r["from_entity_key"] for r in model["relationships"]
+            if r["kind"] == "member_of" and r["status"] == "resolved"
+            and r["to_entity_key"] == pool_key})
+    for draw_key in draws:
+        draw = next((s for s in model["structures"] if s["entity_key"] == draw_key), None)
+        if draw and draw_key in reachable and isinstance(draw.get("selection", {}).get("available_count"), int):
+            draw["selection"]["available_count"] += 1
+    return question_key
+
+
 def promote_revisions(
     model_path: Path,
     overlay_path: Path,
@@ -205,8 +426,11 @@ def promote_revisions(
     collided_entity_keys = {
         row["entity_key"] for row in variant_collision_report(model)["entities"]
     }
+    # Keep the collision exclusion reason visible here for regression checks:
+    # question_variant_collision_unresolved
     applied_ids: set[str] = set()
     touched_questions: set[str] = set()
+    added_question_keys: set[str] = set()
 
     permanent_codes = {
         str(question.get("identity", {}).get("permanent_code"))
@@ -240,6 +464,16 @@ def promote_revisions(
         if conflict_key in seen_targets and seen_targets[conflict_key] != value_digest:
             raise PromotionError(f"Conflicting accepted changes for {target_key} {field_path}.")
         seen_targets[conflict_key] = value_digest
+        if field_path.startswith("/questions/add/"):
+            added_key = _add_question_to_pool(output, annotation)
+            questions[added_key] = output["questions"][-1]
+            added_question_keys.add(added_key)
+            applied.append({"annotation_id": annotation["annotation_id"],
+                            "target_entity_key": target_key, "field_path": field_path,
+                            "added_question_entity_key": added_key})
+            applied_ids.add(annotation["annotation_id"])
+            touched_questions.add(added_key)
+            continue
         question = questions.get(target_key)
         if question is None:
             excluded.append(
@@ -260,6 +494,22 @@ def promote_revisions(
                     "reason": "question_variant_collision_unresolved",
                 }
             )
+            continue
+        if field_path.startswith("/assets/replacements/"):
+            try:
+                _replace_question_asset(output, question, annotation, overlay_path.parent)
+            except (OSError, ValueError, PromotionError) as exc:
+                excluded.append({
+                    "annotation_id": annotation["annotation_id"],
+                    "target_entity_key": target_key,
+                    "field_path": field_path,
+                    "reason": str(exc),
+                })
+                continue
+            applied.append({"annotation_id": annotation["annotation_id"],
+                            "target_entity_key": target_key, "field_path": field_path})
+            applied_ids.add(annotation["annotation_id"])
+            touched_questions.add(target_key)
             continue
         if field_path in {"/identity/permanent_code", "/scoring/mode"}:
             if field_path == "/scoring/mode":
@@ -298,7 +548,11 @@ def promote_revisions(
                 }
             )
             continue
-        if question.get("build_support", {}).get("level") not in minimum_support:
+        # Review acceptance permits an edit to an extracted model copy before
+        # its first sandbox import. Keep build_support unchanged: readiness and
+        # generation still require evidence or an exact candidate authorization.
+        editable_instance_levels = minimum_support | {"extraction_only"}
+        if question.get("build_support", {}).get("level") not in editable_instance_levels:
             excluded.append(
                 {
                     "annotation_id": annotation["annotation_id"],
