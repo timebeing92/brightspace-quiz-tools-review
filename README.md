@@ -9,20 +9,20 @@ interfaces, standalone commands, blank drafting templates, and synthetic example
 It runs locally. A Brightspace or Google Drive account is not needed to run the
 tools; installation downloads Python dependencies.
 
-### Current sandbox verification
+## What's included
 
-The September 26, 2026 sandbox check found and repaired a Multi-Select answer-key
-import defect. A second import preserved the key, workbook edits, replacement
-image, added question and tested settings. The re-export confirmed all six
-questions, keys, image bytes, pool membership and accepted settings. A preview
-attempt scored 5/5. Brightspace changed the unedited clock-display flag.
-See the [verification record](docs/SANDBOX_VERIFICATION_2026-09-26.md)
-before treating this snapshot as ready for course imports.
+| Location | Contents |
+| --- | --- |
+| `scripts/` | Quiz Workshop, Bindery Ledger, and the extraction, review, drafting, package-building and validation code they call |
+| `workspace/reference/examples/quiz_draft/` | Blank XLSX drafting template and synthetic XLSX/JSON examples |
+| `workspace/reference/schemas/quiz/` | Contracts for structured quiz data, review records and build capabilities |
+| `tests/` | Runnable regression tests, synthetic fixtures and sanitized native XML examples |
+| `docs/` | Installation/workflow details, independent commands, design contracts and verification records |
+| `upstream/workbench_pin.json` | Source commit and file hashes for the shared implementation included here |
 
 ## Start here
 
-You need **Python 3.11, 3.12, or 3.13**. This development snapshot was verified with
-Python 3.13. Python 3.14 is not supported yet.
+You need **Python 3.11, 3.12, or 3.13**. Python 3.14 is not supported yet.
 
 Clone this repository, or download and extract its ZIP, then open a terminal in
 the resulting folder:
@@ -84,9 +84,21 @@ The interface calls its three stages **Unbind**, **Compose**, and **Rebind**:
 
 1. **Unbind** reads a Brightspace export ZIP or unpacked export and creates
    workbooks, a local HTML Reading Room, copied assets, and extraction records.
-2. **Compose** collects explicit decisions from the edited workbook and checks
-   readiness for one, several, or all quizzes.
+2. **Compose** collects explicit decisions from the edited workbook, applies
+   accepted changes to a model copy, and checks readiness for one, several, or
+   all quizzes.
 3. **Rebind** builds one eligible quiz into a locally validated package and ZIP.
+
+Extraction reads quiz XML together with the available Question Library so
+question bodies, answer options, keys, pool membership and assets can be joined
+by their source identities. The resulting `model.json` holds that structured
+content and its source evidence. The workbook provides the editable review view.
+
+Compose writes a decision overlay and a promotion receipt showing which accepted
+changes were applied or excluded. It also collects accepted quiz-setting changes.
+The original export and protected baseline remain available for comparison.
+Rebind uses the reviewed model, settings and assets; it checks the generated XML,
+asset references and ZIP contents and writes validation reports alongside them.
 
 The same workflow can be run with explicit commands:
 
@@ -182,15 +194,18 @@ interface; internal Python functions are not a versioned public API.
 | [`extract_quiz_pool_review.py`](scripts/extract_quiz_pool_review.py), [`quiz_normalization.py`](scripts/quiz_normalization.py) | Source extraction and structured question model |
 | [`quiz_assessment_review.py`](scripts/quiz_assessment_review.py) | Assessment tabs, portable images, and guarded import |
 | [`quiz_review_workbook_reingest.py`](scripts/quiz_review_workbook_reingest.py) | Collecting workbook revisions and review decisions |
+| [`quiz_promote_revisions.py`](scripts/quiz_promote_revisions.py) | Applying accepted changes to a new model copy and recording the result |
 | [`quiz_draft_intake.py`](scripts/quiz_draft_intake.py) | XLSX/JSON drafting intake |
+| [`check_quiz_authoring_readiness.py`](scripts/check_quiz_authoring_readiness.py), [`quiz_build_support.py`](scripts/quiz_build_support.py) | Checking selected questions, pools, assets and build requirements |
 | [`build_quiz_package_from_workbook.py`](scripts/build_quiz_package_from_workbook.py) | Package assembly for eligible inputs |
+| [`validate_quiz_package.py`](scripts/validate_quiz_package.py), [`diff_packages.py`](scripts/diff_packages.py) | Checking package structure and comparing generated or re-exported packages |
 | [`run_synthetic_journey.py`](scripts/run_synthetic_journey.py) | Reproducible demonstration and validation |
 
 The [command guide](docs/RUN_SCRIPTS.md) covers independent extraction, review
 packet preparation, import, and draft intake. Run a command with `--help` for its
 arguments. Shared schemas and examples are under `workspace/reference/`.
 
-## Verification and current limits
+## Run the tests and checks
 
 Run the included demonstration, then recheck its recorded files:
 
@@ -200,19 +215,28 @@ Run the included demonstration, then recheck its recorded files:
 .venv/bin/python scripts/make_release_asset.py --check-only
 ```
 
-This checkout includes a runnable regression suite. After installing development
-dependencies, run:
+Install development dependencies, then run the included regression suite:
 
 ```sh
+python3.13 scripts/bootstrap_env.py --locked --dev
 .venv/bin/python -m pytest tests
 ```
 
-The current Python 3.13 run is **652 passed, one skipped**. The intentional skip
-needs a private historical import-receipt log; that log is not distributed.
-The 24 focused SME scenarios and two terminal integration tests cover accepted
-prompt/options/key edits, image replacement, new questions, settings, exact
-candidate authorization, package validation, and re-extraction. Two distribution
-checks verify archive completeness and fixture sanitization.
+On Windows, use `py -3.13` for bootstrap and `.venv\Scripts\python.exe` for
+the test command. To run just the reviewer-edit scenarios and complete terminal
+workflow, select their test files:
+
+```sh
+.venv/bin/python -m pytest tests/test_quiz_sme_edit_scenarios.py tests/test_quiz_terminal_roundtrip.py
+```
+
+| Test area | What it exercises |
+| --- | --- |
+| Extraction and normalization | Source identities, question types, rich content, answer keys, assets and pool relationships |
+| Workbook review | Accepted/open/rejected decisions, prompt/options/key edits, settings, protected cells and companion-file integrity |
+| Images and new questions | Replacement-file checks, unchanged content on rejection, added pool members and retained draw counts |
+| Package and terminal workflow | Unbind → workbook edits → Compose → authorized candidate build → validation → re-extraction |
+| Distribution | Archive completeness, pinned-source integrity and sanitized fixture metadata |
 
 The repository's GitHub Actions workflow runs the public suite and demonstration on
 Python 3.11, 3.12 and 3.13, and checks the pinned source and distribution inputs.
@@ -221,10 +245,15 @@ It does not approve or merge pull requests; maintainers review contributions.
 The fixtures are synthetic or sanitized native XML shapes. Real course prose,
 resource links, access settings and raw tenant exports are excluded. Source
 checkouts and generated review archives include the same public test corpus.
-See [`tests/README.md`](tests/README.md) for coverage and limits. Review acceptance
-does not grant build approval: extracted questions need accepted permanent codes,
-resolved scoring where required, and import evidence or an exact sandbox candidate
-authorization before Rebind.
+One historical evidence check is intentionally skipped because it requires a
+private import-receipt log that is not distributed. See
+[`tests/README.md`](tests/README.md) for coverage, recorded results and limits.
+
+## Build requirements and limits
+
+Review acceptance does not grant build approval: extracted questions need
+accepted permanent codes, resolved scoring where required, and import evidence
+or an exact sandbox candidate authorization before Rebind.
 
 Extraction success does not establish package readiness. Unsupported content,
 unresolved references, missing assets, or missing build approval can prevent
@@ -233,17 +262,33 @@ render the package correctly. The tools do not log in to Brightspace or import
 packages automatically. Word intake and typed-equation conversion are not
 implemented.
 
-This is a development snapshot based on `0.1.0-rc.8`, with newer assessment-review
-changes. `VERSION` identifies that release base.
-In source checkouts, `REVIEW_MANIFEST.json` records the originating commits and
-snapshot file hashes. Generated archives include `RELEASE_MANIFEST.json` with
-their own file hashes. [The upstream pin](upstream/workbench_pin.json) identifies
-the shared implementation. See [repository scope](docs/REPOSITORY_BOUNDARY.md)
-for ownership and change guidance.
-
 The default `output/` folder is ignored so routine generated outputs stay out of
 source control. Included examples are synthetic; feedback can use real course
 exports as described below.
+
+## Source, pins and dependencies
+
+This repository carries a complete copy of its runtime source. Shared extraction,
+review and build behavior originates in CourseCraft Workbench; terminal and
+distribution tooling originates in Quiz Bundle. Neither source repository is
+needed to install, run, test or propose changes here.
+
+The [Workbench pin](upstream/workbench_pin.json) records the source commit and
+SHA-256 hash of each shared file copied into this repository. The vendor check
+compares those local files with the recorded hashes; it does not download code
+or connect to Workbench. A passing pin check confirms source consistency, not
+that a particular quiz is approved to build or import.
+
+Python dependencies are listed separately in `requirements.txt` and pinned in
+`requirements-lock.txt`; `sbom/runtime.cdx.json` inventories those runtime
+dependencies. The Workbench pin records code provenance, not packages to install.
+
+`VERSION` identifies the `0.1.0-rc.8` release base; this development snapshot
+includes subsequent changes. In source checkouts, `REVIEW_MANIFEST.json` records
+the originating commits and snapshot file hashes. Generated archives include
+`RELEASE_MANIFEST.json` for their packaged files. Use the Git commit and these
+records when identifying an exact version in a bug report. See
+[repository scope](docs/REPOSITORY_BOUNDARY.md) for ownership and promotion details.
 
 ## Feedback and contributions
 
@@ -256,8 +301,11 @@ you expected to happen, along with relevant files you have permission to share.
 
 You can propose changes to any part of the included code here. Maintainers will
 coordinate shared-code improvements with the source projects and update the
-pinned files through the vendor process. Contributions will be acknowledged in
-this repository, with accepted improvements credited in project documentation
+pinned files through the vendor process. If a proposed change touches a pinned
+file, the vendor check may report drift while that coordination is pending;
+explain the change in the PR and leave the pin update to the maintainer.
+Contributions will be acknowledged in this repository, with accepted improvements
+credited in project documentation
 or release notes. See [the contribution guidance](docs/REPOSITORY_BOUNDARY.md#feedback-and-contributions)
 for reporting details and source-project coordination.
 
